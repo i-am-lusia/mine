@@ -12,6 +12,17 @@
         <playbox></playbox>
       </div>
     </transition>
+    <!-- 二维码登录模块
+    <div class='qrCodeBox' v-if="!isLogin">
+      <div style="font-size: .3rem;margin-top: 1rem;margin-left:2rem;font-weight: 600">
+        <span>请用手机下面二维码以进入音乐播放器：</span>
+      </div>
+      <img class="qrCode"  id="qrCode" :src="qrCode" @click="login()" />
+      <div style="font-size: .3rem;font-weight: 600;margin-top: 4.3rem;display: flex;justify-content: center;align-items: center;">
+        <span>注意： 本音乐播放器暂未开放除二维码的登录方式</span>
+      </div>
+    </div>
+    -->
   </div>
 </template>
 <script>
@@ -25,7 +36,7 @@ import Onesinger from './components/pages/first/onesinger.vue'
 import Fourth from './components/pages/fourth/fourth.vue'
 import Playbox from './containers/playbox/playbox.vue'
 import Searchbox from './components/searchbox/searchbox.vue'
-// import axios from 'axios'
+import axios from 'axios'
 export default {
   name: 'App',
   components: {
@@ -47,7 +58,12 @@ export default {
       isSearch: false,
       musics: [],
       id: undefined,
-      isSongList: false
+      isSongList: false,
+      singerId: '11972054',
+      qrCode: null,
+      unikey: null,
+      userData: null,
+      isLogin: false
     }
   },
   methods: {
@@ -69,23 +85,72 @@ export default {
     },
     tolist () {
       this.isSongList = true
+    },
+    async getLoginStatus () {
+      const res = await axios({
+        url: `http://localhost:3000/login/status?timerstamp=${Date.now()}`,
+        withCredentials: true
+      })
+      this.userData = res.data
+      if (res.data) this.isLogin = true
+    },
+    async login () {
+      var that = this
+      this.getLoginStatus()
+      const res1 = await axios({
+        method: 'get',
+        url: `http://localhost:3000/login/status?timerstamp=${Date.now()}`,
+        withCredentials: true
+      })
+      that.unikey = res1.data.data.unikey
+      const res2 = await axios({
+        url: `http://localhost:3000/login/qr/create?key=${res1.data.unikey}&qrimg=true&timerstamp=${Date.now()}`,
+        withCredentials: true
+      })
+      that.qrCode = res2.data.data.qrimg
+      let timer = setInterval(async () => {
+        if (this.isLogin) return
+        const status = this.checkStatus()
+        if (status.code === 800) {
+          alert('二维码已过期,请重新获取')
+          clearInterval(timer)
+        }
+        if (status.code === 803) {
+          clearInterval(timer)
+          alert('登录成功')
+          this.getLoginStatus()
+          this.isLogin = true
+        }
+      }, 3000)
     }
-  }/*
-  mounted: function () {
-    var that = this
-    axios({
-      method: 'get',
-      url: `http://localhost:3000/song/url?id=`,
-      withCredentials: true
-    }).then(function (res) {
-      console.log(res.data)
-      that.id = res.data.data[0].url
-    })
-  } */
+  },
+  mounted () {
+    // this.login()
+  }
 }
 </script>
 
 <style>
+.qrCodeBox{
+  position: absolute;
+  z-index: 10;
+  left:0;
+  right:0;
+  top:0;
+  bottom:0;
+  margin: auto;
+  width: 9rem;
+  height: 7rem;
+  background-color: rgba(245,245,245,.9);
+}
+.qrCode{
+  position: absolute;
+  left:0;
+  right:0;
+  top:0;
+  bottom:0;
+  margin: auto;
+}
 body{
   width: 100%;
   height: 100%;
