@@ -1,0 +1,68 @@
+#recommandSongList{
+    width:90%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.box{
+    width: 100%;
+    font-size: .5rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+.box div{
+    font-size: .3rem;
+    margin-left: 5%;
+}
+.logo{
+    width:.4rem;
+    height: .3rem;
+}
+ul{
+    padding: 0;
+    list-style-type: none;
+    overflow: scroll;
+}
+ul::-webkit-scrollbar{
+    display: none;
+}
+.pic{
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: .3rem;
+}
+.box2 li{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    margin-bottom: .1rem;
+}
+.box1{
+    display: flex;
+    flex-direction: row;
+}
+.box1 li{
+    width: 100%;
+    margin-right: .4rem;
+}
+.message{
+    width:6rem;
+    display: flex;
+    flex-direction: column;
+    margin-left: .4rem;
+}
+span:nth-child(1){
+    font-size: .4rem;
+    columns: black;
+}
+span:nth-child(2){
+    font-size: .4rem;
+    color: grey;
+}
+.el-icon-film{
+    font-size: .5rem;
+}

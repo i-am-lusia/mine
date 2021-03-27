@@ -1,0 +1,40 @@
+.song-block{
+  width: 100%;
+  margin-top: .2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#musicstore{
+    width: 100%;
+    height: 100%;
+  }
+  .bottom{
+    width: 100%;
+    height: 3rem;
+  }
+  .allrank,.singer,.itemizes{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: 20;
+    background-color: whitesmoke;
+    top:0;
+  }
+  .box{
+    width: 20%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.box img{
+    width: .8rem;
+}
+.title{
+    font-family: Helvetica;
+    font-size: .4rem;
+    margin-top: .15rem;
+    color: black;
+}

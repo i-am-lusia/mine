@@ -1,0 +1,66 @@
+#songBox{
+    width: 100%;
+    height: auto;
+    margin: 0;
+    position:fixed;
+    margin-left: .2rem;
+}
+#songBox .box{
+    width: 95%;
+    height: 1.5rem;
+    background-color: teal;
+    margin-top: .2rem;
+    border-radius: 3rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+.cd-pic{
+    width: 2rem;
+    height: 2rem;
+    position: absolute;
+    z-index: 1;
+    border-radius: .2rem;
+}
+.cd{
+    width: 1.6rem;
+    height: auto;
+    z-index: 0;
+    margin-left: .9rem;
+}
+.song-name{
+    width: 50%;
+    overflow: hidden;
+    white-space: nowrap;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: .5rem;
+}
+.play1{
+    width:.8rem;
+    height: .8rem;
+    margin-left: 75%;
+    margin-top: 0;
+    position: absolute;
+}
+.play2{
+    width: .7rem;
+    height: .7rem;
+    margin-left: 85%;
+    margin-top: 0;
+    position: absolute;
+}
+.move{
+    animation: 15s title linear infinite alternate;    
+}
+@keyframes title {
+  from {
+    transform: translateX(0%);
+    -webkit-transform: translateX(0%);
+  }
+  to {
+    transform: translateX(50%);
+    -webkit-transform: translateX(50%);
+  }
+}
