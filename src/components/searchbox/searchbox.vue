@@ -53,7 +53,7 @@ export default {
   data: function () {
     return {
       keywords: [],
-      isFocusing: true,
+      isFocusing: false,
       currentIndex: 0,
       animationTriggerFlag: true,
       history: [],

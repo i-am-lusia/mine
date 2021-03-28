@@ -26,7 +26,7 @@
   </div>
 </template>
 <script>
-import menulist from './containers/menu/menulist.vue'
+import menulist from '../src/containers/menu/menulist.vue'
 import Playlist from './components/playlist/playlist.vue'
 import singer from '@/components/pages/first/singer.vue'
 import Allranks from './components/pages/first/allranks.vue'

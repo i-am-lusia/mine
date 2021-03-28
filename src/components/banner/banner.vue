@@ -23,15 +23,25 @@ export default {
 }
 .el-carousel{
     width: 100%;
+    height: 100%;
 }
 .picsize{
     width: 100%;
-    height: 100%;
+    width: 100%;
     border-radius: .3rem;
 }
-#post >>> .el-carousel__indicators{
-  width: 100%;
+#banner >>> .el-carousel__indicators{
+  width: .5rem;
   display: flex;
   justify-content: center;
+}
+#banner >>> .el-carousel__button{
+    width: .5rem;
+}
+#banner >>> .el-carousel__arrow {
+    display: none;
+}
+#banner >>> .el-carousel__item{
+    height: 4rem;
 }
 </style>

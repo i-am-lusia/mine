@@ -1,6 +1,6 @@
 <template>
     <div id="menulist" >
-      <el-row >
+      <el-row>
         <el-menu class="el-menu-vertical-demo" default-active="1"  >
             <el-col :span="6">
               <el-menu-item index="1" @click="toPath">
@@ -58,6 +58,7 @@ export default {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  line-height: .8rem;
 }
 .el-menu-item.is-active {
 background-color: rgb(255, 255, 255) !important;
