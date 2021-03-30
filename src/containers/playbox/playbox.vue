@@ -2,7 +2,7 @@
   <div id="playBox">
     <transition name="el-zoom-in-bottom">
       <div class="thesongbox">
-        <songbox @toPlaysong="toPlaysong" :songMessage="songMessage"></songbox>
+        <songbox v-show="!isPlayList" @toPlaysong="toPlaysong" :songMessage="songMessage" @toPlay="toPlay" @toPlayList="toPlayList" :isPlay="isPlay"></songbox>
       </div>
     </transition>
     <transition name="el-zoom-in-bottom">
@@ -36,10 +36,15 @@
         </div>
       </div>
     </transition>
+    <transition name="el-zoom-in-bottom">
+      <div class="thesongbox" style="height: 8rem;background: rgba(255,255,255,.8);" v-if="isPlayList">
+      <playlist @close="close" :songList="songList" :songMessage="songMessage"></playlist>
+      </div>
+    </transition>
   </div>
 </template>
 <script>
-
+import Playlist from '../../components/playlist/playlist.vue'
 import Lyric from './lyric/lyric.vue'
 import Recommand from './recommand/recommand.vue'
 import Song from './song/song.vue'
@@ -50,11 +55,14 @@ export default {
     Songbox,
     Recommand,
     Song,
-    Lyric
+    Lyric,
+    Playlist
   },
   data () {
     return {
       isPlaysong: false,
+      isPlay: true,
+      isPlayList: false,
       choose: 'song',
       isRecommand: false,
       isSong: true,
@@ -67,12 +75,19 @@ export default {
           'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=739719852,2527507376&fm=26&gp=0.jpg',
         songAuthor: 'Savoir Adore',
         songLyric: 'Will you hold my hands'
-      }
+      },
+      songList: []
     }
   },
   methods: {
     toPlaysong (data) {
       this.isPlaysong = data
+    },
+    toPlay (data) {
+      this.isPlay = data
+    },
+    toPlayList (data) {
+      this.isPlayList = data
     },
     handleClick (tab) {
       if (tab.name === 'song') {
@@ -92,12 +107,16 @@ export default {
     closeShare (data) {
       this.isShare = false
     },
-    close () {
+    close (data) {
       this.isPlaysong = false
+      if (data === 'list') this.isPlayList = false
     }
   }
 }
 </script>
 <style>
 @import "./index.css";
+.thehellobox{
+  background: rgba(255,255,255,.6)
+}
 </style>

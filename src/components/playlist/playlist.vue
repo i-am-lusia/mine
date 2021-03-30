@@ -1,17 +1,17 @@
 <template>
     <div id="playlist">
         <div class="box1">
-            <span style="margin-left:5%;font-size:.35rem;margin-right:10%">124首VIP歌曲可试听，开会员听完整版</span>
-            <button>开通会员</button>
+            <span style="margin-left:5%;font-size:.35rem;margin-right:10%">{{songList.length}}首VIP歌曲可试听，开会员听完整版</span>
+            <span class="el-icon-arrow-down" style="margin-left: 90%;margin-top: .1rem" @click="close"></span>
         </div>
-        <div class="box2">
+        <div class="box1">
             <div class="box2-1">
                 <img class="logo" src="@/assets/images/onecircle.png" v-if="isOnly" @click="handlecircle"/>
                 <span v-if="isOnly" @click="handlecircle">单曲循环</span>
                 <img class="logo" src="@/assets/images/listcircle.png" v-if="isList" @click="handlecircle"/>
-                <span v-if="isList" @click="handlecircle">顺序播放（123首歌）</span>
+                <span v-if="isList" @click="handlecircle">顺序播放（{{songList.length}}首歌）</span>
                 <img class="logo" src="@/assets/images/random.png" v-if="isRandom" @click="handlecircle"/>
-                <span v-if="isRandom" @click="handlecircle">随机播放（123首歌）</span>
+                <span v-if="isRandom" @click="handlecircle">随机播放（{{songList.length}}首歌）</span>
             </div>
             <div class="el-icon-download"></div>
             <div class="el-icon-circle-plus-outline"></div>
@@ -19,7 +19,7 @@
         </div>
         <div class="box3">
             <ul>
-                <li v-for="(item,index) in list" :key="index">
+                <li v-for="(item,index) in songList" :key="index">
                     <div class="name-box">
                         <span style="font-size:.4rem;color:black;margin-right:.1rem;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">{{item.name}}</span>
                         <span style="font-size:.35rem;color:gray;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">- {{item.singer}}</span>
@@ -35,15 +35,18 @@
 <script>
 export default {
   name: 'playslist',
+  props: ['songList', 'songMessage'],
   data () {
     return {
       isOnly: true,
       isList: false,
-      isRandom: false,
-      list: []
+      isRandom: false
     }
   },
   methods: {
+    close () {
+      this.$emit('close', 'list')
+    },
     handlecircle () {
       if (this.isOnly) {
         this.isOnly = false
@@ -67,15 +70,6 @@ export default {
     flex-direction: column;
 }
 .box1{
-    width: 100%;
-    height: 10%;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-    border-bottom: gainsboro solid .001rem;
-}
-.box2{
     width: 100%;
     height: 10%;
     display: flex;
