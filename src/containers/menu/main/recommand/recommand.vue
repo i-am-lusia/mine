@@ -97,7 +97,30 @@ export default {
       }
     }
   },
-  mounted: function () {
+  methods: {
+    async getSongList () {
+      let songlists = []
+      const res = await axios({
+        url: `http://localhost:3000/top/playlist?limit=60`,
+        withCredentials: true
+      })
+      console.log(songlists)
+      console.log(res)
+      for (let i = 0; i < 60;) {
+        songlists.push(res.data.playlists.slice(i, i += 10))
+      }
+      this.newListData.listOneData = songlists[0]
+      this.newListData.listTwoData = songlists[1]
+      this.nearListData.listData = songlists[2]
+      this.djListData.listData = songlists[3]
+      this.radioListData.listData = songlists[4]
+      this.recommandSingerListData = songlists[5]
+    }
+  },
+  mounted () {
+    this.getSongList()
+  }
+  /* mounted: function () {
     var that = this
     // var songlists = []
     /* axios({
@@ -120,7 +143,7 @@ export default {
       that.singerListData.listData = songlists[5]
       that.nearListData.listData = songlists[0]
     }) */
-    /* axios({
+  /* axios({
       method: 'get',
       url: `http://localhost:3000/artist/album?id=6454&limit=9`,
       withCredentials: true
@@ -130,14 +153,14 @@ export default {
         that.recommandSongListData.listData.push(res.data.hotAlbums.slice(i, i += 3))
       }
     }) */
-    axios({
+  /* axios({
       method: 'get',
       url: `http://localhost:3000/dj/hot?limit=10`,
       withCredentials: true
     }).then(function (res) {
       that.liveData.listData = res.data.djRadios
     })
-  }
+  } */
 }
 </script>
 <style>
