@@ -30,6 +30,9 @@ export default {
     width: 100%;
     border-radius: .3rem;
 }
+#banner >>> .el-carousel__container{
+  height: 3rem;
+}
 #banner >>> .el-carousel__indicators{
   width: .5rem;
   display: flex;
@@ -42,6 +45,6 @@ export default {
     display: none;
 }
 #banner >>> .el-carousel__item{
-    height: 4rem;
+    height: 3.5rem;
 }
 </style>
