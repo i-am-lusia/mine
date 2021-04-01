@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import listonbook from '@/components/pages/first/listonbook/listonbook'
 const originalPush = Router.prototype.push
 Router.prototype.push = function push (location) {
   return originalPush.call(this, location).catch(err => err)
@@ -19,7 +18,7 @@ export default new Router({
       children: [
         {
           path: '/',
-          component: resolve => require(['../containers/menu/main/musicStore/musicStore.vue'], resolve)
+          redirect: '/recommand'
         },
         {
           path: '/recommand',
@@ -28,10 +27,6 @@ export default new Router({
         {
           path: '/musicstore',
           component: resolve => require(['../containers/menu/main/musicStore/musicStore.vue'], resolve)
-        },
-        {
-          path: '/listonbook',
-          component: listonbook
         }
       ],
       components: {
