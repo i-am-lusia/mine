@@ -44,20 +44,20 @@
     </div>
 </template>
 <script>
-import hello from '@/components/pages/first/recommand/listbox/hello'
 import axios from 'axios'
 import Songlist from '../../../../components/songlist/songlist.vue'
 import doubleSongList from '../../../../components/doubleSongList/doubleSongList.vue'
 import recommandSongList from '../../../../components/recommandSongList/recommandSongList.vue'
 import Live from '../../../../components/lives/live.vue'
+import Hello from './hello/index.vue'
 export default {
   name: 'recommand',
   components: {
-    hello,
     Songlist,
     doubleSongList,
     recommandSongList,
-    Live
+    Live,
+    Hello
   },
   data () {
     return {
