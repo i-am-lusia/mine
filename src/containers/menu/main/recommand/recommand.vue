@@ -29,9 +29,9 @@
         </div>
         <!-- 根据“***”推荐 -->
         <div class="song-list-recommand-block">
-          <recommandSongList :songListData="recommandSongListData"></recommandSongList>
+          <recommandSongList :songListData="recommandSongListTwoData"></recommandSongList>
         </div>
-        <!-- 和"hjfdgjhksdf"一样好听 -->
+        <!-- 和"***"一样好听 -->
         <div class="song-list-block">
           <songlist :songListData="recommandSingerListData"></songlist>
         </div>
@@ -80,7 +80,7 @@ export default {
         listData: []
       },
       recommandSingerListData: {
-        listName: '和"hjfdgjhksdf"一样好听',
+        singerName: null,
         listData: []
       },
       singerListData: {
@@ -88,7 +88,11 @@ export default {
         listData: []
       },
       recommandSongListData: {
-        singerName: '',
+        singerName: null,
+        listData: []
+      },
+      recommandSongListTwoData: {
+        singerName: null,
         listData: []
       },
       liveData: {
@@ -97,46 +101,51 @@ export default {
       }
     }
   },
-  mounted: function () {
-    var that = this
-    // var songlists = []
-    /* axios({
-      method: 'get',
-      url: `http://localhost:3000/personalized?limit=60`,
-      withCredentials: true
-    }).then(function (res) {
-      console.log(res)
-      for (let i = 0; i < res.data.result.length;) {
-        songlists.push(res.data.result.slice(i, i += 10))
+  methods: {
+    async getSongList () {
+      let songlists = []
+      const res = await axios({
+        url: `http://localhost:3000/top/playlist?limit=60`,
+        withCredentials: true
+      })
+      for (let i = 0; i < 60;) {
+        songlists.push(res.data.playlists.slice(i, i += 10))
       }
-      console.log(songlists)
-      that.newListData.listOneData = songlists[0]
-      that.newListData.listTwoData = songlists[0]
-      that.nearListData.listData = songlists[0]
-      that.djListData.listData = songlists[1]
-      that.radioListData.listData = songlists[2]
-      that.songlistfive = songlists[3]
-      that.recommandSingerListData.listData = songlists[4]
-      that.singerListData.listData = songlists[5]
-      that.nearListData.listData = songlists[0]
-    }) */
-    /* axios({
-      method: 'get',
-      url: `http://localhost:3000/artist/album?id=6454&limit=9`,
-      withCredentials: true
-    }).then(function (res) {
-      that.recommandSongListData.singerName = res.data.artist.name
-      for (let i = 0; i < res.data.hotAlbums.length;) {
-        that.recommandSongListData.listData.push(res.data.hotAlbums.slice(i, i += 3))
+      this.newListData.listOneData = songlists[0]
+      this.newListData.listTwoData = songlists[1]
+      this.nearListData.listData = songlists[2]
+      this.djListData.listData = songlists[3]
+      this.radioListData.listData = songlists[4]
+    },
+    /** id号需要修改 */
+    async getRecommendBySinger () {
+      const res1 = await axios({
+        url: `http://localhost:3000/artist/album?id=6454&limit=9`,
+        withCredentials: true
+      })
+      const res2 = await axios({
+        url: `http://localhost:3000/artist/album?id=6454&limit=9`,
+        withCredentials: true
+      })
+      const res3 = await axios({
+        url: `http://localhost:3000/artist/album?id=6454&limit=9`,
+        withCredentials: true
+      })
+      for (let i = 0; i < res1.data.hotAlbums.length;) {
+        this.recommandSongListData.listData.push(res1.data.hotAlbums.slice(i, i += 3))
       }
-    }) */
-    axios({
-      method: 'get',
-      url: `http://localhost:3000/dj/hot?limit=10`,
-      withCredentials: true
-    }).then(function (res) {
-      that.liveData.listData = res.data.djRadios
-    })
+      for (let i = 0; i < res2.data.hotAlbums.length;) {
+        this.recommandSongListTwoData.listData.push(res2.data.hotAlbums.slice(i, i += 3))
+      }
+      this.recommandSingerListData.listData = res3.data.hotAlbums
+      this.recommandSingerListData.listName = `和"${res3.data.artist.name}"一样好听`
+      this.recommandSongListData.singerName = res1.data.artist.name
+      this.recommandSongListTwoData.singerName = res2.data.artist.name
+    }
+  },
+  mounted () {
+    this.getSongList()
+    this.getRecommendBySinger()
   }
 }
 </script>

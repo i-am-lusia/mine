@@ -1,117 +1,137 @@
-#song{
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+#song {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.song-pic {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  height: 8rem;
+  margin-top: 0.4rem;
+}
+
+.song-pic .pic {
+  width: 8rem;
+  height: 8rem;
+}
+
+.song-box {
+  width: 60%;
+  margin-left: 10%;
+  margin-top: .5rem;
+  height: 2.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.song-title {
+  width: 100%;
+  height: 1rem;
+  overflow: auto;
+}
+
+.song-title::-webkit-scrollbar {
+  display: none
+}
+
+.static {
+  font-size: .6rem;
+  color: whitesmoke;
+  white-space: nowrap;
+  justify-content: flex-start;
+}
+.static:hover {
+  font-size: .6rem;
+  color: white;
+  white-space: nowrap;
+  animation: 5s title linear infinite alternate;
+}
+
+@keyframes title {
+  from {
+    transform: translateX(0%);
+    -webkit-transform: translateX(0%);
   }
-  .song-tabs{
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
-    font-size: 0.8rem;
+
+  to {
+    transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
   }
-  
-  .song-button img{
-    margin-top: 0.2rem;
-    width: 0.5rem;
-    height: 0.5rem;
-  }
-  .song-tabs div{
-    margin: 0 20px 0 20px;
-  }
-  .song-button{
-    width: 100%;
-    height: 15%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
-    font-size: 1.5rem;
-    color: whitesmoke;
-  }
-  .song-button div{
-    margin: 0 20px 0 20px;
-  }
-  .song-progrees{
-    width: 80%;
-    height: 5%;
-  }
-  .song-time{
-    width: 100%;
-    height: 0.2rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
-    color: whitesmoke;
-  }
-  p:nth-child(2) {
-    margin-left: 100%;
-  }
-  .song-pic{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 60%;
-  }
-  .song-title{
-    width: 60%;
-    height: 1rem;
-    overflow: auto;
-  }
-  .song-title::-webkit-scrollbar {display:none}
-  .static{
-    font-size: .8rem;
-    color: whitesmoke;
-    white-space: nowrap;
-    justify-content: flex-start;
-  }
-  .static:hover{
-    font-size: .8rem;
-    color: white;
-    white-space: nowrap;
-    animation: 5s title linear infinite alternate;
-  }
-  @keyframes title {
-    from {
-      transform: translateX(0%);
-      -webkit-transform: translateX(0%);
-    }
-    to {
-      transform: translateX(-50%);
-      -webkit-transform: translateX(-50%);
-    }
-  }
-  .song-box{
-    width: 100%;
-    height: 15%;
-    display: flex;
-    flex-direction: column;
-    margin-left: 30%;
-  }
-  .song-author{
-    margin-top: 0.1rem;
-    color: whitesmoke;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: .3rem;
-  }
-  .song-lyric{
-    margin-top: .1rem;
-    margin-bottom: .2rem;
-    color: whitesmoke;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: .3rem;
-  }
-  .like{
-    position:absolute;
-    margin-left: 65%;
-  }
-  .like img{
-    width: 1.5rem;
-    height: auto;
-  }
+}
+
+.song-author {
+  margin-top: .1rem;
+  color: whitesmoke;
+  font-size: .4rem;
+}
+
+.song-lyric {
+  margin-top: .1rem;
+  margin-bottom: .2rem;
+  color: whitesmoke;
+  font-size: .4rem;
+}
+
+.like {
+  position: absolute;
+  margin-left: 65%;
+}
+
+.like img {
+  width: 1.5rem;
+  height: auto;
+}
+
+.song-tabs {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  font-size: 0.8rem;
+}
+
+.song-tabs div {
+  margin: 0 20px 0 20px;
+}
+
+.song-progrees {
+  width: 80%;
+  height: 5%;
+  margin-left: 10%;
+}
+
+.song-time {
+  width: 100%;
+  height: 0.2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  color: whitesmoke;
+}
+
+p:nth-child(2) {
+  margin-left: 100%;
+}
+
+.song-button {
+  width: 100%;
+  height: 15%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  font-size: 1.5rem;
+  color: whitesmoke;
+}
+
+.song-button img {
+  margin-top: 0.2rem;
+  width: 0.5rem;
+  height: 0.5rem;
+}

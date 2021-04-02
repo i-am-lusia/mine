@@ -88,9 +88,10 @@ export default {
 <style>
 .el-slider__bar{
   background: white;
+  display:flex;
+  flex-direction: column;
 }
 .el-slider__button{
    border: solid 2px white;
 }
-
 </style>

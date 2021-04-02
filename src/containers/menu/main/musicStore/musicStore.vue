@@ -1,6 +1,6 @@
 <template>
     <div id="musicstore">
-        <div class="song-block" style="width: 100%;top:2.5rem;height: 3.5rem;">
+        <div class="song-block" style="width: 100%;top:2.6rem;height: 3.5rem;">
           <banner :bannerData="bannerData"></banner>
         </div>
         <div class="song-block" style="height: 2rem;">

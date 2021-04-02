@@ -1,10 +1,10 @@
 <template>
     <div id='home'>
       <div class="tab">
-              <router-link to="/recommand">
+              <router-link :to="{path:'recommand'}">
                 <span class="pane1" >推荐</span>
               </router-link>
-              <router-link to="/musicstore">
+              <router-link :to="{path:'musicstore'}">
               <span class="pane2" >音乐馆</span>
               </router-link>
        </div>

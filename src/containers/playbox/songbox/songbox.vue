@@ -6,8 +6,8 @@
           <div class="song-name" @click="toPlaysong">
               <div class="move">{{songMessage.songName}}</div>
           </div>
-          <img class="play1" src="@/assets/images/play.png"/>
-          <img class="play2" src="@/assets/images/songlist1.png">
+          <div :class="{'el-icon-video-play': isPlay,'el-icon-video-pause': !isPlay,'play1':true}" @click="toPlay"></div>
+          <img class="play2" src="@/assets/images/songlist1.png" @click="isPlayList">
         </div>
     </div>
 </template>
@@ -16,10 +16,17 @@ export default {
   name: 'songBox',
   components: {
   },
-  props: ['songMessage'],
+  props: ['songMessage', 'isPlay'],
   methods: {
     toPlaysong () {
       this.$emit('toPlaysong', true)
+    },
+    toPlay () {
+      const flag = !this.isPlay
+      this.$emit('toPlay', flag)
+    },
+    isPlayList () {
+      this.$emit('toPlayList', true)
     }
   }
 }

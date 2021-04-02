@@ -7,7 +7,7 @@
             <ul>
                 <li v-for="(item,index) in songListData.listOneData" :key="index">
                     <div class="box">
-                        <img :src="item.picUrl"/>
+                        <img :src="item.coverImgUrl"/>
                         <div class="tag">
                             <div class="el-icon-caret-right">{{item.playCount}}</div>
                         </div>
@@ -18,7 +18,7 @@
             <ul>
                 <li v-for="(item,index) in songListData.listTwoData" :key="index">
                      <div class="box">
-                        <img :src="item.picUrl"/>
+                        <img :src="item.coverImgUrl"/>
                         <div class="tag">
                             <div class="el-icon-caret-right">{{item.playCount}}</div>
                         </div>

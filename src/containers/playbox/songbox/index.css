@@ -42,6 +42,8 @@
     height: .8rem;
     margin-left: 75%;
     margin-top: 0;
+    font-size: .8rem;
+    color: white;
     position: absolute;
 }
 .play2{
@@ -52,7 +54,7 @@
     position: absolute;
 }
 .move{
-    animation: 15s title linear infinite alternate;    
+    animation: 15s title linear infinite alternate;
 }
 @keyframes title {
   from {

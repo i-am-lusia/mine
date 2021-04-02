@@ -7,8 +7,9 @@
             <ul>
                 <li v-for="(item,index) in songListData.listData" :key="index">
                     <div class="box">
-                        <img :src="item.picUrl"/>
-                        <div class="tag">
+                        <img :src="item.coverImgUrl" v-if="item.coverImgUrl" />
+                        <img :src="item.picUrl" v-if="item.picUrl" />
+                        <div class="tag" v-if="item.playCount">
                             <div class="el-icon-caret-right">{{item.playCount}}</div>
                         </div>
                         <span>{{item.name}}</span>
