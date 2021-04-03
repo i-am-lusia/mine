@@ -31,8 +31,6 @@ import Playlist from './components/playlist/playlist.vue'
 import singer from '@/components/pages/first/singer.vue'
 import Allranks from './components/pages/first/allranks.vue'
 import Onerank from './components/pages/first/onerank.vue'
-import Songlist from './components/pages/first/songlist.vue'
-import Onesinger from './components/pages/first/onesinger.vue'
 import Fourth from './components/pages/fourth/fourth.vue'
 import Playbox from './containers/playbox/playbox.vue'
 import Searchbox from './components/searchbox/searchbox.vue'
@@ -45,8 +43,6 @@ export default {
     singer,
     Allranks,
     Onerank,
-    Songlist,
-    Onesinger,
     Fourth,
     Playbox,
     Searchbox

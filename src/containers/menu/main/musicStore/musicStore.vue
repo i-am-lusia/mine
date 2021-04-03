@@ -61,23 +61,20 @@
         </div>
         <!-- -->
       <div class="bottom"></div>
+      <div class="allrank">
+      <router-view></router-view>
+      </div>
       <transition>
           <div class="allrank" v-if="isRanks">
             <allranks
              v-if="isRanks"
              @closeRanks="closeRanks"></allranks>
           </div>
-          <div class="itemizes" v-if="isItemize">
-            <itemize
-            v-if="isItemize"
-            @closeItemize="closeItemize"></itemize>
-          </div>
         </transition>
     </div>
 </template>
 <script>
 import special from '@/components/pages/first/musicstore/special/special'
-import tags from '@/components/pages/first/musicstore/tags/tags'
 import newsongs from '@/components/pages/first/musicstore/newsongs/newsongs'
 import rank from '@/components/pages/first/musicstore/rank/rank'
 import lives from '@/components/pages/first/musicstore/lives/lives'
@@ -87,12 +84,11 @@ import musician from '@/components/pages/first/musicstore/musician/musician'
 import allranks from '@/components/pages/first/allranks.vue'
 import Banner from '../../../../components/banner/banner.vue'
 import axios from 'axios'
-import Songlist from '../../../../components/songlist/songlist.vue'
+import Tags from '../../../../components/tags/index.vue'
 export default {
   name: 'musicstore',
   components: {
     special,
-    tags,
     newsongs,
     rank,
     lives,
@@ -101,7 +97,7 @@ export default {
     musician,
     allranks,
     Banner,
-    Songlist
+    Tags
   },
   data () {
     return {

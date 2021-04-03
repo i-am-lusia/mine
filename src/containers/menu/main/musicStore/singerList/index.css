@@ -1,0 +1,169 @@
+#singer {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    overflow:scroll;
+  }
+  .title {
+    width: 100%;
+    height: 1rem;
+    background: white;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 0.5rem;
+  }
+  .classifyBox {
+    width: 90%;
+    height: 0.8rem;
+    margin-top: 0.1rem;
+    display: flex;
+    flex-direction: row;
+  }
+  .singerList {
+    width: 100%;
+    height: 10rem;
+    margin-top: 0.3rem;
+  }
+  .leaderBox {
+    position: fixed;
+    z-index: 4;
+    right: 0;
+    top: 20%;
+  }
+  /** 常听歌手列表样式 */
+  .singerBox {
+    width: 90%;
+    height: 2.5rem;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+  .singerBox ::-webkit-scrollbar {
+    display: none;
+  }
+  .singerBox > div {
+    width: 2rem;
+    height: 2.5rem;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0.3rem;
+  }
+  .singerBox > ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+  }
+  .singerBox > ul > li {
+    margin-right: 0.2rem;
+  }
+  .singerBox > img {
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+  }
+  /** 分类样式 */
+  .classifyBox::-webkit-scrollbar {
+    display: none;
+  }
+  .classifyBox >>> .el-radio-group {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+  .classifyBox >>> .el-radio-button {
+    width: 1.2rem;
+    margin-right: 0.2rem;
+  }
+  .classifyBox >>> .el-radio-button__inner {
+    width: 1.2rem;
+    height: .5rem;
+    font-size: 0.35rem;
+    border-radius: 0.3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .classifyBox >>> .el-radio-button__orig-radio:checked+.el-radio-button__inner{
+    background-color: #3CB371;
+    border-color: #3CB371;;
+}
+  /** 导航栏的样式 */
+.leaderBox {
+    position: fixed;
+    z-index: 4;
+    right: 0;
+    top: 42%;
+    background: whitesmoke;
+    border-radius: .2rem;
+  }
+  .leaderBox > ul {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+  }
+  .leaderBox > ul > li {
+    padding: 0.1rem;
+    line-height: .2rem;
+    font-size: 0.3rem;
+  }
+  .current {
+    color: 	#3CB371;
+  }
+  /** 歌手列表样式 */
+.singerList  ul {
+    height: auto;
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+    background: white;
+  }
+  .pic {
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    margin-left: 2.5%;
+  }
+  .singer-li {
+    margin-left: 5%;
+    width: 90%;
+    height: 1.5rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 0.2rem;
+  }
+  .singer-box {
+    width: 60%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    color: black;
+    justify-content: center;
+    align-items: flex-start;
+    margin-left: 1.5%;
+  }
+  .follow-button {
+    width: 1.5rem;
+    height: 0.5rem;
+    border-radius: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    font-size: 0.3rem;
+    text-align: center;
+    background: white;
+    border: gray solid 0.001rem;
+  }

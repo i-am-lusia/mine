@@ -26,7 +26,17 @@ export default new Router({
         },
         {
           path: '/musicstore',
-          component: resolve => require(['../containers/menu/main/musicStore/musicStore.vue'], resolve)
+          component: resolve => require(['../containers/menu/main/musicStore/musicStore.vue'], resolve),
+          children: [
+            {
+              path: '/',
+              redirect: '/singerList'
+            },
+            {
+              path: '/singerList',
+              component: resolve => require(['../containers/menu/main/musicStore/singerList/index.vue'], resolve)
+            }
+          ]
         }
       ],
       components: {

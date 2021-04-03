@@ -55,7 +55,6 @@
 import post from '@/components/pages/first/musicstore/post/post'
 import buttons from '@/components/pages/first/musicstore/buttons/buttons'
 import special from '@/components/pages/first/musicstore/special/special'
-import tags from '@/components/pages/first/musicstore/tags/tags'
 import newsongs from '@/components/pages/first/musicstore/newsongs/newsongs'
 import rank from '@/components/pages/first/musicstore/rank/rank'
 import lives from '@/components/pages/first/musicstore/lives/lives'
@@ -71,7 +70,6 @@ export default {
     post,
     buttons,
     special,
-    tags,
     newsongs,
     rank,
     lives,
