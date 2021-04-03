@@ -18,7 +18,7 @@ export default new Router({
       children: [
         {
           path: '/',
-          redirect: '/recommand'
+          redirect: '/musicstore'
         },
         {
           path: '/recommand',

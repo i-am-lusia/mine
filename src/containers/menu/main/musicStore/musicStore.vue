@@ -1,8 +1,10 @@
 <template>
     <div id="musicstore">
+      <!-- 海报 -->
         <div class="song-block" style="width: 100%;top:2.6rem;height: 3.5rem;">
           <banner :bannerData="bannerData"></banner>
         </div>
+        <!-- 按钮 -->
         <div class="song-block" style="height: 2rem;">
           <div class="box" @click="openSinger">
                 <img src="@/assets/images/singger.png">
@@ -25,35 +27,41 @@
                 <span class="title">直播</span>
             </div>
         </div>
+        <!-- 编辑甄选 -->
         <div class="song-block" style="height: 4.5rem">
           <songlist :songListData="speSongList" ></songlist>
         </div>
+        <!-- -->
         <div class="song-block" style="height: .8rem">
           <tags></tags>
         </div>
+        <!-- -->
         <div class="song-block" style="height: 5.6rem;margin-top: .4rem;">
           <newsongs></newsongs>
         </div>
+        <!-- -->
         <div class="song-block" style="height: 4.5rem;margin-top: .3rem;">
           <rank></rank>
         </div>
+        <!-- -->
         <div class="song-block" style="height: 6rem">
           <lives></lives>
         </div>
+        <!-- -->
         <div class="song-block" style="height: 5.5rem">
           <classify></classify>
         </div>
+        <!-- -->
         <div class="song-block" style="height: 5.4rem">
           <sole></sole>
         </div>
+        <!-- -->
         <div class="song-block" style="height: 6rem">
           <musician></musician>
         </div>
+        <!-- -->
       <div class="bottom"></div>
       <transition>
-          <div class="singer" v-if="isSinger">
-            <singer v-if="isSinger"  @closeSinger="closeSinger" ></singer>
-          </div>
           <div class="allrank" v-if="isRanks">
             <allranks
              v-if="isRanks"
@@ -76,7 +84,6 @@ import lives from '@/components/pages/first/musicstore/lives/lives'
 import classify from '@/components/pages/first/musicstore/classify/classify'
 import sole from '@/components/pages/first/musicstore/sole/sole'
 import musician from '@/components/pages/first/musicstore/musician/musician'
-import singer from '@/components/pages/first/singer.vue'
 import allranks from '@/components/pages/first/allranks.vue'
 import Banner from '../../../../components/banner/banner.vue'
 import axios from 'axios'
@@ -92,7 +99,6 @@ export default {
     classify,
     sole,
     musician,
-    singer,
     allranks,
     Banner,
     Songlist
@@ -129,17 +135,17 @@ export default {
     },
     closeItemize () {
       this.isItemize = false
+    },
+    async getBanner () {
+      const res = await axios({
+        url: `http://localhost:3000/banner`,
+        withCredentials: true
+      })
+      this.bannerData.listData = res.data.banners
     }
   },
-  mounted: function () {
-    var that = this
-    axios({
-      method: 'get',
-      url: `http://localhost:3000/banner`,
-      withCredentials: true
-    }).then(function (res) {
-      that.bannerData.listData = res.data.banners
-    })
+  mounted () {
+    this.getBanner()
   }
 }
 </script>
