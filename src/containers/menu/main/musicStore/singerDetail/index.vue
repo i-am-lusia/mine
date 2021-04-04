@@ -323,75 +323,56 @@ export default {
         that.paneName = '全选'
       }
     },
-    getSingerData () {
-      var that = this
+    async getSingerData () {
       var url = `http://localhost:3000/artist/detail?id=${this.singerId}`
-      axios({
-        method: 'get',
+      const res = await axios({
         url: url,
         withCredentials: true
-      }).then(function (res) {
-        that.singerMessage = res.data.data.artist
-        console.log(res.data)
       })
+      this.singerMessage = res.data.data.artist
     },
-    getSongData () {
-      var that = this
+    async getSongData () {
       var url = `http://localhost:3000/artists?id=${this.singerId}`
-      axios({
-        method: 'get',
+      const res = await axios({
         url: url,
         withCredentials: true
-      }).then(function (res) {
-        that.songs = res.data.hotSongs
       })
+      this.songs = res.data.hotSongs
     },
-    getAblum () {
-      var that = this
+    async getAblum () {
       var url = `http://localhost:3000/artist/album?id=${this.singerId}`
-      axios({
-        method: 'get',
+      const res = await axios({
         url: url,
         withCredentials: true
-      }).then(function (res) {
-        that.albums = res.data.hotAlbums
-        that.top = res.data.hotAlbums[0]
       })
+      this.albums = res.data.hotAlbums
+      this.top = res.data.hotAlbums[0]
     },
-    getMv () {
-      var that = this
+    async getMv () {
       var url = `http://localhost:3000/artist/mv?id=${this.singerId}`
-      axios({
-        method: 'get',
+      const res = await axios({
         url: url,
         withCredentials: true
-      }).then(function (res) {
-        let len = res.data.mvs.length
-        that.mv1 = res.data.mvs.slice(0, Math.floor(len / 2))
-        that.mv2 = res.data.mvs.slice(Math.floor(len / 2), len)
       })
+      let len = res.data.mvs.length
+      this.mv1 = res.data.mvs.slice(0, Math.floor(len / 2))
+      this.mv2 = res.data.mvs.slice(Math.floor(len / 2), len)
     },
-    getSimi () {
-      var that = this
+    async getSimi () {
       var url = `http://localhost:3000/simi/artist?id=${this.singerId}`
-      axios({
-        method: 'get',
+      const res = await axios({
         url: url,
         withCredentials: true
-      }).then(function (res) {
-        that.simi = res.data.artists
       })
+      this.simi = res.data.artists
     },
-    getSingerDec () {
-      var that = this
+    async getSingerDec () {
       var url = `http://localhost:3000/artist/desc?id=${this.singerId}`
-      axios({
-        method: 'get',
+      const res = await axios({
         url: url,
         withCredentials: true
-      }).then(function (res) {
-        that.passage = res.data.introduction
       })
+      this.passage = res.data.introduction
     },
     goBack () {
       this.$router.go(-1)
