@@ -6,7 +6,7 @@
         </div>
         <!-- 按钮 -->
         <div class="song-block" style="height: 2rem;">
-          <div class="box" @click="openSinger">
+          <div class="box" @click="goTo(1)">
                 <img src="@/assets/images/singger.png">
                 <span class="title">歌手</span>
             </div>
@@ -61,9 +61,6 @@
         </div>
         <!-- -->
       <div class="bottom"></div>
-      <div class="allrank">
-      <router-view></router-view>
-      </div>
       <transition>
           <div class="allrank" v-if="isRanks">
             <allranks
@@ -85,6 +82,7 @@ import allranks from '@/components/pages/first/allranks.vue'
 import Banner from '../../../../components/banner/banner.vue'
 import axios from 'axios'
 import Tags from '../../../../components/tags/index.vue'
+import songlist from '../../../../components/songlist/songlist.vue'
 export default {
   name: 'musicstore',
   components: {
@@ -97,7 +95,8 @@ export default {
     musician,
     allranks,
     Banner,
-    Tags
+    Tags,
+    songlist
   },
   data () {
     return {
@@ -114,6 +113,9 @@ export default {
     }
   },
   methods: {
+    goTo (data) {
+      this.$router.push({path: '/singerList'})
+    },
     openSinger () {
       this.isSinger = true
     },

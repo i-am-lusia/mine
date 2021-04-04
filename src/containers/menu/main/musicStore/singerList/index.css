@@ -6,6 +6,7 @@
     justify-content: flex-start;
     align-items: center;
     overflow:scroll;
+    background: whitesmoke;
   }
   .title {
     width: 100%;
@@ -22,6 +23,7 @@
     margin-top: 0.1rem;
     display: flex;
     flex-direction: row;
+    overflow:scroll;
   }
   .singerList {
     width: 100%;

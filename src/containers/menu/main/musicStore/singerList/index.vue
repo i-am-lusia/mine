@@ -2,7 +2,7 @@
   <div id="singer">
       <!-- 标题 -->
     <div class="title">
-      <span style="margin-left: 2.5%;margin-right: 36%;" class="el-icon-arrow-left" @click="closeSinger"></span>
+      <span style="margin-left: 2.5%;margin-right: 36%;" class="el-icon-arrow-left" @click="goBack()"></span>
       <span style="margin-right: 36%;">歌手</span>
       <span class="el-icon-search"></span>
     </div>
@@ -74,6 +74,7 @@
               class="singer-li"
               v-for="(fitem, findex) in item.data"
               :key="findex"
+              @click="goToSingerDetail(fitem)"
             >
               <img class="pic" :src="fitem.img1v1Url" />
               <div class="singer-box">
@@ -151,8 +152,8 @@ export default {
     }
   },
   methods: {
-    closeSinger () {
-      this.$emit('closeSinger', this.isSinger)
+    goBack () {
+      this.$router.go(-1)
     },
     Toarea () {
       switch (this.type1) {
@@ -260,6 +261,9 @@ export default {
       this.currentSort = i
       console.log(i)
       document.querySelector(`#${i}`).scrollIntoView()
+    },
+    goToSingerDetail (data) {
+      this.$router.push({path: '/singerDetail', query: {id: data.id}})
     }
   },
   mounted () {

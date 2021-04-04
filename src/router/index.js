@@ -26,15 +26,22 @@ export default new Router({
         },
         {
           path: '/musicstore',
-          component: resolve => require(['../containers/menu/main/musicStore/musicStore.vue'], resolve),
+          component: resolve => require(['../containers/menu/main/musicStore/index.vue'], resolve),
           children: [
             {
               path: '/',
-              redirect: '/singerList'
+              component: resolve => require(['../containers/menu/main/musicStore/musicStore.vue'], resolve)
             },
             {
               path: '/singerList',
               component: resolve => require(['../containers/menu/main/musicStore/singerList/index.vue'], resolve)
+            },
+            {
+              path: '/singerDetail',
+              component: resolve => require(['../containers/menu/main/musicStore/singerDetail/index.vue'], resolve)
+            },
+            {
+              path: '/songListDetail'
             }
           ]
         }

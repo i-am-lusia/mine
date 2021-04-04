@@ -44,7 +44,7 @@
     position: fixed;
     top:.4rem;
     right: .4rem;
-    z-index: 10;
+    z-index: 8;
     color:black
   }
   .tab >>> .el-tabs__header{

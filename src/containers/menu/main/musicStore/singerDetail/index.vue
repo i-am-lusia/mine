@@ -2,7 +2,7 @@
     <div id="singerDetail">
         <!-- 歌手标题 -->
         <div class="box1">
-            <span class="el-icon-arrow-left"></span>
+            <span class="el-icon-arrow-left" @click="goBack()"></span>
             <span class="title" >{{singerMessage.name}}</span>
             <img class="share" src="@/assets/images/share.png"/>
             <span class="el-icon-more"></span>
@@ -14,7 +14,7 @@
             <span class="coverFans">{{Math.ceil(Math.random()*10000)}}万粉丝</span>
             <div class="coverGroup">
                 <div class="team">
-                    <img class="share" src="@/assets/images/putong1.png"/>
+                    <img style="width:.5rem;height: .5rem;" src="@/assets/images/putong1.png"/>
                     <span>扑通小组</span>
                 </div>
                 <div class="follow">
@@ -99,7 +99,7 @@
                             <img class="albumCover" :src="item.blurPicUrl"/>
                             <div class="ba-1">
                                 <span >{{item.name}}</span>
-                                <span>{{new Date(item.publishTime).getFullYear()}}年{{new Date(item.publishTime).getMonth()}}月{{new Date(item.publishTime).getDate()}}日 {{item.size}}首</span>
+                                <span>{{new Date(item.publishTime).getFullYear()}}年{{new Date(item.publishTime).getMonth()+1}}月{{new Date(item.publishTime).getDate()}}日 {{item.size}}首</span>
                             </div>
                             <div class="ba-2">
                                 <span class="el-icon-arrow-right"></span>
@@ -194,14 +194,14 @@
     </div>
 </template>
 <script>
-import avatarList from '../avatarList/index.vue'
+import avatarList from '../../../../../components/avatarList/index.vue'
 import axios from 'axios'
 export default {
   name: 'singerDetail',
-  props: ['singerId'],
   components: {avatarList},
   data () {
     return {
+      singerId: null,
       isScroll: false,
       singerMessage: {},
       songs: [],
@@ -392,9 +392,13 @@ export default {
       }).then(function (res) {
         that.passage = res.data.introduction
       })
+    },
+    goBack () {
+      this.$router.go(-1)
     }
   },
   mounted () {
+    this.singerId = this.$route.query.id
     this.getSingerData()
     this.getSongData()
     this.getAblum()
@@ -406,13 +410,6 @@ export default {
 </script>
 <style scoped>
 @import './index.css';
-.name{
-    width: 100%;
-    font-size: .45rem;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-}
 </style>
 <style>
 .el-popper{
@@ -421,7 +418,16 @@ export default {
 .el-icon-check{
     display: none;
 }
+.el-cascader-node{
+  padding: 0;
+  width: 1.6rem;
+  margin: 0;
+}
 .el-cascader-node.is-active{
     color: #000;
+}
+.el-cascader-node__label{
+  font-size: .3rem;
+  width: 1rem;
 }
 </style>
