@@ -191,11 +191,10 @@ export default {
           this.type = '3'
       }
     },
-    testData () {
+    async testData () {
       var that = this
       that.list = []
-      axios({
-        method: 'get',
+      const res = await axios({
         url:
           `http://localhost:3000/artist/list?type` +
           that.type +
@@ -203,15 +202,14 @@ export default {
           that.area +
           `&initial=-1`,
         withCredentials: true
-      }).then(function (res) {
-        let tag = 'hot'
-        let list = res.data.artists
-        let j = {}
-        j.tag = tag
-        j.data = list
-        that.list.push(j)
       })
-      for (let i in that.sortlist) {
+      let tag = 'hot'
+      let list = res.data.artists
+      let j = {}
+      j.tag = tag
+      j.data = list
+      this.list.push(j)
+      for (let i in this.sortlist) {
         let url =
           `http://localhost:3000/artist/list?type=` +
           that.type +
@@ -220,17 +218,15 @@ export default {
           `&initial=` +
           that.sortlist[i]
         let tag = that.sortlist[i]
-        axios({
-          method: 'get',
+        const req = await axios({
           url: url,
           withCredentials: true
-        }).then(function (res) {
-          let list = res.data.artists
-          let j = {}
-          j.tag = tag
-          j.data = list
-          that.list.push(j)
         })
+        let list = req.data.artists
+        let j = {}
+        j.tag = tag
+        j.data = list
+        this.list.push(j)
       }
     },
     handleScroll () {
