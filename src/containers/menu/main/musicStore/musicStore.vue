@@ -10,11 +10,11 @@
         <img src="@/assets/images/singger.png" />
         <span class="title">歌手</span>
       </div>
-      <div class="box" @click="openRanks">
+      <div class="box" @click="goTo(2)">
         <img src="@/assets/images/sole.png" />
         <span class="title">排行</span>
       </div>
-      <div class="box" @click="openItemize">
+      <div class="box" @click="goTo(3)">
         <img src="@/assets/images/rank.png" />
         <span class="title">分类歌单</span>
       </div>
@@ -115,10 +115,10 @@
         </el-tab-pane>
       </el-tabs>
     </div>
-    <!--
-        <div class="song-block" style="height: 4.5rem;margin-top: .3rem;">
+    <!-- -->
+        <div class="song-block" style="height: 4.5rem;margin-top: .8rem;">
           <rank></rank>
-        </div> -->
+        </div>
     <!--
         <div class="song-block" style="height: 6rem">
           <lives></lives>
@@ -192,7 +192,10 @@ export default {
   },
   methods: {
     goTo (data) {
-      this.$router.push({ path: '/singerList' })
+      switch (data) {
+        case 1 : this.$router.push({ path: '/singerList' }); return
+        case 2 : this.$router.push({ path: '/rankList' })
+      }
     },
     openSinger () {
       this.isSinger = true
