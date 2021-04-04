@@ -28,12 +28,12 @@
             </div>
         </div>
         <!-- 编辑甄选 -->
-        <div class="song-block" style="height: 4.5rem">
+        <div class="song-block" style="height: 4rem">
           <songlist :songListData="speSongList" ></songlist>
         </div>
         <!-- -->
         <div class="song-block" style="height: .8rem">
-          <tags></tags>
+          <tags :isTags="true" :list="tag"></tags>
         </div>
         <!-- -->
         <div class="song-block" style="height: 5.6rem;margin-top: .4rem;">
@@ -61,13 +61,6 @@
         </div>
         <!-- -->
       <div class="bottom"></div>
-      <transition>
-          <div class="allrank" v-if="isRanks">
-            <allranks
-             v-if="isRanks"
-             @closeRanks="closeRanks"></allranks>
-          </div>
-        </transition>
     </div>
 </template>
 <script>
@@ -103,6 +96,7 @@ export default {
       isSinger: false,
       isRanks: false,
       isItemize: false,
+      tag: [],
       bannerData: {
         listData: []
       },
@@ -140,10 +134,33 @@ export default {
         withCredentials: true
       })
       this.bannerData.listData = res.data.banners
+    },
+    async getHotTopic () {
+      var hots = []
+      const res = await axios({
+        url: `http://localhost:3000/search/hot`,
+        withCredentials: true
+      })
+      hots = res.data.result.hots
+      console.log(hots)
+      for (var i in hots) {
+        this.tag.push(hots[i].first)
+      }
+      console.log(this.tag)
+    },
+    async getRecommendSong () {
+      const res = await axios({
+        url: `http://localhost:3000/top/playlist?limit=10&order=new`,
+        withCredentials: true
+      })
+      this.speSongList.listData = res.data.playlists
+      console.log(res)
     }
   },
   mounted () {
     this.getBanner()
+    this.getHotTopic()
+    this.getRecommendSong()
   }
 }
 </script>

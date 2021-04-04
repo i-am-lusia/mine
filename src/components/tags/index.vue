@@ -3,7 +3,7 @@
       <div class="box">
             <ul>
                 <li v-for="(item,index) in list" :key="index">
-                    <span class="name">{{ isTags ? '#' : ''}}{{isTags ? item.content : item.showKeyword}}</span>
+                    <span class="name">{{ isTags ? '#' : ''}}{{isTags ? item : item.showKeyword}}</span>
                 </li>
             </ul>
         </div>
