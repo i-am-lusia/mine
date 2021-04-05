@@ -45,6 +45,10 @@ export default new Router({
               component: resolve => require(['../containers/menu/main/musicStore/rankList/index.vue'], resolve)
             },
             {
+              path: '/rankDetail',
+              component: resolve => require(['../containers/menu/main/musicStore/rankDetail/index.vue'], resolve)
+            },
+            {
               path: '/songListDetail'
             }
           ]

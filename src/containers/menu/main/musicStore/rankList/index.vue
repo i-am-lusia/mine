@@ -110,7 +110,7 @@ export default {
       this.$router.go(-1)
     },
     goTo (data) {
-      console.log(data)
+      this.$router.push({path: '/rankDetail', query: {id: data.id}})
     },
     async getData () {
       const res = await axios({

@@ -2,7 +2,7 @@
     <div id="rankDetail">
       <!-- 排行榜头部 -->
         <div class="box1">
-            <span class="el-icon-arrow-left"></span>
+            <span class="el-icon-arrow-left" @click="goBack()"></span>
             <span class="el-icon-more"></span>
             <img style="width: .5rem;height: .5rem;" src="@/assets/images/share.png"/>
         </div>
@@ -84,9 +84,9 @@
 import axios from 'axios'
 export default {
   name: 'rankDetail',
-  props: ['rankId'],
   data () {
     return {
+      rankId: null,
       songs: [],
       coverPic: null,
       playlist: [],
@@ -98,18 +98,18 @@ export default {
     }
   },
   methods: {
-    getData () {
-      var that = this
+    goBack () {
+      this.$router.go(-1)
+    },
+    async getData () {
       var url = `http://localhost:3000/playlist/detail?id=${this.rankId}`
-      axios({
-        method: 'get',
+      const res = await axios({
         url: url,
         withCredentials: true
-      }).then(function (res) {
-        that.songs = res.data.playlist.tracks
-        that.playlist = res.data.playlist
-        that.coverPic = res.data.playlist.tracks[0].al.picUrl
       })
+      this.songs = res.data.playlist.tracks
+      this.playlist = res.data.playlist
+      this.coverPic = res.data.playlist.tracks[0].al.picUrl
     },
     chkAll () {
       var that = this
@@ -171,6 +171,7 @@ export default {
     }
   },
   mounted () {
+    this.rankId = this.$route.query.id
     this.getData()
   }
 }

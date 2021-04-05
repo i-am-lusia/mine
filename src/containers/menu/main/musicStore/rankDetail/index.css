@@ -5,6 +5,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
+    background-color: #fff;
   }
   /** 标题部分 */
   .box1{
@@ -35,7 +36,7 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    background: rgba(170, 165, 165, 0.397);
+    background: rgba(255, 255, 255, 0.397);
   }
   .bg-pic{
     position: absolute;
@@ -72,7 +73,11 @@
   /** 音乐列表 */
   .box4{
     width: 100%;
-    height: auto;
+    height: 11rem;
+    overflow: scroll;
+  }
+  .box4::-webkit-scrollbar{
+    display: none;
   }
   .box4 ul{
     padding: 0;
