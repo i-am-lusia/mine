@@ -194,26 +194,9 @@ export default {
     goTo (data) {
       switch (data) {
         case 1 : this.$router.push({ path: '/singerList' }); return
-        case 2 : this.$router.push({ path: '/rankList' })
+        case 2 : this.$router.push({ path: '/rankList' }); return
+        case 3 : this.$router.push({ path: '/songList' })
       }
-    },
-    openSinger () {
-      this.isSinger = true
-    },
-    closeSinger () {
-      this.isSinger = false
-    },
-    openRanks () {
-      this.isRanks = true
-    },
-    closeRanks () {
-      this.isRanks = false
-    },
-    openItemize () {
-      this.isItemize = true
-    },
-    closeItemize () {
-      this.isItemize = false
     },
     async getBanner () {
       const res = await axios({
