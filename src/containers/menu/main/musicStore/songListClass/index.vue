@@ -8,14 +8,14 @@
         </div>
         <div style="width: 90%;height: 4rem;margin-top: 1rem;">
             <el-carousel type="card" indicator-position="none">
-              <el-carousel-item v-for="item in bannerData" :key="item.name">
-                  <img style="width: 4rem;height: 4rem;border-radius: .3rem;" :src="item.coverImgUrl"/>
+              <el-carousel-item v-for="(item, index) in bannerData" :key="index" >
+                  <img style="width: 4rem;height: 4rem;border-radius: .3rem;" @click="goTo(item)"  :src="item.coverImgUrl"/>
               </el-carousel-item>
             </el-carousel>
         </div>
         <div id="box">
             <ul>
-                <li v-for="(item,index) in songListData" :key="index">
+                <li v-for="(item,index) in songListData" :key="index" @click="goTo(item)">
                   <img style="width: 2.8rem;height: 2.8rem;border-radius: .3rem;" :src="item.coverImgUrl"/>
                   <span>{{item.name}}</span>
                 </li>
@@ -37,13 +37,16 @@ export default {
     goBack () {
       this.$router.go(-1)
     },
+    goTo (data) {
+      console.log(data.id)
+      this.$router.push({path: 'songListDetail', query: {id: data.id}})
+    },
     async getBannerSongList () {
       const res = await axios({
         url: `http://localhost:3000/top/playlist?limit=10&order=new`,
         withCredentials: true
       })
       this.bannerData = res.data.playlists
-      console.log(res.data.playlists)
     },
     async getSongList () {
       const res = await axios({
@@ -51,7 +54,6 @@ export default {
         withCredentials: true
       })
       this.songListData = res.data.playlists
-      console.log(res.data)
     }
   },
   mounted () {
