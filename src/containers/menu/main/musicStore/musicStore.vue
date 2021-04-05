@@ -115,9 +115,29 @@
         </el-tab-pane>
       </el-tabs>
     </div>
-    <!-- -->
-        <div class="song-block" style="height: 4.5rem;margin-top: .8rem;">
-          <rank></rank>
+    <!-- 排行榜 -->
+        <div class="song-block" style="width: 90%;height: 4.5rem;margin-left:5%;margin-top: .8rem;display: flex;flex-direction:column;">
+            <div style="width: 100%;height: .8rem;display: flex;flex-direction: row;">
+                <span style="font-size: .5rem;margin-right: 65%;">排行榜</span>
+                <span>更多></span>
+            </div>
+            <div class="rankBox">
+                <ul>
+                    <li v-for="(item,index) in rankList" :key="index">
+                        <img :src="item.coverImgUrl"/>
+                        <div class="box">
+                            <div class="message">
+                            <div>
+                                <span class="name">{{item.name}}</span>
+                                <div>01<span>{{item.tracks[0].first}}-{{item.tracks[0].second}}</span></div>
+                                <div>02<span>{{item.tracks[1].first}}-{{item.tracks[1].second}}</span></div>
+                                <div>03<span>{{item.tracks[2].first}}-{{item.tracks[2].second}}</span></div>
+                            </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
         </div>
     <!--
         <div class="song-block" style="height: 6rem">
@@ -187,7 +207,8 @@ export default {
       speSongList: {
         listData: [],
         listName: '编辑甄选'
-      }
+      },
+      rankList: []
     }
   },
   methods: {
@@ -251,6 +272,14 @@ export default {
         albums.push(res.data.albums.slice(i, i += 3))
       }
       this.newAblum.listData = albums
+    },
+    async getRankList () {
+      const res = await axios({
+        url: `http://localhost:3000/toplist/detail`,
+        withCredentials: true
+      })
+      this.rankList.push(res.data.list[0])
+      this.rankList.push(res.data.list[1])
     }
   },
   mounted () {
@@ -260,6 +289,7 @@ export default {
     this.getNewSong()
     this.getNewNumberAblum()
     this.getNewAblum()
+    this.getRankList()
   }
 }
 </script>

@@ -66,8 +66,8 @@ export default {
 #rank{
     width: 90%;
     height: 100%;
-    display: flex;
-    flex-direction: column;
+    font-size: .5rem;
+    margin-right: 65%;
 }
 .box1{
     width: 100%;
