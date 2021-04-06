@@ -119,7 +119,6 @@
         <div class="song-block" style="width: 90%;height: 4.5rem;margin-left:5%;margin-top: .8rem;display: flex;flex-direction:column;">
             <div style="width: 100%;height: .8rem;display: flex;flex-direction: row;">
                 <span style="font-size: .5rem;margin-right: 65%;">排行榜</span>
-                <span>更多></span>
             </div>
             <div class="rankBox">
                 <ul>
@@ -139,11 +138,11 @@
                 </ul>
             </div>
         </div>
-    <!--
+    <!-- 直播 -->
         <div class="song-block" style="height: 6rem">
-          <lives></lives>
-        </div> -->
-    <!--
+          <live :liveData="liveData"></live>
+        </div>
+    <!-- 分类专区 -->
         <div class="song-block" style="height: 5.5rem">
           <classify></classify>
         </div> -->
@@ -159,9 +158,6 @@
   </div>
 </template>
 <script>
-import special from '@/components/pages/first/musicstore/special/special'
-import rank from '@/components/pages/first/musicstore/rank/rank'
-import lives from '@/components/pages/first/musicstore/lives/lives'
 import classify from '@/components/pages/first/musicstore/classify/classify'
 import sole from '@/components/pages/first/musicstore/sole/sole'
 import musician from '@/components/pages/first/musicstore/musician/musician'
@@ -171,12 +167,10 @@ import axios from 'axios'
 import Tags from '../../../../components/tags/index.vue'
 import songlist from '../../../../components/songlist/songlist.vue'
 import recommandSongList from '../../../../components/recommandSongList/recommandSongList.vue'
+import Live from '../../../../components/lives/live.vue'
 export default {
   name: 'musicstore',
   components: {
-    special,
-    rank,
-    lives,
     classify,
     sole,
     musician,
@@ -184,7 +178,8 @@ export default {
     Banner,
     Tags,
     songlist,
-    recommandSongList
+    recommandSongList,
+    Live
   },
   data () {
     return {
@@ -192,6 +187,10 @@ export default {
       isRanks: false,
       isItemize: false,
       tag: [],
+      liveData: {
+        title: '直播',
+        listData: []
+      },
       bannerData: {
         listData: []
       },
@@ -280,6 +279,13 @@ export default {
       })
       this.rankList.push(res.data.list[0])
       this.rankList.push(res.data.list[1])
+    },
+    async getLiveList () {
+      const res = await axios({
+        url: `http://localhost:3000/program/recommend`,
+        withCredentials: true
+      })
+      this.liveData.listData = res.data.programs
     }
   },
   mounted () {
@@ -290,6 +296,7 @@ export default {
     this.getNewNumberAblum()
     this.getNewAblum()
     this.getRankList()
+    this.getLiveList()
   }
 }
 </script>
