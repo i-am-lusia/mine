@@ -170,7 +170,27 @@
                 </ul>
             </div>
         </div>
-        <div class="song-block" style="height: 5.4rem">
+    <!-- 独家内容 -->
+        <div class="song-block" style="width: 90%;height: 5.4rem;margin-left: 5%;display:flex;flex-direction: column;">
+            <div style="width:100%;height: .8rem">
+              <span style="font-size:.5rem">独家内容</span>
+            </div>
+            <div class="classify">
+                <ul>
+                    <li v-for="(item,index) in soleList" :key="index">
+                        <div style="width:6rem;display:flex;flex-direction: column;">
+                            <img style="width: 6rem;height: 4rem;border-radius: .3rem;" :src="item.sPicUrl"/>
+                            <span style="
+                              font-size: .4rem;
+                              color: black;
+                              white-space: nowrap;
+                              text-overflow: ellipsis;
+                              overflow: hidden;
+                            ">{{item.name}} | {{item.message}}</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
         </div>
     <!--
         <div class="song-block" style="height: 6rem">
@@ -180,7 +200,6 @@
   </div>
 </template>
 <script>
-import sole from '@/components/pages/first/musicstore/sole/sole'
 import musician from '@/components/pages/first/musicstore/musician/musician'
 import Banner from '../../../../components/banner/banner.vue'
 import axios from 'axios'
@@ -191,7 +210,6 @@ import Live from '../../../../components/lives/live.vue'
 export default {
   name: 'musicstore',
   components: {
-    sole,
     musician,
     Banner,
     Tags,
@@ -206,6 +224,7 @@ export default {
       isItemize: false,
       tag: [],
       classifyData: [],
+      soleList: [],
       liveData: {
         title: '直播',
         listData: []
@@ -312,6 +331,13 @@ export default {
         withCredentials: true
       })
       this.classifyData = res.data.data
+    },
+    async getSoleList () {
+      const res = await axios({
+        url: `http://localhost:3000/personalized/privatecontent`,
+        withCredentials: true
+      })
+      this.soleList = res.data.result
     }
   },
   mounted () {
@@ -324,6 +350,7 @@ export default {
     this.getRankList()
     this.getLiveList()
     this.getClassifyList()
+    this.getSoleList()
   }
 }
 </script>
