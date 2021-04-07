@@ -139,17 +139,39 @@
             </div>
         </div>
     <!-- 直播 -->
-        <div class="song-block" style="height: 6rem">
+        <div class="song-block" style="height: 5rem">
           <live :liveData="liveData"></live>
         </div>
     <!-- 分类专区 -->
-        <div class="song-block" style="height: 5.5rem">
-          <classify></classify>
-        </div> -->
-    <!--
+        <div class="song-block" style="width:90%;height: 6rem;margin-left: 5%;flex-direction: column;">
+            <div style="width:100%;height:.8rem">
+                <span style="font-size:.5rem">分类专区</span>
+            </div>
+            <div class="classify">
+                <ul>
+                    <li v-for="(item,index) in classifyData" :key="index">
+                        <div style="display:flex;flex-direction: column;">
+                            <img style="width: 5rem;height: 4rem;border-radius: .3rem;" :src="item.picUrl"/>
+                            <div class="tag">
+                                <div>
+                                <span>{{item.name}}</span>
+                                </div>
+                            </div>
+                            <span style="
+                              margin-top: .1rem;
+                              font-size: .35rem;
+                              color: black;
+                              white-space: nowrap;
+                              text-overflow: ellipsis;
+                              overflow: hidden;
+                            ">{{item.rcmdText}}</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
         <div class="song-block" style="height: 5.4rem">
-          <sole></sole>
-        </div> -->
+        </div>
     <!--
         <div class="song-block" style="height: 6rem">
           <musician></musician>
@@ -158,10 +180,8 @@
   </div>
 </template>
 <script>
-import classify from '@/components/pages/first/musicstore/classify/classify'
 import sole from '@/components/pages/first/musicstore/sole/sole'
 import musician from '@/components/pages/first/musicstore/musician/musician'
-import allranks from '@/components/pages/first/allranks.vue'
 import Banner from '../../../../components/banner/banner.vue'
 import axios from 'axios'
 import Tags from '../../../../components/tags/index.vue'
@@ -171,10 +191,8 @@ import Live from '../../../../components/lives/live.vue'
 export default {
   name: 'musicstore',
   components: {
-    classify,
     sole,
     musician,
-    allranks,
     Banner,
     Tags,
     songlist,
@@ -187,6 +205,7 @@ export default {
       isRanks: false,
       isItemize: false,
       tag: [],
+      classifyData: [],
       liveData: {
         title: '直播',
         listData: []
@@ -286,6 +305,13 @@ export default {
         withCredentials: true
       })
       this.liveData.listData = res.data.programs
+    },
+    async getClassifyList () {
+      const res = await axios({
+        url: `http://localhost:3000/dj/today/perfered`,
+        withCredentials: true
+      })
+      this.classifyData = res.data.data
     }
   },
   mounted () {
@@ -297,6 +323,7 @@ export default {
     this.getNewAblum()
     this.getRankList()
     this.getLiveList()
+    this.getClassifyList()
   }
 }
 </script>
