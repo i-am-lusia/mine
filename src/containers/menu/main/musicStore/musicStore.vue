@@ -82,15 +82,17 @@
                 "
                 src="@/assets/images/cd.png"
               />
-              <div style="
-                    width: 5rem;
-                    height: 4rem;
-                    margin-top: .2rem;
-                    margin-left: .4rem;
-                    height: 3rem;
-                    display: flex;
-                    flex-direction: column;
-              ">
+              <div
+                style="
+                  width: 5rem;
+                  height: 4rem;
+                  margin-top: 0.2rem;
+                  margin-left: 0.4rem;
+                  height: 3rem;
+                  display: flex;
+                  flex-direction: column;
+                "
+              >
                 <span
                   style="
                     font-size: 0.5rem;
@@ -116,86 +118,240 @@
       </el-tabs>
     </div>
     <!-- 排行榜 -->
-        <div class="song-block" style="width: 90%;height: 4.5rem;margin-left:5%;margin-top: .8rem;display: flex;flex-direction:column;">
-            <div style="width: 100%;height: .8rem;display: flex;flex-direction: row;">
-                <span style="font-size: .5rem;margin-right: 65%;">排行榜</span>
+    <div
+      class="song-block"
+      style="
+        width: 90%;
+        height: 4.5rem;
+        margin-left: 5%;
+        margin-top: 0.8rem;
+        display: flex;
+        flex-direction: column;
+      "
+    >
+      <div
+        style="width: 100%; height: 0.8rem; display: flex; flex-direction: row"
+      >
+        <span style="font-size: 0.5rem; margin-right: 65%">排行榜</span>
+      </div>
+      <div class="rankBox">
+        <ul>
+          <li v-for="(item, index) in rankList" :key="index">
+            <img :src="item.coverImgUrl" />
+            <div class="box">
+              <div class="message">
+                <div>
+                  <span class="name">{{ item.name }}</span>
+                  <div>
+                    01<span
+                      >{{ item.tracks[0].first }}-{{
+                        item.tracks[0].second
+                      }}</span
+                    >
+                  </div>
+                  <div>
+                    02<span
+                      >{{ item.tracks[1].first }}-{{
+                        item.tracks[1].second
+                      }}</span
+                    >
+                  </div>
+                  <div>
+                    03<span
+                      >{{ item.tracks[2].first }}-{{
+                        item.tracks[2].second
+                      }}</span
+                    >
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="rankBox">
-                <ul>
-                    <li v-for="(item,index) in rankList" :key="index">
-                        <img :src="item.coverImgUrl"/>
-                        <div class="box">
-                            <div class="message">
-                            <div>
-                                <span class="name">{{item.name}}</span>
-                                <div>01<span>{{item.tracks[0].first}}-{{item.tracks[0].second}}</span></div>
-                                <div>02<span>{{item.tracks[1].first}}-{{item.tracks[1].second}}</span></div>
-                                <div>03<span>{{item.tracks[2].first}}-{{item.tracks[2].second}}</span></div>
-                            </div>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
+          </li>
+        </ul>
+      </div>
+    </div>
     <!-- 直播 -->
-        <div class="song-block" style="height: 5rem">
-          <live :liveData="liveData"></live>
-        </div>
+    <div class="song-block" style="height: 5rem">
+      <live :liveData="liveData"></live>
+    </div>
     <!-- 分类专区 -->
-        <div class="song-block" style="width:90%;height: 6rem;margin-left: 5%;flex-direction: column;">
-            <div style="width:100%;height:.8rem">
-                <span style="font-size:.5rem">分类专区</span>
+    <div
+      class="song-block"
+      style="
+        width: 90%;
+        height: 5.5rem;
+        margin-top: 0.5rem;
+        margin-left: 5%;
+        flex-direction: column;
+      "
+    >
+      <div style="width: 100%; height: 0.8rem">
+        <span style="font-size: 0.5rem">分类专区</span>
+      </div>
+      <div class="classify">
+        <ul>
+          <li v-for="(item, index) in classifyData" :key="index">
+            <div style="display: flex; flex-direction: column">
+              <img
+                style="width: 5rem; height: 4rem; border-radius: 0.3rem"
+                :src="item.picUrl"
+              />
+              <div class="tag">
+                <div>
+                  <span>{{ item.name }}</span>
+                </div>
+              </div>
+              <span
+                style="
+                  margin-top: 0.1rem;
+                  font-size: 0.35rem;
+                  color: black;
+                  white-space: nowrap;
+                  text-overflow: ellipsis;
+                  overflow: hidden;
+                "
+                >{{ item.rcmdText }}</span
+              >
             </div>
-            <div class="classify">
-                <ul>
-                    <li v-for="(item,index) in classifyData" :key="index">
-                        <div style="display:flex;flex-direction: column;">
-                            <img style="width: 5rem;height: 4rem;border-radius: .3rem;" :src="item.picUrl"/>
-                            <div class="tag">
-                                <div>
-                                <span>{{item.name}}</span>
-                                </div>
-                            </div>
-                            <span style="
-                              margin-top: .1rem;
-                              font-size: .35rem;
-                              color: black;
-                              white-space: nowrap;
-                              text-overflow: ellipsis;
-                              overflow: hidden;
-                            ">{{item.rcmdText}}</span>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
+          </li>
+        </ul>
+      </div>
+    </div>
     <!-- 独家内容 -->
-        <div class="song-block" style="width: 90%;height: 5.4rem;margin-left: 5%;display:flex;flex-direction: column;">
-            <div style="width:100%;height: .8rem">
-              <span style="font-size:.5rem">独家内容</span>
+    <div
+      class="song-block"
+      style="
+        width: 90%;
+        height: 5.4rem;
+        margin-left: 5%;
+        display: flex;
+        flex-direction: column;
+      "
+    >
+      <div style="width: 100%; height: 0.8rem">
+        <span style="font-size: 0.5rem">独家内容</span>
+      </div>
+      <div class="classify">
+        <ul>
+          <li v-for="(item, index) in soleList" :key="index">
+            <div style="width: 6rem; display: flex; flex-direction: column">
+              <img
+                style="width: 6rem; height: 4rem; border-radius: 0.3rem"
+                :src="item.sPicUrl"
+              />
+              <span
+                style="
+                  font-size: 0.4rem;
+                  color: black;
+                  white-space: nowrap;
+                  text-overflow: ellipsis;
+                  overflow: hidden;
+                "
+                >{{ item.name }} | {{ item.message }}</span
+              >
             </div>
-            <div class="classify">
-                <ul>
-                    <li v-for="(item,index) in soleList" :key="index">
-                        <div style="width:6rem;display:flex;flex-direction: column;">
-                            <img style="width: 6rem;height: 4rem;border-radius: .3rem;" :src="item.sPicUrl"/>
-                            <span style="
-                              font-size: .4rem;
-                              color: black;
-                              white-space: nowrap;
-                              text-overflow: ellipsis;
-                              overflow: hidden;
-                            ">{{item.name}} | {{item.message}}</span>
-                        </div>
-                    </li>
-                </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <!-- 音乐 -->
+    <div
+      class="song-block"
+      style="height: 6.5rem; width: 90%; margin-left: 5%; flex-direction: column"
+    >
+      <div style="width: 100%; height: 0.8rem">
+        <span style="font-size: 0.5rem">乐人</span>
+      </div>
+      <div class="classify">
+        <ul>
+          <li v-for="(item, index) in musician" :key="index">
+            <div
+              style="
+                width: 5rem;
+                height: 5rem;
+                display: flex;
+                flex-direction: column;
+              "
+            >
+              <div
+                style="
+                  width: 100%;
+                  height: 3.5rem;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  background-color: rgba(93, 93, 93, 0.2);
+                  border-radius: 0.3rem;
+                "
+              >
+                <img
+                  style="width: 3rem; height: 3rem; border-radius: 0.3rem"
+                  :src="item.img1v1Url"
+                />
+              </div>
+              <div
+                style="
+                  margin-left: 1rem;
+                  margin-top: 2.8rem;
+                  width: 1rem;
+                  height: 0.5rem;
+                  position: absolute;
+                  color: white;
+                  font-size: 0.3rem;
+                  background-color: silver;
+                  border-radius: 0.3rem;
+                "
+              >
+                <div
+                  style="
+                    width: 100%;
+                    height: 100%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    font-size: 0.4rem;
+                  "
+                >
+                  <div class="el-icon-caret-right"></div>
+                </div>
+              </div>
+              <div
+                style="
+                  width: 100%;
+                  height: 1.5rem;
+                  margin-top: 0.1rem;
+                  display: flex;
+                  flex-direction: row;
+                "
+              >
+                <img
+                  style="
+                    width: 1.2rem;
+                    height: 1.2rem;
+                    margin-right: 0.2rem;
+                    border-radius: 50%;
+                  "
+                  :src="item.picUrl"
+                />
+                <div
+                  style="
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                  "
+                >
+                  <span style="font-size: 0.4rem">{{ item.name }}</span>
+                  <span style="font-size: 0.4rem; color: gray">{{
+                    item.alias[0]
+                  }}</span>
+                </div>
+              </div>
             </div>
-        </div>
-    <!--
-        <div class="song-block" style="height: 6rem">
-          <musician></musician>
-        </div> -->
+          </li>
+        </ul>
+      </div>
+    </div>
     <div class="bottom"></div>
   </div>
 </template>
@@ -245,15 +401,21 @@ export default {
         listData: [],
         listName: '编辑甄选'
       },
-      rankList: []
+      rankList: [],
+      musician: []
     }
   },
   methods: {
     goTo (data) {
       switch (data) {
-        case 1 : this.$router.push({ path: '/singerList' }); return
-        case 2 : this.$router.push({ path: '/rankList' }); return
-        case 3 : this.$router.push({ path: '/songList' })
+        case 1:
+          this.$router.push({ path: '/singerList' })
+          return
+        case 2:
+          this.$router.push({ path: '/rankList' })
+          return
+        case 3:
+          this.$router.push({ path: '/songList' })
       }
     },
     async getBanner () {
@@ -306,7 +468,7 @@ export default {
         withCredentials: true
       })
       for (let i = 0; i < res.data.albums.length;) {
-        albums.push(res.data.albums.slice(i, i += 3))
+        albums.push(res.data.albums.slice(i, (i += 3)))
       }
       this.newAblum.listData = albums
     },
@@ -338,6 +500,13 @@ export default {
         withCredentials: true
       })
       this.soleList = res.data.result
+    },
+    async getMusican () {
+      const res = await axios({
+        url: `http://localhost:3000/top/artists?offset=0&limit=10`,
+        withCredentials: true
+      })
+      this.musician = res.data.artists
     }
   },
   mounted () {
@@ -351,10 +520,10 @@ export default {
     this.getLiveList()
     this.getClassifyList()
     this.getSoleList()
+    this.getMusican()
   }
 }
 </script>
 <style scoped>
 @import "./index.css";
-
 </style>
