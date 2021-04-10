@@ -26,11 +26,6 @@
 </template>
 <script>
 import menulist from '../src/containers/menu/menulist.vue'
-import Playlist from './components/playlist/playlist.vue'
-import singer from '@/components/pages/first/singer.vue'
-import Allranks from './components/pages/first/allranks.vue'
-import Onerank from './components/pages/first/onerank.vue'
-import Fourth from './components/pages/fourth/fourth.vue'
 import Playbox from './containers/playbox/playbox.vue'
 import Searchbox from './components/searchbox/searchbox.vue'
 import axios from 'axios'
@@ -38,11 +33,6 @@ export default {
   name: 'App',
   components: {
     menulist,
-    Playlist,
-    singer,
-    Allranks,
-    Onerank,
-    Fourth,
     Playbox,
     Searchbox
   },
@@ -95,6 +85,7 @@ export default {
       })
       this.userData = res.data.data
       if (res.data.data.account) {
+        this.$store.commit('updateUserData', this.userData)
         this.isLogin = true
       }
     },
