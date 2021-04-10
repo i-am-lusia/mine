@@ -136,7 +136,7 @@
       </div>
       <div class="rankBox">
         <ul>
-          <li v-for="(item, index) in rankList" :key="index">
+          <li v-for="(item, index) in rankList" :key="index" @click="goToDetail(2, item.id)">
             <img :src="item.coverImgUrl" />
             <div class="box">
               <div class="message">
@@ -264,7 +264,7 @@
       </div>
       <div class="classify">
         <ul>
-          <li v-for="(item, index) in musician" :key="index">
+          <li v-for="(item, index) in musician" :key="index" @click="goToDetail(1,item.id)">
             <div
               style="
                 width: 5rem;
@@ -356,7 +356,6 @@
   </div>
 </template>
 <script>
-import musician from '@/components/pages/first/musicstore/musician/musician'
 import Banner from '../../../../components/banner/banner.vue'
 import axios from 'axios'
 import Tags from '../../../../components/tags/index.vue'
@@ -366,7 +365,6 @@ import Live from '../../../../components/lives/live.vue'
 export default {
   name: 'musicstore',
   components: {
-    musician,
     Banner,
     Tags,
     songlist,
@@ -416,6 +414,18 @@ export default {
           return
         case 3:
           this.$router.push({ path: '/songList' })
+      }
+    },
+    goToDetail (index, id) {
+      switch (index) {
+        case 1:
+          this.$router.push({path: '/singerDetail', query: {id: id}})
+          return
+        case 2:
+          this.$router.push({path: '/rankDetail', query: {id: id}})
+          return
+        case 3:
+          this.$router.push({path: '/songListDetail', query: {id: id}})
       }
     },
     async getBanner () {

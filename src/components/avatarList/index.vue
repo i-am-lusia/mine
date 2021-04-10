@@ -1,7 +1,7 @@
 <template>
   <div id="avatarList">
     <ul>
-      <li v-for="(item, index) in simi" :key="index">
+      <li v-for="(item, index) in simi" :key="index" @click="goTo(item)">
         <img class="h-pic" :src="item.picUrl" />
         <span
           style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden"
@@ -13,7 +13,12 @@
 <script>
 export default {
   name: 'avatarList',
-  props: ['simi']
+  props: ['simi'],
+  methods: {
+    goTo (data) {
+      this.$router.push({path: '/singerDetail', query: {id: data.id}})
+    }
+  }
 }
 </script>
 <style scoped>

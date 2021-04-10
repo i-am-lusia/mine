@@ -5,7 +5,7 @@
         </div>
         <div class="box2">
             <ul>
-                <li v-for="(item,index) in songListData.listData" :key="index">
+                <li v-for="(item,index) in songListData.listData" :key="index" @click="goTo(item)">
                     <div class="box">
                         <img :src="item.coverImgUrl" v-if="item.coverImgUrl" />
                         <img :src="item.picUrl" v-if="item.picUrl" />
@@ -22,7 +22,12 @@
 <script>
 export default {
   name: 'songList',
-  props: ['songListData']
+  props: ['songListData'],
+  methods: {
+    goTo (data) {
+      this.$router.push({path: '/songListDetail', query: {id: data.id}})
+    }
+  }
 }
 </script>
 <style scoped>
