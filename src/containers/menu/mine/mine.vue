@@ -1,15 +1,105 @@
 <template>
-    <div id='mine'>
-        <el-tabs  class="tab">
-          <el-tab-pane>
-            <span slot="label">
-              <span class="pane1">我的</span>
-            </span>
-          </el-tab-pane>
-        </el-tabs>
-        <span class="el-icon-message" @click="toMessage"></span>
-        <span class="el-icon-more" @click="toMore"></span>
-    </div>
+  <div id="mine">
+    <el-tabs class="tab">
+      <el-tab-pane>
+        <span slot="label">
+          <span class="pane1">我的</span>
+        </span>
+        <div id="own">
+          <!-- 个人信息表 -->
+          <div
+            class="ownBlock"
+            style="width: 90%; height: 3rem; margin-top: 1rem"
+          >
+            <div id="personal">
+              <img class="headPic" :src="headPic" />
+              <div class="box">
+                <div class="personalButtons" style="margin-left: 2rem">
+                  <div class="font-size: .6rem;margin-left: .6rem">
+                    {{ userName }}
+                  </div>
+                  <img
+                    style="width: 0.5rem; height: 0.5rem; margin-left: 0.1rem"
+                    src="@/assets/images/vip1.png"
+                  />
+                  <img
+                    style="width: 0.5rem; height: 0.5rem; margin-left: 0.1rem"
+                    src="@/assets/images/vip1.png"
+                  />
+                  <img
+                    style="width: 0.5rem; height: 0.5rem; margin-left: 0.1rem"
+                    src="@/assets/images/vip1.png"
+                  />
+                </div>
+                <div
+                  class="personalButtons"
+                  style="justify-content: flex-start"
+                >
+                  <div style="border-right: gainsboro solid 2px">
+                    <span style="color: black">关注</span>
+                    <span
+                      style="
+                        color: gainsboro;
+                        margin-left: 0.2rem;
+                        margin-right: 0.3rem;
+                      "
+                      >1</span
+                    >
+                  </div>
+                  <div style="border-right: gainsboro solid 2px">
+                    <span style="color: black">粉丝</span>
+                    <span
+                      style="
+                        color: gainsboro;
+                        margin-left: 0.2rem;
+                        margin-right: 0.3rem;
+                      "
+                      >2</span
+                    >
+                  </div>
+                  <div style="border-right: gainsboro solid 2px">
+                    <span style="color: black">新歌提醒</span>
+                    <span
+                      style="
+                        color: gainsboro;
+                        margin-left: 0.2rem;
+                        margin-right: 0.3rem;
+                      "
+                      >3</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- 活动中心 -->
+          <div class="ownBlock" style="width:90%;height: 2rem">
+            <div id="activity">
+              <div style="display: flex;justify-content: center;">
+                <img style="width:1rem;height:1rem" src="@/assets/images/act1.png" />
+                <div style="margin-left:.2rem">
+                  <div style="font-size: .5rem;">活动中心</div>
+                  <div style="color:grey;font-size: .35rem;">签到七天赢绿砖</div>
+                </div>
+              </div>
+              <div style="display: flex;justify-content: center;margin-left: .5rem">
+                <img style="width:1rem;height:1rem" src="@/assets/images/act2.png" />
+                <div style="margin-left:.2rem">
+                  <div style="font-size: .5rem;">会员中心</div>
+                  <div style="color:grey;font-size: .35rem;">VIP热门新碟🎵</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- 按键 -->
+          <div class="ownBlock" style="width:90%;height: 3rem">
+          </div>
+        </div>
+      </el-tab-pane>
+    </el-tabs>
+    <span class="el-icon-message" @click="toMessage"></span>
+    <span class="el-icon-more" @click="toMore"></span>
+  </div>
 </template>
 <script>
 import more from '@/components/pages/fourth/more/more.vue'
@@ -23,7 +113,14 @@ export default {
   data () {
     return {
       isMore: false,
-      isMessage: false
+      isMessage: false,
+      headPic: this.$store.state.userData
+        ? this.$store.state.userData.profile.avatarUrl
+        : null,
+      userData: this.$store.state.userData ? this.$store.state.userData : null,
+      userName: this.$store.state.userData
+        ? this.$store.state.userData.profile.nickname
+        : null
     }
   },
   methods: {
@@ -39,9 +136,46 @@ export default {
     closeMessage () {
       this.isMessage = false
     }
+  },
+  computed: {
+    getUserData () {
+      return this.$store.state.userData
+    }
+  },
+  watch: {
+    getUserData (newVal, oldVal) {
+      this.userName = this.$store.state.userData.profile.nickname
+      this.headPic = this.$store.state.userData.profile.avatarUrl
+    }
   }
 }
 </script>
 <style scoped>
-@import './index.css';
+@import "./index.css";
+#own {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: whitesmoke;
+}
+.ownBlock {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/** 活动 */
+#activity{
+    width: 100%;
+    height: 100%;
+    border-radius: .3rem;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
 </style>

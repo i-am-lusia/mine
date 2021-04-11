@@ -35,7 +35,6 @@ export default {
 .act1,.act2{
     display: flex;
     justify-content: center;
-    align-items: center;
 }
 .act1{
     margin-right: 5%;
