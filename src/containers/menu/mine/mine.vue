@@ -93,6 +93,26 @@
           </div>
           <!-- 按键 -->
           <div class="ownBlock" style="width:90%;height: 3rem">
+             <div style="display: flex;flex-direction: column;justify-content: center;align-items: center;margin: .5rem;">
+                <img style="width: 1rem;" src="@/assets/images/heart1.png">
+                <span style="font-size:.4rem;margin-top: .15rem">喜欢</span>
+                <span style="font-size:.2rem;color: gray;">1234</span>
+            </div>
+            <div style="display: flex;flex-direction: column;justify-content: center;align-items: center;margin: .5rem;">
+                <img style="width: 1rem;"  src="@/assets/images/download1.png">
+                <span style="font-size:.4rem;margin-top: .15rem">本地</span>
+                <span style="font-size:.2rem;color: gray;">1234</span>
+            </div>
+            <div style="display: flex;flex-direction: column;justify-content: center;align-items: center;margin: .5rem;">
+                <img style="width: 1rem;" src="@/assets/images/songlist2.png">
+                <span style="font-size:.4rem;margin-top: .15rem">歌单</span>
+                <span style="font-size:.2rem;color: gray;">1234</span>
+            </div>
+            <div style="display: flex;flex-direction: column;justify-content: center;align-items: center;margin: .5rem;">
+                <img style="width: 1rem;" src="@/assets/images/yigou.png">
+                <span style="font-size:.4rem;margin-top: .15rem">已购</span>
+                <span style="font-size:.2rem;color: gray;">1234</span>
+            </div>
           </div>
         </div>
       </el-tab-pane>
@@ -166,16 +186,5 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-}
-/** 活动 */
-#activity{
-    width: 100%;
-    height: 100%;
-    border-radius: .3rem;
-    background-color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
 }
 </style>
