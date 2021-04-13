@@ -237,7 +237,7 @@
     <!-- 歌单列表 -->
     <div class="list">
       <ul>
-        <li v-for="(item, index) in songs" :key="index">
+        <li v-for="(item, index) in songs" :key="index" @click="songChange(item)">
           <div class="index">
             <span>{{ index + 1 }}</span>
           </div>
@@ -442,6 +442,10 @@ export default {
     },
     closeBox () {
       this.isBatch = false
+    },
+    songChange (data) {
+      this.$store.commit('updateSongList', this.songs)
+      this.$store.commit('updateCurrentSongData', data)
     }
   },
   mounted () {

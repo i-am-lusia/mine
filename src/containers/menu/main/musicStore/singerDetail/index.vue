@@ -34,7 +34,7 @@
                     </div>
                     <div class="bs-2">
                         <ul>
-                            <li v-for="(item, index) in songs" :key="index">
+                            <li v-for="(item, index) in songs" :key="index" @click="songChange(item)">
                                 <div class="bs-2-1">
                                     <span>{{index+1}}</span>
                                 </div>
@@ -376,6 +376,10 @@ export default {
     },
     goBack () {
       this.$router.go(-1)
+    },
+    songChange (data) {
+      this.$store.commit('updateSongList', this.songs)
+      this.$store.commit('updateCurrentSongData', data)
     }
   },
   mounted () {

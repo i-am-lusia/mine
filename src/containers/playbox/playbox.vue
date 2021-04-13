@@ -76,7 +76,8 @@ export default {
         songAuthor: 'Savoir Adore',
         songLyric: 'Will you hold my hands'
       },
-      songList: []
+      songList: [],
+      currentSong: null
     }
   },
   methods: {
@@ -110,6 +111,26 @@ export default {
     close (data) {
       this.isPlaysong = false
       if (data === 'list') this.isPlayList = false
+    }
+  },
+  computed: {
+    getSongList () {
+      return this.$store.state.songList
+    },
+    getCurrentSong () {
+      return this.$store.state.currentSong
+    }
+  },
+  watch: {
+    getSongList (newVal, oldVal) {
+      this.songList = newVal
+    },
+    getCurrentSong (newVal, oldVal) {
+      this.songMessage = newVal
+      this.songMessage.songName = newVal.name
+      this.songMessage.songpic = newVal.al.picUrl
+      this.songMessage.songAuthor = newVal.ar[0].name
+      console.log(this.currentSong)
     }
   }
 }
