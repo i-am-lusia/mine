@@ -22,7 +22,7 @@
         <!-- 歌曲列表 -->
         <div class="box4">
             <ul>
-                <li v-for="(item, index) in songs" :key="index">
+                <li v-for="(item, index) in songs" :key="index" @click="songChange(item)">
                     <div class="box4-1">
                     <span>{{index+1}}</span>
                     </div>
@@ -144,7 +144,6 @@ export default {
       if (item.isActive) {
         that.checkList.push(item.id)
         that.chkAllStatus = that.checkList.length === that.songs.length
-        console.log('选择', that.checkList)
       } else {
         let index = that.checkList.indexOf(item.id)
         if (index > -1) {
@@ -168,6 +167,10 @@ export default {
     },
     closeBox () {
       this.isBatch = false
+    },
+    songChange (data) {
+      this.$store.commit('updateSongList', this.songs)
+      this.$store.commit('updateCurrentSongData', data)
     }
   },
   mounted () {

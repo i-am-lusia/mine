@@ -4,7 +4,8 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   state: {
     songList: [],
-    userData: null
+    userData: null,
+    currentSong: null
   },
   mutations: {
     updateUserData (state, userData) {
@@ -12,6 +13,9 @@ const store = new Vuex.Store({
     },
     updateSongList (state, songListData) {
       state.songList = songListData
+    },
+    updateCurrentSongData (state, currentSong) {
+      state.currentSong = currentSong
     }
   }
 })
