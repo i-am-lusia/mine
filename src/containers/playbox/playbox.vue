@@ -130,7 +130,6 @@ export default {
       this.songMessage.songName = newVal.name
       this.songMessage.songpic = newVal.al.picUrl
       this.songMessage.songAuthor = newVal.ar[0].name
-      console.log(this.currentSong)
     }
   }
 }

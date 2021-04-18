@@ -158,7 +158,7 @@ export default {
         : null,
       nearSongData: {
         listName: '最近播放',
-        listData: []
+        listData: this.$store.state.nearlist ? this.$store.state.nearlist : []
       },
       ownSongData: {
         listName: '自建歌单',
@@ -202,16 +202,25 @@ export default {
   mounted () {
     this.getColletSongData()
     this.getRecommandSongData()
+    console.log(this.nearSongData)
   },
   computed: {
     getUserData () {
       return this.$store.state.userData
+    },
+    getNearSongData () {
+      return this.$store.state.nearlist
     }
   },
   watch: {
     getUserData (newVal, oldVal) {
       this.userName = this.$store.state.userData.profile.nickname
       this.headPic = this.$store.state.userData.profile.avatarUrl
+    },
+    getNearSongData (newVal, oldVal) {
+      console('new', newVal)
+      this.nearSongData.listData = newVal
+      console.log(newVal)
     }
   }
 }
