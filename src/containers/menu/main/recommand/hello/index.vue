@@ -11,13 +11,13 @@
             </div>
             <ul class="list1" >
                 <li style="position:relative;">
-                  <img class="pic" :src="recommendPic"/>
+                  <img class="pic" :src="currentSong.songpic"/>
                 </li>
                 <li style="position:relative;">
-                 <img class="pic0" :src="recommendPic"/>
+                 <img class="pic0" :src="secondSong.songpic"/>
                 </li>
                 <li style="position:relative;">
-                 <img class="pic1" :src="recommendPic"/>
+                 <img class="pic1" :src="thirdSong.songpic"/>
                 </li>
             </ul>
             <ul class="list2">
@@ -73,7 +73,10 @@ export default {
       ktvPic: null,
       friends: null,
       friendsPic: null,
-      songList: this.$store.state.songList ? this.$store.state.songList : null
+      songList: this.$store.state.songList ? this.$store.state.songList : null,
+      currentSong: this.$store.state.currentSong ? this.$store.state.currentSong : {songpic: null},
+      secondSong: {songpic: null},
+      thirdSong: {songpic: null}
     }
   },
   methods: {
@@ -110,6 +113,18 @@ export default {
       this.friendsPic = res.data.data.dailySongs[0].al.picUrl
       this.songList = this.friends
       // this.$store.commit('updateSongList', this.friends)
+    },
+    getSecondSong () {
+      if (this.currentSong) {
+        const flag = this.songList.indexOf(this.currentSong)
+        if (flag === -1) return
+        if (flag < this.songList.length - 2) {
+          this.secondSong = this.songList[flag + 1]
+          this.secondSong.songpic = this.songList[flag + 1].al.picUrl
+          this.thirdSong = this.songList[flag + 2]
+          this.thirdSong.songpic = this.songList[flag + 2].al.picUrl
+        }
+      }
     }
   },
   mounted () {
@@ -117,6 +132,7 @@ export default {
     this.getNewSong()
     this.getKTV()
     this.getFriend()
+    this.getSecondSong()
   },
   computed: {
     userData () {
@@ -124,6 +140,9 @@ export default {
     },
     songListData () {
       return this.$store.state.songList
+    },
+    computedCurrentSong () {
+      return this.$store.state.currentSong
     }
   },
   watch: {
@@ -131,8 +150,11 @@ export default {
       this.nickname = newVal.profile.nickname
     },
     songListData (newVal, oldVal) {
-      console.log(newVal)
       this.songList = newVal
+    },
+    computedCurrentSong (newVal, oldVal) {
+      this.currentSong = newVal
+      this.getSecondSong()
     }
   }
 }

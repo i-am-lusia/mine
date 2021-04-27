@@ -114,6 +114,18 @@
                 <span style="font-size:.2rem;color: gray;">1234</span>
             </div>
           </div>
+          <!-- 最近播放 -->
+          <div class="ownBlock" style="background: white">
+            <songlist :songListData="nearSongData"></songlist>
+          </div>
+          <!-- 自建歌单 -->
+          <div class="ownBlock" style="background: white">
+            <songlist :songListData="ownSongData"></songlist>
+          </div>
+          <!-- 推荐歌单 -->
+          <div class="ownBlock" style="background: white;height: 8rem">
+            <songlist :songListData="recommendSongData"></songlist>
+          </div>
         </div>
       </el-tab-pane>
     </el-tabs>
@@ -124,11 +136,14 @@
 <script>
 import more from '@/components/pages/fourth/more/more.vue'
 import messages from '@/components/pages/fourth/messages/messages.vue'
+import Songlist from '../../../components/songlist/songlist.vue'
+import axios from 'axios'
 export default {
   name: 'mine',
   components: {
     more,
-    messages
+    messages,
+    Songlist
   },
   data () {
     return {
@@ -140,7 +155,19 @@ export default {
       userData: this.$store.state.userData ? this.$store.state.userData : null,
       userName: this.$store.state.userData
         ? this.$store.state.userData.profile.nickname
-        : null
+        : null,
+      nearSongData: {
+        listName: '最近播放',
+        listData: this.$store.state.nearlist ? this.$store.state.nearlist : []
+      },
+      ownSongData: {
+        listName: '自建歌单',
+        listData: []
+      },
+      recommendSongData: {
+        listName: '推荐歌单',
+        listData: []
+      }
     }
   },
   methods: {
@@ -155,17 +182,45 @@ export default {
     },
     closeMessage () {
       this.isMessage = false
+    },
+    /** 收藏歌单 */
+    async getColletSongData () {
+      const res = await axios({
+        url: `http://localhost:3000/album/sublist`,
+        withCredentials: true
+      })
+      this.ownSongData.listData = res.data.data
+    },
+    async getRecommandSongData () {
+      const res = await axios({
+        url: `http://localhost:3000/personalized?limit=3`,
+        withCredentials: true
+      })
+      this.recommendSongData.listData = res.data.result
     }
+  },
+  mounted () {
+    this.getColletSongData()
+    this.getRecommandSongData()
+    console.log(this.nearSongData)
   },
   computed: {
     getUserData () {
       return this.$store.state.userData
+    },
+    getNearSongData () {
+      return this.$store.state.nearlist
     }
   },
   watch: {
     getUserData (newVal, oldVal) {
       this.userName = this.$store.state.userData.profile.nickname
       this.headPic = this.$store.state.userData.profile.avatarUrl
+    },
+    getNearSongData (newVal, oldVal) {
+      console('new', newVal)
+      this.nearSongData.listData = newVal
+      console.log(newVal)
     }
   }
 }

@@ -22,7 +22,7 @@
                 <li v-for="(item,index) in songList" :key="index">
                     <div class="name-box">
                         <span style="font-size:.4rem;color:black;margin-right:.1rem;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">{{item.name}}</span>
-                        <span style="font-size:.35rem;color:gray;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">- {{item.singer}}</span>
+                        <span style="font-size:.35rem;color:gray;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">- {{item.ar[0].name}}</span>
                     </div>
                     <div class="el-icon-close" style="font-size:.4rem"></div>
                 </li>
@@ -59,6 +59,9 @@ export default {
         this.isOnly = true
       }
     }
+  },
+  mounted () {
+    console.log(this.songList)
   }
 }
 </script>
@@ -119,11 +122,13 @@ export default {
 ul {
     padding: 0;
     margin: 0;
+    height:6rem;
     list-style-type: none;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
+    overflow: scroll;
 }
 li{
     width: 100%;

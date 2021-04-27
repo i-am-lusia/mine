@@ -4,6 +4,7 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   state: {
     songList: [],
+    nearlist: [],
     userData: null,
     currentSong: null
   },
@@ -16,6 +17,10 @@ const store = new Vuex.Store({
     },
     updateCurrentSongData (state, currentSong) {
       state.currentSong = currentSong
+      console.log(currentSong)
+    },
+    updateNearSongList (state, songListData) {
+      state.nearlist.unshift(songListData)
     }
   }
 })
