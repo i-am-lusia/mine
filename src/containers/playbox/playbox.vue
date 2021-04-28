@@ -41,6 +41,7 @@
       <playlist @close="close" :songList="songList" :songMessage="songMessage"></playlist>
       </div>
     </transition>
+    <audio autoplay :src="musicUrl" ref="audioRef"></audio>
   </div>
 </template>
 <script>
@@ -49,6 +50,7 @@ import Lyric from './lyric/lyric.vue'
 import Recommand from './recommand/recommand.vue'
 import Song from './song/song.vue'
 import Songbox from './songbox/songbox.vue'
+import axios from 'axios'
 export default {
   name: 'playBox',
   components: {
@@ -70,14 +72,15 @@ export default {
       isShare: false,
       id: undefined,
       songMessage: {
-        songName: 'dfasgrgsgagjiodgsjugioajsiogjaiosgjaiosd',
+        songName: 'RUNNIN` BACK',
         songpic:
-          'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=739719852,2527507376&fm=26&gp=0.jpg',
-        songAuthor: 'Savoir Adore',
-        songLyric: 'Will you hold my hands'
+          'http://p4.music.126.net/xx9ifMtSOmssz1Z5cHVNig==/109951163499493230.jpg',
+        songAuthor: 'Leebada',
+        id: '1304301317'
       },
       songList: [],
-      currentSong: null
+      currentSong: null,
+      musicUrl: 'http://m8.music.126.net/20210427195116/a0cad2bc77a12fbc9eb983ab2cf61198/ymusic/c8f5/5972/6bc9/07183b419aa4b6bb545837f248685017.mp3'
     }
   },
   methods: {
@@ -111,6 +114,13 @@ export default {
     close (data) {
       this.isPlaysong = false
       if (data === 'list') this.isPlayList = false
+    },
+    async getMusicUrl (id) {
+      const res = await axios({
+        url: `http://localhost:3000/song/url?id=${id}`,
+        withCredentials: true
+      })
+      this.musicUrl = res.data.data[0].url
     }
   },
   computed: {
@@ -130,7 +140,7 @@ export default {
       this.songMessage.songName = newVal.name
       this.songMessage.songpic = newVal.al.picUrl
       this.songMessage.songAuthor = newVal.ar[0].name
-      console.log(this.currentSong)
+      this.getMusicUrl(newVal.id)
     }
   }
 }

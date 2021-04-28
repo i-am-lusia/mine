@@ -35,6 +35,7 @@
 import axios from 'axios'
 export default {
   name: 'lyric',
+  props: ['songMessage'],
   data () {
     return {
       title: 'fasaf',
@@ -44,9 +45,9 @@ export default {
     }
   },
   methods: {
-    async getLyrics () {
+    async getLyrics (id) {
       const res = await axios({
-        url: 'http://localhost:3000/lyric?id=33894312',
+        url: `http://localhost:3000/lyric?id=${id}`,
         withCredentials: true
       })
       this.formatLyric(res.data.lrc.lyric)
@@ -77,7 +78,7 @@ export default {
     }
   },
   mounted () {
-    this.getLyrics()
+    this.getLyrics(this.songMessage.id)
   },
   watch: {
     lyricCurrent () {

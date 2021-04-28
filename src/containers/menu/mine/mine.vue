@@ -218,9 +218,7 @@ export default {
       this.headPic = this.$store.state.userData.profile.avatarUrl
     },
     getNearSongData (newVal, oldVal) {
-      console('new', newVal)
       this.nearSongData.listData = newVal
-      console.log(newVal)
     }
   }
 }

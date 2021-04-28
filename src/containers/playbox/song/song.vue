@@ -47,6 +47,7 @@
     </div>
 </template>
 <script>
+import axios from 'axios'
 export default {
   name: 'song',
   props: ['songMessage'],
@@ -78,7 +79,17 @@ export default {
     Play () {
       this.isPlay = false
       this.isPause = true
+    },
+    async getSongComments () {
+      const res = await axios({
+        url: `http://localhost:3000/comment/music?id=${this.songMessage.id}`,
+        withCredentials: true
+      })
+      console.log(res)
     }
+  },
+  mounted () {
+    this.getSongComments()
   }
 }
 </script>

@@ -155,7 +155,7 @@
         </div>
         <div class="sign">
           <span class="el-icon-chat-dot-square"></span>
-          <span style="margin-left: 0.1rem">32</span>
+          <span style="margin-left: 0.1rem">{{commentNum}}</span>
         </div>
         <div class="sign">
           <img
@@ -370,7 +370,8 @@ export default {
       chkAllStatus: false,
       checkList: [],
       isBatch: false,
-      isMore: false
+      isMore: false,
+      commentNum: 0
     }
   },
   methods: {
@@ -446,11 +447,21 @@ export default {
     songChange (data) {
       this.$store.commit('updateSongList', this.songs)
       this.$store.commit('updateCurrentSongData', data)
+    },
+    async getComments () {
+      const res = await axios({
+        url: `http://localhost:3000/comment/playlist?id=${this.id}`,
+        withCredentials: true
+      })
+      this.commentNum = res.data.comments.length
+      /** 待清洗数据 */
+      console.log(res)
     }
   },
   mounted () {
     this.id = this.$route.query.id
     this.getData()
+    this.getComments()
   }
 }
 </script>

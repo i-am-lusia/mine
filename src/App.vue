@@ -29,7 +29,6 @@ import menulist from '../src/containers/menu/menulist.vue'
 import Playbox from './containers/playbox/playbox.vue'
 import Searchbox from './components/searchbox/searchbox.vue'
 import axios from 'axios'
-import Sentiment from 'sentiment-zh_cn_web'
 export default {
   name: 'App',
   components: {
@@ -61,7 +60,6 @@ export default {
     },
     menuto (data) {
       this.menuindex = data
-      console.log(this.menuindex)
       switch (this.menuindex) {
         case '1':this.$router.push({path: '/first'}); return
         case '2':this.$router.push({path: '/second'}); return
@@ -118,15 +116,10 @@ export default {
           this.isLogin = true
         }
       }, 3000)
-    },
-    useSentiment () {
-      var r1 = Sentiment('网络不是法外之地。党政机关微信工作群是展示、交流、沟通、讨论工作的平台，属于“公共场所”，党员领导干部是公众人物，一言一行都代表着党和政府的形象。在微信群转发淫秽图片，既破坏了网络环境，危害他人身心健康，又违反了工作纪律、生活纪律，损害了党和政府形象，造成不良影响，必然要受到党纪处理。随即，当地纪委也迅速介入了调查。', { language: 'ch' })
-      console.dir(r1)
     }
   },
   mounted () {
     this.login()
-    this.useSentiment()
   }
 }
 </script>
