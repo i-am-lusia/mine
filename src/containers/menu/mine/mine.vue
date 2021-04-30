@@ -96,7 +96,7 @@
              <div style="display: flex;flex-direction: column;justify-content: center;align-items: center;margin: .5rem;">
                 <img style="width: 1rem;" src="@/assets/images/heart1.png">
                 <span style="font-size:.4rem;margin-top: .15rem">喜欢</span>
-                <span style="font-size:.2rem;color: gray;">1234</span>
+                <span style="font-size:.2rem;color: gray;">{{this.likeSong.length}}</span>
             </div>
             <div style="display: flex;flex-direction: column;justify-content: center;align-items: center;margin: .5rem;">
                 <img style="width: 1rem;"  src="@/assets/images/download1.png">
@@ -167,7 +167,8 @@ export default {
       recommendSongData: {
         listName: '推荐歌单',
         listData: []
-      }
+      },
+      likeSong: []
     }
   },
   methods: {
@@ -191,18 +192,29 @@ export default {
       })
       this.ownSongData.listData = res.data.data
     },
+    /** 推荐歌单 */
     async getRecommandSongData () {
       const res = await axios({
         url: `http://localhost:3000/personalized?limit=3`,
         withCredentials: true
       })
       this.recommendSongData.listData = res.data.result
+    },
+    /** 获取喜好歌单列表 */
+    async getLikeSong () {
+      const res = await axios({
+        url: `http://localhost:3000/likelist?uid=${this.userData.profile.userId}`,
+        withCredentials: true
+      })
+      this.likeSong = res.data.ids
+      console.log(this.likeSong)
     }
   },
   mounted () {
     this.getColletSongData()
     this.getRecommandSongData()
     console.log(this.nearSongData)
+    console.log(this.userData)
   },
   computed: {
     getUserData () {
@@ -216,6 +228,8 @@ export default {
     getUserData (newVal, oldVal) {
       this.userName = this.$store.state.userData.profile.nickname
       this.headPic = this.$store.state.userData.profile.avatarUrl
+      this.userData = this.$store.state.userData
+      this.getLikeSong()
     },
     getNearSongData (newVal, oldVal) {
       this.nearSongData.listData = newVal
