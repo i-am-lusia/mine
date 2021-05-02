@@ -1,47 +1,50 @@
 <template>
-    <div id="recommand">
-        <div class="thehellobox">
-          <hello></hello>
-        </div>
-        <!-- 你的歌单补给站 -->
-        <div class="song-list-block" style="height:8.4rem">
-          <doubleSongList :songListData="newListData"></doubleSongList>
-        </div>
-        <!-- 根据“***”推荐 -->
-        <div class="song-list-recommand-block">
-          <recommandSongList :songListData="recommandSongListData"></recommandSongList>
-        </div>
-        <!-- 你最近的悦耳旋律 -->
-        <div class="song-list-block">
-          <songlist :songListData="nearListData"></songlist>
-        </div>
-        <!-- DJ,Drop the beat! -->
-        <div class="song-list-block">
-          <songlist :songListData="djListData"></songlist>
-        </div>
-        <!-- 最热门的电台节目，一键获得 -->
-        <div class="song-list-block">
-          <songlist :songListData="radioListData"></songlist>
-        </div>
-        <!-- 等你来听的宝藏声音 -->
-        <div class="song-list-block" style="height:5.8rem">
-          <live :liveData="liveData"></live>
-        </div>
-        <!-- 根据“***”推荐 -->
-        <div class="song-list-recommand-block">
-          <recommandSongList :songListData="recommandSongListTwoData"></recommandSongList>
-        </div>
-        <!-- 和"***"一样好听 -->
-        <div class="song-list-block">
-          <songlist :songListData="recommandSingerListData"></songlist>
-        </div>
-        <!-- 宝藏歌手集合 -->
-        <div class="song-list-block">
-            <songlist :songListData="singerListData"></songlist>
-        </div>
-        <div class="bottom">
-        </div>
+  <div id="recommand">
+    <div class="thehellobox">
+      <hello></hello>
     </div>
+    <!-- 你的歌单补给站 -->
+    <div class="song-list-block" style="height: 8.4rem">
+      <doubleSongList :songListData="newListData"></doubleSongList>
+    </div>
+    <!-- 根据“***”推荐 -->
+    <div class="song-list-recommand-block">
+      <recommandSongList
+        :songListData="recommandSongListData"
+      ></recommandSongList>
+    </div>
+    <!-- 你最近的悦耳旋律 -->
+    <div class="song-list-block">
+      <songlist :songListData="nearListData"></songlist>
+    </div>
+    <!-- DJ,Drop the beat! -->
+    <div class="song-list-block">
+      <songlist :songListData="djListData"></songlist>
+    </div>
+    <!-- 最热门的电台节目，一键获得 -->
+    <div class="song-list-block">
+      <songlist :songListData="radioListData"></songlist>
+    </div>
+    <!-- 等你来听的宝藏声音 -->
+    <div class="song-list-block" style="height: 5.8rem">
+      <live :liveData="liveData"></live>
+    </div>
+    <!-- 根据“***”推荐 -->
+    <div class="song-list-recommand-block">
+      <recommandSongList
+        :songListData="recommandSongListTwoData"
+      ></recommandSongList>
+    </div>
+    <!-- 和"***"一样好听 -->
+    <div class="song-list-block">
+      <songlist :songListData="recommandSingerListData"></songlist>
+    </div>
+    <!-- 宝藏歌手集合 -->
+    <div class="song-list-block">
+      <songlist :songListData="singerListData"></songlist>
+    </div>
+    <div class="bottom"></div>
+  </div>
 </template>
 <script>
 import axios from 'axios'
@@ -109,7 +112,7 @@ export default {
         withCredentials: true
       })
       for (let i = 0; i < 60;) {
-        songlists.push(res.data.playlists.slice(i, i += 10))
+        songlists.push(res.data.playlists.slice(i, (i += 10)))
       }
       this.newListData.listOneData = songlists[0]
       this.newListData.listTwoData = songlists[1]
@@ -132,10 +135,14 @@ export default {
         withCredentials: true
       })
       for (let i = 0; i < res1.data.hotAlbums.length;) {
-        this.recommandSongListData.listData.push(res1.data.hotAlbums.slice(i, i += 3))
+        this.recommandSongListData.listData.push(
+          res1.data.hotAlbums.slice(i, (i += 3))
+        )
       }
       for (let i = 0; i < res2.data.hotAlbums.length;) {
-        this.recommandSongListTwoData.listData.push(res2.data.hotAlbums.slice(i, i += 3))
+        this.recommandSongListTwoData.listData.push(
+          res2.data.hotAlbums.slice(i, (i += 3))
+        )
       }
       this.recommandSingerListData.listData = res3.data.hotAlbums
       this.recommandSingerListData.listName = `和"${res3.data.artist.name}"一样好听`
@@ -150,13 +157,19 @@ export default {
 }
 </script>
 <style>
-@import './index.css';
-.thehellobox{
+@import "./index.css";
+.thehellobox {
   width: 100%;
   height: 4.5rem;
-  margin-top: 2rem;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+#recommand {
+  height: 14rem;
+  overflow: scroll;
+}
+#recommand::-webkit-scrollbar{
+  display: none;
 }
 </style>

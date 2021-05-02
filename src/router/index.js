@@ -11,18 +11,24 @@ export default new Router({
   routes: [
     {
       path: '/',
-      redirect: '/fourth'
+      redirect: '/first'
     },
     {
       path: '/first',
       children: [
         {
           path: '/',
-          redirect: '/musicstore'
+          redirect: '/recommand'
         },
         {
           path: '/recommand',
-          component: resolve => require(['../containers/menu/main/recommand/recommand.vue'], resolve)
+          component: resolve => require(['../containers/menu/main/recommand/index.vue'], resolve),
+          children: [
+            {
+              path: '/',
+              component: resolve => require(['../containers/menu/main/recommand/recommand.vue'], resolve)
+            }
+          ]
         },
         {
           path: '/musicstore',
@@ -66,8 +72,14 @@ export default new Router({
     {
       path: '/fourth',
       components: {
-        content: resolve => require(['../containers/menu/mine/mine.vue'], resolve)
-      }
+        content: resolve => require(['../containers/menu/mine/index.vue'], resolve)
+      },
+      children: [
+        {
+          path: '/',
+          component: resolve => require(['../containers/menu/mine/mine.vue'], resolve)
+        }
+      ]
     }
   ]
 })

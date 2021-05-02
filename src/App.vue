@@ -118,6 +118,13 @@ export default {
       }, 3000)
     }
   },
+  watch: {
+    $route (to, from) {
+      if (to.path === '/recommand' || to.path === '/musicstore' || to.path === '/fourth') {
+        this.$store.commit('updateFullScreen', false)
+      } else this.$store.commit('updateFullScreen', true)
+    }
+  },
   mounted () {
     this.login()
   }

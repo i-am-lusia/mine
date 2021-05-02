@@ -536,4 +536,11 @@ export default {
 </script>
 <style scoped>
 @import "./index.css";
+#musicstore{
+  height: 14rem;
+  overflow: scroll;
+}
+#musicstore::-webkit-scrollbar{
+  display: none;
+}
 </style>

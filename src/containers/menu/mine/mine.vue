@@ -239,6 +239,13 @@ export default {
 </script>
 <style scoped>
 @import "./index.css";
+#mine{
+  height: 14rem;
+  overflow: scroll;
+}
+#mine::-webkit-scrollbar{
+  display: none;
+}
 #own {
   width: 100%;
   height: 100%;
