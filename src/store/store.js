@@ -7,7 +7,8 @@ const store = new Vuex.Store({
     nearlist: [],
     userData: null,
     currentSong: null,
-    fullScreen: false
+    fullScreen: false,
+    comments: null
   },
   mutations: {
     updateUserData (state, userData) {
@@ -23,8 +24,10 @@ const store = new Vuex.Store({
       state.nearlist.unshift(songListData)
     },
     updateFullScreen (state, flag) {
-      console.log(flag)
       state.fullScreen = flag
+    },
+    updateCurrentComments (state, data) {
+      state.comments = data
     }
   }
 })

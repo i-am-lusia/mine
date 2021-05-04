@@ -1,8 +1,6 @@
 <template>
     <div id="music">
-        <!--  <router-view :class="{full: this.$store.state.fullScreen}"></router-view>
-        -->
-        <comment></comment>
+        <router-view :class="{full: this.$store.state.fullScreen}"></router-view>
     </div>
 </template>
 <script>

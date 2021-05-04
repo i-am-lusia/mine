@@ -154,7 +154,7 @@
           <span style="margin-left: 0.1rem">13245</span>
         </div>
         <div class="sign">
-          <span class="el-icon-chat-dot-square"></span>
+          <span class="el-icon-chat-dot-square" @click="dialogVisible=true"></span>
           <span style="margin-left: 0.1rem">{{commentNum}}</span>
         </div>
         <div class="sign">
@@ -349,12 +349,25 @@
         </div>
       </div>
     </transition>
+    <el-dialog
+    title="评论分析结果"
+    :fullscreen=true
+    :visible.sync="dialogVisible"
+    :modal=false
+    :modal-append-to-body=false
+    >
+      <comment></comment>
+    </el-dialog>
   </div>
 </template>
 <script>
 import axios from 'axios'
+import comment from '../../../../../components/comment/index.vue'
 export default {
   name: 'songlist',
+  components: {
+    comment
+  },
   data () {
     return {
       id: null,
@@ -371,7 +384,8 @@ export default {
       checkList: [],
       isBatch: false,
       isMore: false,
-      commentNum: 0
+      commentNum: 0,
+      dialogVisible: false
     }
   },
   methods: {
@@ -450,12 +464,11 @@ export default {
     },
     async getComments () {
       const res = await axios({
-        url: `http://localhost:3000/comment/playlist?id=${this.id}`,
+        url: `http://localhost:3000/comment/playlist?id=${this.id}&limit=100`,
         withCredentials: true
       })
       this.commentNum = res.data.comments.length
-      /** 待清洗数据 */
-      console.log(res)
+      this.$store.commit('updateCurrentComments', res.data)
     }
   },
   mounted () {
@@ -467,9 +480,11 @@ export default {
 </script>
 <style scoped>
 @import './index.css';
-
+#songlist >>> .el-dialog__body{
+  padding: 0;
+  margin-top: .5rem;
+}
 /** 未调整部分 **/
-
 .box7{
     width: 100%;
     height: 100%;
