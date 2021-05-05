@@ -35,7 +35,11 @@
                 v-if="isSong"
                 :songMessage="songMessage"
                 :songCurrent="songCurrent"
+                :isPlay="isPlay"
+                @toPlay="toPlay"
                 @clickProgress="clickProgress"
+                @prevSong="prevSong"
+                @nextSong="nextSong"
               ></song>
             </el-tab-pane>
             <el-tab-pane label="歌词" name="lyric" :key="'lyric'">
@@ -175,6 +179,36 @@ export default {
         this.$refs.audio.pause()
       }
     },
+    /** 播放上一首歌 */
+    prevSong () {
+      const current = this.$store.state.currentSong
+      const index = this.songList.indexOf(current)
+      const length = this.songList.length - 1
+      if (index === -1) {
+        this.$refs.audio.autoplay = true
+      } else if (index === 0) {
+        const prevSong = this.songList[length]
+        this.$store.commit('updateCurrentSongData', prevSong)
+      } else {
+        const prevSong = this.songList[index - 1]
+        this.$store.commit('updateCurrentSongData', prevSong)
+      }
+    },
+    /** 播放下一首歌曲 */
+    nextSong () {
+      const current = this.$store.state.currentSong
+      const index = this.songList.indexOf(current)
+      const length = this.songList.length - 1
+      if (index === -1) {
+        this.$refs.audio.autoplay = true
+      } else if (index === length) {
+        const nextSong = this.songList[0]
+        this.$store.commit('updateCurrentSongData', nextSong)
+      } else {
+        const nextSong = this.songList[index + 1]
+        this.$store.commit('updateCurrentSongData', nextSong)
+      }
+    },
     /** 控制打开歌单列表 */
     toPlayList (data) {
       this.isPlayList = data
@@ -220,7 +254,6 @@ export default {
       })
       const olyrics = res.data.lrc.lyric
       this.songMessage.lyric = this.lyricArr(olyrics)
-      console.log(this.songMessage.lyric)
     },
     /** 转化歌词格式 */
     lyricArr (lyric) {

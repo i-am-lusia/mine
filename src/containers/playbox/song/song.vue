@@ -61,18 +61,18 @@
         @click="handlecircle"
       />
       <!-- 控制音乐开关 -->
-      <div class="el-icon-arrow-left"></div>
+      <div class="el-icon-arrow-left" @click="prevSong"></div>
       <div
         class="el-icon-video-pause"
-        v-if="!isPlay"
-        @click="isPlay = !isPlay"
+        v-if="isPlay"
+        @click="toPlay"
       ></div>
       <div
         class="el-icon-video-play"
-        v-if="isPlay"
-        @click="isPlay = !isPlay"
+        v-if="!isPlay"
+        @click="toPlay"
       ></div>
-      <div class="el-icon-arrow-right"></div>
+      <div class="el-icon-arrow-right" @click="nextSong"></div>
       <img src="@/assets/images/songlist.png" />
     </div>
     <el-dialog
@@ -91,13 +91,12 @@ import comment from '../../../components/comment/index.vue'
 import axios from 'axios'
 export default {
   name: 'song',
-  props: ['songMessage', 'songCurrent'],
+  props: ['songMessage', 'songCurrent', 'isPlay'],
   components: {
     comment
   },
   data () {
     return {
-      isPlay: false,
       isOnly: true,
       isList: false,
       isRandom: false,
@@ -127,9 +126,9 @@ export default {
       }
     },
     /** 控制音乐播放 */
-    Play () {
-      this.isPlay = false
-      this.isPause = true
+    toPlay () {
+      const flag = !this.isPlay
+      this.$emit('toPlay', flag)
     },
     /** 获取歌曲评论 */
     async getSongComments () {
@@ -151,6 +150,14 @@ export default {
           this.currentLyic = this.lyric[i].lyric
         }
       }
+    },
+    /** 播放上一首歌曲 */
+    prevSong () {
+      this.$emit('prevSong', null)
+    },
+    /** 播放下一首歌曲 */
+    nextSong () {
+      this.$emit('nextSong', null)
     }
   },
   mounted () {
