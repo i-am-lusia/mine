@@ -6,7 +6,7 @@
           <div class="song-name" @click="toPlaysong">
               <div class="move">{{songMessage.songName}}</div>
           </div>
-          <div :class="{'el-icon-video-play': isPlay,'el-icon-video-pause': !isPlay,'play1':true}" @click="toPlay"></div>
+          <div :class="{'el-icon-video-play': !isPlay,'el-icon-video-pause': isPlay,'play1':true}" @click="toPlay"></div>
           <img class="play2" src="@/assets/images/songlist1.png" @click="isPlayList">
         </div>
     </div>

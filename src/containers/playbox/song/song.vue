@@ -24,7 +24,7 @@
         />
       </div>
       <div class="song-lyric">
-        {{ songMessage.songLyric }}
+        <div>{{currentLyic}}</div>
       </div>
     </div>
     <!-- 歌曲标题 -->
@@ -37,7 +37,7 @@
     </div>
     <!-- 歌曲进度条 -->
     <div class="song-progrees">
-      <el-slider :show-tooltip="false" :max="max"></el-slider>
+      <el-slider :show-tooltip="false" v-model="precent" :max="max" @change="clickProgress()" ref="progress"></el-slider>
       <div class="song-time">
         <p>{{ currentTime }}</p>
         <p>{{ maxTime }}</p>
@@ -91,7 +91,7 @@ import comment from '../../../components/comment/index.vue'
 import axios from 'axios'
 export default {
   name: 'song',
-  props: ['songMessage'],
+  props: ['songMessage', 'songCurrent'],
   components: {
     comment
   },
@@ -103,12 +103,17 @@ export default {
       isRandom: false,
       isLike: true,
       dialogVisible: false,
-      currentTime: '0:00',
+      currentTime: this.songCurrent.currentTime || '00:00',
       max: 100,
-      maxTime: '0:00'
+      precent: this.songCurrent.precent || 0,
+      maxTime: this.songCurrent.maxTime || '00:00',
+      lyric: this.songMessage.lyric,
+      currentLyic: '',
+      currentNum: 0
     }
   },
   methods: {
+    /** 播放模式 */
     handlecircle () {
       if (this.isOnly) {
         this.isOnly = false
@@ -121,20 +126,46 @@ export default {
         this.isOnly = true
       }
     },
+    /** 控制音乐播放 */
     Play () {
       this.isPlay = false
       this.isPause = true
     },
+    /** 获取歌曲评论 */
     async getSongComments () {
       const res = await axios({
         url: `http://localhost:3000/comment/music?id=${this.songMessage.id}&limit=999`,
         withCredentials: true
       })
       this.$store.commit('updateCurrentComments', res.data)
+    },
+    /** 进度条控制 */
+    clickProgress () {
+      this.$emit('clickProgress', this.precent)
+    },
+    /** 匹配当前歌词 */
+    getLyrics () {
+      const currentTime = this.currentNum
+      for (let i = 0; i < this.lyric.length; i++) {
+        if (currentTime > (parseInt(this.lyric[i].time))) {
+          this.currentLyic = this.lyric[i].lyric
+        }
+      }
     }
   },
   mounted () {
     this.getSongComments()
+  },
+  watch: {
+    songCurrent: {
+      deep: true,
+      handler (newVal, oldVal) {
+        this.currentTime = newVal.currentTime
+        this.precent = newVal.precent
+        this.currentNum = newVal.currentNum
+        this.getLyrics()
+      }
+    }
   }
 }
 </script>
