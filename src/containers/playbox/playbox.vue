@@ -73,6 +73,7 @@
       :src="musicUrl"
       @timeupdate="updateTime"
       @canplay="getDuration"
+      @ended="ended"
       ref="audio"
     ></audio>
   </div>
@@ -169,6 +170,11 @@ export default {
     /** 控制当前音乐盒子显隐 */
     toPlaysong (data) {
       this.isPlaysong = data
+    },
+    /** 当前歌曲播放结束 */
+    ended () {
+      console.log('ended')
+      this.nextSong()
     },
     /** 控制播放 */
     toPlay (data) {

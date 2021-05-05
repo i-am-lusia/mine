@@ -8,7 +8,8 @@ const store = new Vuex.Store({
     userData: null,
     currentSong: null,
     fullScreen: false,
-    comments: null
+    comments: null,
+    lyricList: []
   },
   mutations: {
     updateUserData (state, userData) {
@@ -28,6 +29,9 @@ const store = new Vuex.Store({
     },
     updateCurrentComments (state, data) {
       state.comments = data
+    },
+    updateLyricList (state, data) {
+      state.lyricList.push(data)
     }
   }
 })

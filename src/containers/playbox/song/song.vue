@@ -128,6 +128,9 @@ export default {
     /** 控制音乐播放 */
     toPlay () {
       const flag = !this.isPlay
+      if (!flag) {
+        this.$store.commit('updateLyricList', this.currentLyic)
+      }
       this.$emit('toPlay', flag)
     },
     /** 获取歌曲评论 */
