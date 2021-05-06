@@ -31,7 +31,10 @@ const store = new Vuex.Store({
       state.comments = data
     },
     updateLyricList (state, data) {
-      state.lyricList.push(data)
+      state.lyricList.push({
+        time: new Date(),
+        word: data
+      })
     }
   }
 })

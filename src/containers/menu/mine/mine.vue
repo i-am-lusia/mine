@@ -131,17 +131,28 @@
     </el-tabs>
     <span class="el-icon-message" @click="toMessage"></span>
     <span class="el-icon-more" @click="toMore"></span>
+    <el-dialog
+      title="用户数据分析报告"
+      :fullscreen="true"
+      :visible.sync="dialogVisible"
+      :modal="false"
+      :modal-append-to-body="false"
+    >
+    <analysisLyric></analysisLyric>
+    </el-dialog>
   </div>
 </template>
 <script>
 import more from '@/components/pages/fourth/more/more.vue'
 import messages from '@/components/pages/fourth/messages/messages.vue'
 import Songlist from '../../../components/songlist/songlist.vue'
+import analysisLyric from '../../../components/analysis/analysisLyric.vue'
 import axios from 'axios'
 export default {
   name: 'mine',
   components: {
     more,
+    analysisLyric,
     messages,
     Songlist
   },
@@ -149,6 +160,7 @@ export default {
     return {
       isMore: false,
       isMessage: false,
+      dialogVisible: false,
       headPic: this.$store.state.userData
         ? this.$store.state.userData.profile.avatarUrl
         : null,
@@ -176,7 +188,7 @@ export default {
       this.isMore = true
     },
     toMessage () {
-      this.isMessage = true
+      this.dialogVisible = true
     },
     closeMore () {
       this.isMore = false
@@ -213,8 +225,6 @@ export default {
   mounted () {
     this.getColletSongData()
     this.getRecommandSongData()
-    console.log(this.nearSongData)
-    console.log(this.userData)
   },
   computed: {
     getUserData () {
@@ -242,6 +252,10 @@ export default {
 #mine{
   height: 14rem;
   overflow: scroll;
+}
+#mine >>> .el-dialog__body{
+  padding: 0;
+  margin-top: .5rem;
 }
 #mine::-webkit-scrollbar{
   display: none;

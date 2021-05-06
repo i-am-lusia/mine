@@ -39,7 +39,7 @@ export default {
       title: 'fasaf',
       songAuthor: 'fagfsdaffa',
       isYi: true,
-      lyric: this.songMessage.lyric,
+      lyric: this.songMessage.lyric || [],
       currentNum: 0,
       lyricIndex: 0
     }

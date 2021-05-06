@@ -173,7 +173,6 @@ export default {
     },
     /** 当前歌曲播放结束 */
     ended () {
-      console.log('ended')
       this.nextSong()
     },
     /** 控制播放 */
@@ -311,6 +310,7 @@ export default {
   },
   watch: {
     getSongList (newVal, oldVal) {
+      console.log(newVal)
       this.songList = newVal
     },
     getCurrentSong (newVal, oldVal) {

@@ -106,7 +106,7 @@ export default {
       max: 100,
       precent: this.songCurrent.precent || 0,
       maxTime: this.songCurrent.maxTime || '00:00',
-      lyric: this.songMessage.lyric,
+      lyric: this.songMessage.lyric || [],
       currentLyic: '',
       currentNum: 0
     }
