@@ -138,7 +138,10 @@
       :modal="false"
       :modal-append-to-body="false"
     >
+    <div style=" height: 15rem;overflow: scroll;">
+    <analysisTags></analysisTags>
     <analysisLyric></analysisLyric>
+    </div>
     </el-dialog>
   </div>
 </template>
@@ -147,12 +150,14 @@ import more from '@/components/pages/fourth/more/more.vue'
 import messages from '@/components/pages/fourth/messages/messages.vue'
 import Songlist from '../../../components/songlist/songlist.vue'
 import analysisLyric from '../../../components/analysis/analysisLyric.vue'
+import analysisTags from '../../../components/analysis/analysisTags.vue'
 import axios from 'axios'
 export default {
   name: 'mine',
   components: {
     more,
     analysisLyric,
+    analysisTags,
     messages,
     Songlist
   },

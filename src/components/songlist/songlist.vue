@@ -25,8 +25,8 @@ export default {
   props: ['songListData'],
   methods: {
     goTo (data) {
-      this.$router.push({path: '/songListDetail', query: {id: data.id}})
       this.$store.commit('updateNearSongList', data)
+      this.$router.push({path: '/songListDetail', query: {id: data.id}})
     }
   }
 }

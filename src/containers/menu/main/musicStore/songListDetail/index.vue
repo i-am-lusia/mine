@@ -398,6 +398,8 @@ export default {
         url: url,
         withCredentials: true
       })
+      var tags = res.data.playlist.tags
+      tags.map((item) => { this.$store.commit('updateTags', item) })
       this.songs = res.data.playlist.tracks
       this.playlist = res.data.playlist
     },

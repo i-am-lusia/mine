@@ -265,8 +265,7 @@ export default {
 <style scoped>
 #analysisLyric {
   width: 10rem;
-  height: 15rem;
-  overflow: scroll;
+  height: 18rem;
 }
 #analysisLyric::-webkit-scrollbar {
   display: none;
