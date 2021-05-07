@@ -13,15 +13,15 @@
                 <li style="position:relative;">
                   <img class="pic" :src="currentSong.songpic"/>
                 </li>
-                <li style="position:relative;">
+                <li style="position:relative;" @click="playSong(secondSong)">
                  <img class="pic0" :src="secondSong.songpic"/>
                 </li>
-                <li style="position:relative;">
+                <li style="position:relative;" @click="playSong(thirdSong)">
                  <img class="pic1" :src="thirdSong.songpic"/>
                 </li>
             </ul>
             <ul class="list2">
-                <li style="position:relative;">
+                <li style="position:relative;" @click="playItem(recommend)">
                     <div class="box3">
                     <div class="tag0"></div>
                     <span class="tipe0" >Daily</span>
@@ -30,7 +30,7 @@
                     <span class="name">每日30首</span>
                     </div>
                 </li>
-                <li style="position:relative;">
+                <li style="position:relative;" @click='playItem (newSong)'>
                     <div class="box3">
                     <div class="tag1"></div>
                     <span class="tipe1" >New</span>
@@ -38,7 +38,7 @@
                     <span class="name">新歌推荐</span>
                     </div>
                 </li>
-                <li>
+                <li @click="playItem (ktv)">
                     <div class="box3">
                     <div class="tag2"></div>
                     <span class="tipe2" >Sing</span>
@@ -46,7 +46,7 @@
                 <span class="name">K歌不停</span>
                     </div>
                 </li>
-                <li>
+                <li @click="playItem (friends)">
                     <div class="box3">
                     <div class="tag3"></div>
                     <span class="tipe3" >Friends</span>
@@ -80,40 +80,22 @@ export default {
     }
   },
   methods: {
+    /** 获取推荐单目 */
     async getRecommendDaily () {
       const res = await axios({
         url: `http://localhost:3000/recommend/resource`,
         withCredentials: true
       })
-      this.recommend = res.data
+      this.recommend = res.data.recommend[0]
       this.recommendPic = res.data.recommend[0].picUrl
+      this.ktv = res.data.recommend[1]
+      this.ktvPic = res.data.recommend[1].picUrl
+      this.newSong = res.data.recommend[2]
+      this.newPic = res.data.recommend[2].picUrl
+      this.friends = res.data.recommend[3]
+      this.friendsPic = res.data.recommend[3].picUrl
     },
-    async getNewSong () {
-      const res = await axios({
-        url: `http://localhost:3000/personalized/newsong`,
-        withCredentials: true
-      })
-      this.newSong = res.data
-      this.newPic = res.data.result[0].picUrl
-    },
-    async getKTV () {
-      const res = await axios({
-        url: `http://localhost:3000/dj/today/perfered`,
-        withCredentials: true
-      })
-      this.ktv = res.data.data
-      this.ktvPic = res.data.data[0].picUrl
-    },
-    async getFriend () {
-      const res = await axios({
-        url: `http://localhost:3000/recommend/songs`,
-        withCredentials: true
-      })
-      this.friends = res.data.data.dailySongs
-      this.friendsPic = res.data.data.dailySongs[0].al.picUrl
-      this.songList = this.friends
-      // this.$store.commit('updateSongList', this.friends)
-    },
+    /** 当前歌曲下一首 */
     getSecondSong () {
       if (this.currentSong) {
         const flag = this.songList.indexOf(this.currentSong)
@@ -125,13 +107,32 @@ export default {
           this.thirdSong.songpic = this.songList[flag + 2].al.picUrl
         }
       }
+    },
+    /** 获取详细歌单内容 */
+    async getData (id) {
+      var url = `http://localhost:3000/playlist/detail?id=${id}`
+      const res = await axios({
+        url: url,
+        withCredentials: true
+      })
+      var tags = res.data.playlist.tags
+      tags.map((item) => { this.$store.commit('updateTags', item) })
+      const songs = res.data.playlist.tracks
+      this.$store.commit('updateSongList', songs)
+      this.$store.commit('updateNearSongList', res.data.playlist)
+      this.$store.commit('updateCurrentSongData', songs[0])
+    },
+    /** 跳转播放歌单 */
+    playItem (data) {
+      this.getData(data.id)
+    },
+    /** 跳转播放歌曲 */
+    playSong (data) {
+      this.$store.commit('updateCurrentSongData', data)
     }
   },
   mounted () {
     this.getRecommendDaily()
-    this.getNewSong()
-    this.getKTV()
-    this.getFriend()
     this.getSecondSong()
   },
   computed: {

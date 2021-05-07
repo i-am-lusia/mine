@@ -101,7 +101,6 @@ export default {
         list3.length = 0
       }
       that.recommandlist = list
-      console.log(list)
     })
   }
 }

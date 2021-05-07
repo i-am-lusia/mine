@@ -59,9 +59,6 @@ export default {
         this.isOnly = true
       }
     }
-  },
-  mounted () {
-    console.log(this.songList)
   }
 }
 </script>

@@ -227,7 +227,6 @@ export default {
         }
       })
       timeData.sort()
-      console.log(timeData.length)
       for (var i = 0; i < timeData.length;) {
         var count = 0
         for (var j = i; j < timeData.length; j++) {

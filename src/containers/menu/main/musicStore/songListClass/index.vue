@@ -38,7 +38,6 @@ export default {
       this.$router.go(-1)
     },
     goTo (data) {
-      console.log(data.id)
       this.$router.push({path: 'songListDetail', query: {id: data.id}})
     },
     async getBannerSongList () {
