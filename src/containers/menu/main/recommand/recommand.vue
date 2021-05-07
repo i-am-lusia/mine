@@ -122,37 +122,55 @@ export default {
     },
     /** id号需要修改 */
     async getRecommendBySinger () {
+      const singerList = this.$store.state.singerList
+      const id1 = singerList[0] && singerList[0].id
+      const id2 = singerList[1] && singerList[1].id
+      const id3 = singerList[2] && singerList[2].id
+      const listData1 = []
+      const listData2 = []
       const res1 = await axios({
-        url: `http://localhost:3000/artist/album?id=6454&limit=9`,
+        url: `http://localhost:3000/artist/album?id=${id1 || 6454}&limit=9`,
         withCredentials: true
       })
       const res2 = await axios({
-        url: `http://localhost:3000/artist/album?id=6454&limit=9`,
+        url: `http://localhost:3000/artist/album?id=${id2 || 6454}&limit=9`,
         withCredentials: true
       })
       const res3 = await axios({
-        url: `http://localhost:3000/artist/album?id=6454&limit=9`,
+        url: `http://localhost:3000/artist/album?id=${id3 || 6454}&limit=9`,
         withCredentials: true
       })
       for (let i = 0; i < res1.data.hotAlbums.length;) {
-        this.recommandSongListData.listData.push(
+        listData1.push(
           res1.data.hotAlbums.slice(i, (i += 3))
         )
       }
       for (let i = 0; i < res2.data.hotAlbums.length;) {
-        this.recommandSongListTwoData.listData.push(
+        listData2.push(
           res2.data.hotAlbums.slice(i, (i += 3))
         )
       }
       this.recommandSingerListData.listData = res3.data.hotAlbums
       this.recommandSingerListData.listName = `和"${res3.data.artist.name}"一样好听`
       this.recommandSongListData.singerName = res1.data.artist.name
+      this.recommandSongListData.listData = listData1
       this.recommandSongListTwoData.singerName = res2.data.artist.name
+      this.recommandSongListTwoData.listData = listData2
     }
   },
   mounted () {
     this.getSongList()
-    this.getRecommendBySinger()
+    this.$store.state.singerList && this.getRecommendBySinger()
+  },
+  computed: {
+    getNearSinger () {
+      return this.$store.state.singerList
+    }
+  },
+  watch: {
+    getNearSinger (newVal, oldVal) {
+      this.getRecommendBySinger()
+    }
   }
 }
 </script>
