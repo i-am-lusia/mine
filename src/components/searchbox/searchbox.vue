@@ -15,20 +15,30 @@
         />
       </label>
     </div>
-    <span @click="isFocusing = false" class="tocancel" v-if="isFocusing"
+    <span
+      @click="
+        isFocusing = false;
+        isSearch = false;
+      "
+      class="tocancel"
+      v-if="isFocusing"
       >取消</span
     >
     <!-- 搜索历史 -->
-    <div class="searchHistory" v-if="isFocusing">
+    <div class="searchHistory" v-if="isFocusing && !isSearch">
       <span class="historyTitle">搜索历史</span>
       <tags style="margin-left: 1rem" :list="history"></tags>
     </div>
     <!-- 热门搜索 -->
-    <div class="hotSearch" v-if="isFocusing">
+    <div class="hotSearch" v-if="isFocusing && !isSearch">
       <span class="historyTitle">热门搜索</span>
       <div id="doubleRank">
         <ul>
-          <li v-for="(item, index) in hotList" :key="index">
+          <li
+            v-for="(item, index) in hotList"
+            :key="index"
+            @click="search(item.searchWord)"
+          >
             <div>
               <span class="index">{{ index + 1 }}</span>
               <div style="width: 3.5rem">
@@ -39,6 +49,42 @@
           </li>
         </ul>
       </div>
+    </div>
+    <div class="list" v-if="isFocusing && isSearch">
+      <ul>
+        <li
+          v-for="(item, index) in searchResult"
+          :key="index"
+          @click="songChange(item)"
+        >
+          <div class="index">
+            <span>{{ index + 1 }}</span>
+          </div>
+          <div class="nameBox">
+            <span class="name">{{ item.name }}</span>
+            <div>
+              <span
+                style="
+                  white-space: nowrap;
+                  text-overflow: ellipsis;
+                  overflow: hidden;
+                "
+                >{{ item.name }}-{{ item.artists[0].name }}</span
+              >
+            </div>
+          </div>
+          <img
+            style="
+              width: 0.5rem;
+              height: 0.5rem;
+              margin-left: 1%;
+              margin-right: 4%;
+            "
+            src="@/assets/images/video1.png"
+          />
+          <span class="el-icon-more"></span>
+        </li>
+      </ul>
     </div>
   </div>
 </template>
@@ -53,11 +99,14 @@ export default {
   data: function () {
     return {
       keywords: [],
+      isSearch: false,
       isFocusing: false,
       currentIndex: 0,
       animationTriggerFlag: true,
       history: [],
-      hotList: []
+      hotList: [],
+      searchResult: [],
+      songList: []
     }
   },
   computed: {
@@ -106,6 +155,7 @@ export default {
         console.log(this.keywords[this.currentIndex])
       }
     },
+    /** 获取历史记录 */
     async getHistory () {
       const res = await axios({
         method: 'get',
@@ -114,6 +164,7 @@ export default {
       })
       this.history.push(res.data.data)
     },
+    /** 获取热词 */
     async getHot () {
       var that = this
       var hots = []
@@ -127,7 +178,8 @@ export default {
         that.keywords.push(hots[i].first)
       }
     },
-    async  getHotDetail () {
+    /** 获取热词 */
+    async getHotDetail () {
       const res = await axios({
         method: 'get',
         url: `http://localhost:3000/search/hot/detail`,
@@ -136,10 +188,36 @@ export default {
       for (var i in res.data.data) {
         this.hotList.push(res.data.data[i])
       }
+      console.log(this.hotList)
+    },
+    /** 搜索 */
+    async search (searchWord) {
+      this.isSearch = true
+      const res = await axios({
+        url: `http://localhost:3000/search?keywords=${searchWord}`,
+        withCredentials: true
+      })
+      this.searchResult = res.data.result.songs
+    },
+    async getSongDetail (id, play) {
+      const res = await axios({
+        url: `http://localhost:3000/song/detail?ids=${id}`,
+        withCredentials: true
+      })
+      if (play) this.$store.commit('updateCurrentSongData', res.data.songs[0])
+      else this.songList.push(...res.data.songs)
+    },
+    songChange (data) {
+      this.getSongDetail(data.id, true)
+      for (var i in this.searchResult) {
+        this.getSongDetail(this.searchResult[i].id, false)
+      }
+      this.$store.commit('updateSongList', this.songList)
     }
   }
 }
 </script>
 <style scoped>
 @import "./index.css";
+
 </style>

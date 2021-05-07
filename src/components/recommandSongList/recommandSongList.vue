@@ -41,7 +41,8 @@ export default {
   methods: {
     async get (id) {
       const res = await axios({
-        url: `http://localhost:3000/album?id=${id}`
+        url: `http://localhost:3000/album?id=${id}`,
+        withCredentials: true
       })
       this.$store.commit('updateCurrentSongData', res.data.songs[0])
       this.$store.commit('updateSongList', res.data.songs)

@@ -18,6 +18,7 @@
                   <div class="font-size: .6rem;margin-left: .6rem">
                     {{ userName }}
                   </div>
+                  <!--
                   <img
                     style="width: 0.5rem; height: 0.5rem; margin-left: 0.1rem"
                     src="@/assets/images/vip1.png"
@@ -29,7 +30,7 @@
                   <img
                     style="width: 0.5rem; height: 0.5rem; margin-left: 0.1rem"
                     src="@/assets/images/vip1.png"
-                  />
+                  /> -->
                 </div>
                 <div
                   class="personalButtons"
@@ -43,7 +44,7 @@
                         margin-left: 0.2rem;
                         margin-right: 0.3rem;
                       "
-                      >1</span
+                      >{{followed.length}}</span
                     >
                   </div>
                   <div style="border-right: gainsboro solid 2px">
@@ -54,7 +55,7 @@
                         margin-left: 0.2rem;
                         margin-right: 0.3rem;
                       "
-                      >2</span
+                      >{{fans.length}}</span
                     >
                   </div>
                   <div style="border-right: gainsboro solid 2px">
@@ -65,7 +66,7 @@
                         margin-left: 0.2rem;
                         margin-right: 0.3rem;
                       "
-                      >3</span
+                      >{{event.length}}</span
                     >
                   </div>
                 </div>
@@ -101,17 +102,17 @@
             <div style="display: flex;flex-direction: column;justify-content: center;align-items: center;margin: .5rem;">
                 <img style="width: 1rem;"  src="@/assets/images/download1.png">
                 <span style="font-size:.4rem;margin-top: .15rem">本地</span>
-                <span style="font-size:.2rem;color: gray;">1234</span>
+                <span style="font-size:.2rem;color: gray;">0</span>
             </div>
             <div style="display: flex;flex-direction: column;justify-content: center;align-items: center;margin: .5rem;">
                 <img style="width: 1rem;" src="@/assets/images/songlist2.png">
                 <span style="font-size:.4rem;margin-top: .15rem">歌单</span>
-                <span style="font-size:.2rem;color: gray;">1234</span>
+                <span style="font-size:.2rem;color: gray;">{{playlist.length}}</span>
             </div>
             <div style="display: flex;flex-direction: column;justify-content: center;align-items: center;margin: .5rem;">
                 <img style="width: 1rem;" src="@/assets/images/yigou.png">
                 <span style="font-size:.4rem;margin-top: .15rem">已购</span>
-                <span style="font-size:.2rem;color: gray;">1234</span>
+                <span style="font-size:.2rem;color: gray;">{{digitalAlbum.length}}</span>
             </div>
           </div>
           <!-- 最近播放 -->
@@ -188,7 +189,12 @@ export default {
         listName: '推荐歌单',
         listData: []
       },
-      likeSong: []
+      likeSong: [],
+      followed: [],
+      fans: [],
+      event: [],
+      digitalAlbum: [],
+      playlist: []
     }
   },
   methods: {
@@ -227,12 +233,58 @@ export default {
         withCredentials: true
       })
       this.likeSong = res.data.ids
-      console.log(this.likeSong)
+    },
+    /** 获取关注列表 */
+    async getfollowedList () {
+      const res = await axios({
+        url: `http://localhost:3000/user/follows?uid=${this.userData.profile.userId}`,
+        withCredentials: true
+      })
+      this.followed = res.data.follow
+    },
+    /** 获取粉丝列表 */
+    async getfansList () {
+      const res = await axios({
+        url: `http://localhost:3000/user/followeds?uid=${this.userData.profile.userId}`,
+        withCredentials: true
+      })
+      this.fans = res.data.followeds
+    },
+    /** 获取用户动态 */
+    async getEventList () {
+      const res = await axios({
+        url: `http://localhost:3000/user/event?uid=${this.userData.profile.userId}`,
+        withCredentials: true
+      })
+      this.event = res.data.events
+    },
+    /** 我的数据专辑 */
+    async getdigitalAlbumList () {
+      const res = await axios({
+        url: `http://localhost:3000/digitalAlbum/purchased`,
+        withCredentials: true
+      })
+      this.digitalAlbum = res.data.paidAlbums
+    },
+    /** 获取用户信息等数据 */
+    async getSubcount () {
+      const res = await axios({
+        url: `http://localhost:3000/user/playlist?uid=${this.userData.profile.userId}`,
+        withCredentials: true
+      })
+      this.playlist = res.data.playlist
+      this.ownSongData.listData.push(...res.data.playlist)
     }
   },
   mounted () {
     this.getColletSongData()
     this.getRecommandSongData()
+    this.getLikeSong()
+    this.getfollowedList()
+    this.getfansList()
+    this.getEventList()
+    this.getdigitalAlbumList()
+    this.getSubcount()
   },
   computed: {
     getUserData () {
@@ -244,6 +296,7 @@ export default {
   },
   watch: {
     getUserData (newVal, oldVal) {
+      console.log(newVal)
       this.userName = this.$store.state.userData.profile.nickname
       this.headPic = this.$store.state.userData.profile.avatarUrl
       this.userData = this.$store.state.userData
