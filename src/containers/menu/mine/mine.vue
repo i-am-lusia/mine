@@ -140,6 +140,7 @@
     >
     <div style=" height: 15rem;overflow: scroll;">
     <analysisTags></analysisTags>
+    <analysisSinger></analysisSinger>
     <analysisLyric></analysisLyric>
     </div>
     </el-dialog>
@@ -151,6 +152,7 @@ import messages from '@/components/pages/fourth/messages/messages.vue'
 import Songlist from '../../../components/songlist/songlist.vue'
 import analysisLyric from '../../../components/analysis/analysisLyric.vue'
 import analysisTags from '../../../components/analysis/analysisTags.vue'
+import analysisSinger from '../../../components/analysis/analysisSinger.vue'
 import axios from 'axios'
 export default {
   name: 'mine',
@@ -159,7 +161,8 @@ export default {
     analysisLyric,
     analysisTags,
     messages,
-    Songlist
+    Songlist,
+    analysisSinger
   },
   data () {
     return {

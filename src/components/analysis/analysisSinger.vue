@@ -1,33 +1,34 @@
 <template>
-  <div id="analysisTags">
-      <div id="tagsBar"></div>
+  <div id="analysisSinger">
+      <div id="singerRank"></div>
   </div>
 </template>
 <script>
 import * as echarts from 'echarts'
 import 'echarts-wordcloud/dist/echarts-wordcloud.js'
-
 export default {
-  name: 'analysisTags',
+  name: 'analysisSinger',
   data () {
     return {
-      tagList: this.$store.state.tags || [],
-      tagsName: [],
-      tagsData: [],
-      tagStartData: [],
-      timeData: []
+      singerList: (this.$store.state.singerList && this.$store.state.singerList.map((item) => item.name)) || [],
+      singerName: [],
+      singerData: [],
+      singerStartData: []
     }
   },
   methods: {
     /** 柱形图 */
     initBarCharts () {
-      this.chart = echarts.init(document.getElementById('tagsBar'))
-      var startIndex = Math.max(...this.tagsData)
-      var length = this.tagsName.length
+      this.chart = echarts.init(document.getElementById('singerRank'))
+      var startIndex = Math.max(...this.singerData)
+      var length = this.singerName.length
       const option = {
         title: {
-          text: '用户最近播放歌曲类型分析',
+          text: '用户最常听歌手排行榜',
           x: 'center'
+        },
+        tooltip: {
+          formatter: '{b}历史播放量{c}首'
         },
         grid: {
           top: 30,
@@ -44,7 +45,7 @@ export default {
         yAxis: {
           type: 'category',
           inverse: true,
-          max: this.tagsName.length,
+          max: this.singerName.length,
           axisLabel: {
             show: true,
             textStyle: {
@@ -57,7 +58,7 @@ export default {
               }
             }
           },
-          data: this.tagsName,
+          data: this.singerName,
           animationDuration: 2,
           animationDurationUpdate: 1
         },
@@ -65,7 +66,7 @@ export default {
           realtimeSort: true,
           seriesLayoutBy: 'column',
           type: 'bar',
-          data: this.tagStartData,
+          data: this.singerStartData,
           itemStyle: {
             color: function (param) {
               return 'rgb(' +
@@ -109,8 +110,8 @@ export default {
       this.chart.setOption(option)
       for (var i = 0; i < startIndex; i++) {
         for (var j = 0; j < length; j++) {
-          if (this.tagStartData[j] < this.tagsData[j]) {
-            this.tagStartData[j]++
+          if (this.singerStartData[j] < this.singerData[j]) {
+            this.singerStartData[j]++
             this.chart.setOption(option)
           }
         }
@@ -118,49 +119,46 @@ export default {
     },
     /** 数据处理 */
     getAnysis () {
-      const tags = this.tagList.reverse()
-      const length = tags.length
+      const singers = this.singerList.sort()
+      const length = singers.length
       for (var i = 0; i < length; i++) {
         var count = 0
         for (var j = i; j < length; j++) {
-          if (tags[i] === tags[j]) {
+          if (singers[i] === singers[j]) {
             count++
           }
         }
-        this.tagsName.push(tags[i])
-        this.tagsData.push(count)
-        this.tagStartData.push(0)
+        this.singerName.push(singers[i])
+        this.singerData.push(count)
+        this.singerStartData.push(0)
         i += count
       }
-      this.tagsData && this.initBarCharts()
+      this.singerData && this.initBarCharts()
     }
   },
   mounted () {
-    this.tagList && this.getAnysis()
+    this.singerList && this.getAnysis()
   },
   computed: {
-    getTags () {
-      return this.$store.state.tags
+    getSingerList () {
+      return this.$store.state.singerList
     }
   },
   watch: {
-    getTags (newVal, oldVal) {
-      this.tags = newVal
+    getSingerList (newVal, oldVal) {
+      this.singerList = newVal.map((item) => item.name)
     }
   }
 }
 </script>
 <style scoped>
-#analysisTags {
+#analysisSinger {
   width: 100%;
-  height: 7rem;
+  height: 10rem;
 }
-#analysisTags::-webkit-scrollbar {
-  display: none;
-}
-#tagsBar {
+#singerRank {
   width: 100%;
-  height: 7rem;
+  height: 10rem;
   margin-bottom: 0.5rem;
 }
 </style>
