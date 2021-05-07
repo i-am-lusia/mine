@@ -5,8 +5,6 @@
         >根据“{{ songListData.singerName }}”推荐</span
       >
       <div>
-        <img class="logo" src="@/assets/images/video1.png" />
-        <span v-if="songListData.singerName">播放</span>
       </div>
     </div>
     <ul class="box1">

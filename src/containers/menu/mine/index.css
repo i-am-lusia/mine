@@ -104,14 +104,14 @@
     position:fixed;
     top:.4rem;
     right: 1.4rem;
-    z-index: 6;
+    z-index: 5;
     color:black
   }
   .el-icon-more{
     position: fixed;
     top:.4rem;
     right: .4rem;
-    z-index: 6;
+    z-index: 5;
     color:black
   }
   /** 个人主页 */

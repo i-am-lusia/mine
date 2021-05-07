@@ -119,6 +119,7 @@ export default {
       this.nearListData.listData = songlists[2]
       this.djListData.listData = songlists[3]
       this.radioListData.listData = songlists[4]
+      this.singerListData.listData = songlists[5]
     },
     /** id号需要修改 */
     async getRecommendBySinger () {
@@ -156,10 +157,18 @@ export default {
       this.recommandSongListData.listData = listData1
       this.recommandSongListTwoData.singerName = res2.data.artist.name
       this.recommandSongListTwoData.listData = listData2
+    },
+    async getLiveList () {
+      const res = await axios({
+        url: `http://localhost:3000/program/recommend`,
+        withCredentials: true
+      })
+      this.liveData.listData = res.data.programs
     }
   },
   mounted () {
     this.getSongList()
+    this.getLiveList()
     this.$store.state.singerList && this.getRecommendBySinger()
   },
   computed: {
