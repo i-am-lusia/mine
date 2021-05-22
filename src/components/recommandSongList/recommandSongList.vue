@@ -50,9 +50,6 @@ export default {
     play (item) {
       this.get(item.id)
     }
-  },
-  mounted () {
-    console.log(this.songListData)
   }
 }
 </script>

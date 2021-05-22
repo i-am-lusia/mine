@@ -126,13 +126,13 @@ export default {
       switch (to.path) {
         case '/fourth': this.$store.commit('updateScore', 'own'); break
         case '/recommand': this.$store.commit('updateScore', 'recommand'); break
-        case '/musicstore': this.$store.commit('updateScore', 'musiStore'); break
-        case '/songListDetail': this.$store.commit('updateScore', 'musiStore'); break
+        case '/musicstore': this.$store.commit('updateScore', 'musicStore'); break
+        case '/songListDetail': this.$store.commit('updateScore', 'musicStore'); break
         case '/singerList': this.$store.commit('updateScore', 'singger'); break
         case '/singerDetail': this.$store.commit('updateScore', 'singger'); break
         case '/rankList': this.$store.commit('updateScore', 'rankList'); break
         case '/rankDetail': this.$store.commit('updateScore', 'rankList'); break
-        case '/songList': this.$store.commit('updateScore', 'musiStore'); break
+        case '/songList': this.$store.commit('updateScore', 'musicStore'); break
       }
     }
   },

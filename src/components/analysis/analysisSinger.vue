@@ -25,7 +25,9 @@ export default {
       singerStartData: [],
       songStartData: [],
       songName: [],
-      songData: []
+      songData: [],
+      score: [],
+      total: 0
     }
   },
   methods: {
@@ -288,7 +290,7 @@ export default {
         title: {
           text: '用户系统功能使用雷达图',
           x: 'center',
-          subtext: '用户活跃度：42.3'
+          subtext: `用户活跃度：${this.total}`
         },
         legend: {
           data: ['预算分配（Allocated Budget）']
@@ -296,13 +298,13 @@ export default {
         radar: {
           // shape: 'circle',
           indicator: [
-            { name: '用户个性化推荐(Recommand)', max: 6500 },
-            { name: '搜索（Search)', max: 10 },
-            { name: '音乐盒子（Playbox）', max: 16000 },
-            { name: '音乐馆推荐（Musicstore Recommand）', max: 30000 },
-            { name: '个人中心(Personal Center)', max: 38000 },
-            { name: '歌手（Singer）', max: 52000 },
-            { name: '排行榜（Rank）', max: 25000 }
+            { name: '用户个性化推荐(Recommand)', max: 1 },
+            { name: '搜索（Search)', max: 1 },
+            { name: '音乐盒子（Playbox）', max: 1 },
+            { name: '音乐馆推荐（Musicstore Recommand）', max: 1 },
+            { name: '个人中心(Personal Center)', max: 1 },
+            { name: '歌手（Singer）', max: 1 },
+            { name: '排行榜（Rank）', max: 1 }
           ]
         },
         series: [
@@ -312,7 +314,7 @@ export default {
             top: 0,
             data: [
               {
-                value: [3000, 3, 13000, 9000, 30000, 10500, 9000],
+                value: this.score,
                 name: ''
               }
             ],
@@ -324,15 +326,32 @@ export default {
         ]
       }
       this.chart.setOption(option)
+    },
+    getData (data) {
+      let recommand = data.recommand / data.total
+      let own = data.own / data.total
+      let Musicstore = data.musicStore / data.total
+      let playbox = data.playbox / data.total
+      let singger = data.singger / data.total
+      let rankList = data.rankList / data.total
+      let search = data.search / data.total
+      this.score.length = 0
+      this.score = [recommand, search, playbox, Musicstore, own, rankList, singger]
+      this.total = recommand + search + playbox + Musicstore + own + rankList + singger
+      this.total = parseFloat(this.total / 0.07).toFixed(2)
+      this.score && this.initCharts()
     }
   },
   mounted () {
     this.singerList && this.getAnysis()
-    this.initCharts()
+    this.getData(this.$store.state.router)
   },
   computed: {
     getSingerList () {
       return this.$store.state.singerList
+    },
+    getScore () {
+      return this.$store.state.router
     }
   },
   watch: {
@@ -340,6 +359,9 @@ export default {
       this.singerList = newVal.map((item) => item.name)
       this.songList = newVal.map((item) => item.songName)
       this.getAnysis()
+    },
+    getScore (newVal, oldVal) {
+      this.getData(newVal)
     }
   }
 }

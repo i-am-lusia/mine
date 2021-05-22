@@ -12,6 +12,7 @@
           @focus="isFocusing = true"
           :placeholder="placeholder"
           @keydown="dosearch"
+          v-model="key"
         />
       </label>
     </div>
@@ -19,6 +20,7 @@
       @click="
         isFocusing = false;
         isSearch = false;
+        key = ''
       "
       class="tocancel"
       v-if="isFocusing"
@@ -27,7 +29,7 @@
     <!-- 搜索历史 -->
     <div class="searchHistory" v-if="isFocusing && !isSearch">
       <span class="historyTitle">搜索历史</span>
-      <tags style="margin-left: 1rem" :list="history"></tags>
+      <tags style="margin-left: 1rem" :list="history" ></tags>
     </div>
     <!-- 热门搜索 -->
     <div class="hotSearch" v-if="isFocusing && !isSearch">
@@ -106,7 +108,8 @@ export default {
       history: [],
       hotList: [],
       searchResult: [],
-      songList: []
+      songList: [],
+      key: ''
     }
   },
   computed: {
@@ -156,7 +159,9 @@ export default {
       }
     },
     toSearch () {
+      console.log(this.key)
       this.$store.commit('updateScore', 'search')
+      this.search(this.key)
     },
     /** 获取历史记录 */
     async getHistory () {
