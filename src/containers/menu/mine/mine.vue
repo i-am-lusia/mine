@@ -118,6 +118,7 @@
                 align-items: center;
                 margin: 0.5rem;
               "
+              @click="isBatch=true"
             >
               <img style="width: 1rem" src="@/assets/images/heart1.png" />
               <span style="font-size: 0.4rem; margin-top: 0.15rem">喜欢</span>
@@ -202,14 +203,35 @@
     </el-dialog>
     <!-- 曲目 -->
     <transition>
-      <div class="songListBox">
+      <div class="songListBox" v-if="isBatch">
         <div class="boxTitle">
-          <span class="el-icon-arrow-left"  @click="isBatch=false"></span>
+          <span class="el-icon-arrow-left"  style="margin-left:5%;margin-right: 35%" @click="isBatch=false"></span>
           <span>{{this.title}}</span>
         </div>
-        <ul>
-          <li></li>
-        </ul>
+        <!-- 歌单 -->
+        <div class="list">
+      <ul>
+        <li v-for="(item, index) in songs" :key="index" @click="songChange(item)">
+          <div class="index">
+            <span>{{ index + 1 }}</span>
+          </div>
+          <div class="nameBox">
+            <span class="name">{{ item.name }}</span>
+            <div>
+              <span
+                style="
+                  white-space: nowrap;
+                  text-overflow: ellipsis;
+                  overflow: hidden;
+                "
+                >{{ item.ar[0].name }}-{{ item.name }}</span
+              >
+            </div>
+          </div>
+          <span class="el-icon-more"></span>
+        </li>
+      </ul>
+    </div>
       </div>
     </transition>
   </div>
@@ -262,8 +284,9 @@ export default {
       event: [],
       digitalAlbum: [],
       playlist: [],
-      isBatch: true,
-      title: '喜欢'
+      isBatch: false,
+      title: '喜欢',
+      songs: []
     }
   },
   methods: {
@@ -295,6 +318,14 @@ export default {
       })
       this.recommendSongData.listData = res.data.result
     },
+    /** 获取歌曲详情 */
+    async getSongDetail (id) {
+      const res = await axios({
+        url: `http://localhost:3000/song/detail?ids=${id}`,
+        withCredentials: true
+      })
+      this.songs.push(res.data.songs[0])
+    },
     /** 获取喜好歌单列表 */
     async getLikeSong () {
       const res = await axios({
@@ -302,6 +333,9 @@ export default {
         withCredentials: true
       })
       this.likeSong = res.data.ids
+      for (var i in this.likeSong) {
+        this.getSongDetail(this.likeSong[i])
+      }
     },
     /** 获取关注列表 */
     async getfollowedList () {
@@ -343,6 +377,11 @@ export default {
       })
       this.playlist = res.data.playlist
       this.ownSongData.listData.push(...res.data.playlist)
+    },
+    /** 播放当前歌曲 */
+    songChange (data) {
+      this.$store.commit('updateSongList', this.songs)
+      this.$store.commit('updateCurrentSongData', data)
     }
   },
   mounted () {
@@ -409,113 +448,17 @@ export default {
     width: 100%;
     height: 100%;
     position: fixed;
-    background-color:aqua;
+    background-color:#fff;
     z-index: 10;
     top: 0;
     overflow:scroll
 }
 .boxTitle{
     font-size: .5rem;
-    background-color: pink;
-}
-.box7-1{
-    width: 100%;
-    height: 5%;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    top: 0;
-    z-index: 1;
-}
-.box7-1-1{
-    font-size: .4rem;
-}
-.box7-1-2{
-    margin-left: 25%;
-    font-size: .4rem;
-    margin-right: 25%;
-    font-weight: 600;
-}
-.box7-1-3{
-    font-size: .4rem;
-}
-.box7-2{
-    padding: 0;
-    margin: 0;
-    list-style-type: none;
-    display: flex;
-    flex-direction: column;
-    margin-top: 10%;
-    width: 100%;
-    height: 87%;
-    overflow: scroll;
-    background: rgb(252, 252, 252);
-}
-.box7-3{
-    width: 100%;
-    height: 7%;
-    margin-top: .52%;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-}
-.box7-3 div{
-    width: 33.3%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-.box7-3 div span:nth-child(1){
-    font-size: .5rem;
-}
-.box7 ul li{
-    width: 100%;
     height: 1rem;
+    width: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
     align-items: center;
-    margin-top: .1rem;
-    margin-bottom: .1rem;
-}
-input[type="checkbox"]{
-    width:.3rem;
-    height:.3rem;
-    display: inline-block;
-    text-align: center;
-    vertical-align: middle;
-    line-height: .3rem;
-    position: relative;
-    border-radius: 50%;
-}
-input[type="checkbox"]::before{
-    content: "";
-    position: absolute;
-    background: #fff;
-    top: -.06rem;
-    left: -.05rem;
-    width: .36rem;
-    height: .36rem;
-    border: 1px solid #d9d9d9;
-    border-radius: 50%;
-}
-input[type="checkbox"]:checked::before{
-    content: "\2713";
-    background-color: rgb(26, 238, 238);
-    position: absolute;
-    top: -.06rem;
-    left: -.04rem;
-    width: .36rem;
-    height: .36rem;
-    border: 1px solid rgb(26, 238, 238);
-    color:#fff;
-    font-size: 20px;
-    font-weight: bold;
-    border-radius: 50%;
 }
 </style>
