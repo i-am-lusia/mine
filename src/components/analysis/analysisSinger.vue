@@ -1,6 +1,8 @@
 <template>
   <div id="analysisSinger">
-      <div id="singerRank"></div>
+    <div id="singerRank"></div>
+    <div id="songRank"></div>
+    <div id="yonghu"></div>
   </div>
 </template>
 <script>
@@ -10,15 +12,131 @@ export default {
   name: 'analysisSinger',
   data () {
     return {
-      singerList: (this.$store.state.singerList && this.$store.state.singerList.map((item) => item.name)) || [],
+      singerList:
+        (this.$store.state.singerList &&
+          this.$store.state.singerList.map((item) => item.name)) ||
+        [],
+      songList:
+        (this.$store.state.singerList &&
+          this.$store.state.singerList.map((item) => item.songName)) ||
+        [],
       singerName: [],
       singerData: [],
-      singerStartData: []
+      singerStartData: [],
+      songStartData: [],
+      songName: [],
+      songData: []
     }
   },
   methods: {
     /** 柱形图 */
-    initBarCharts () {
+    initSongCharts () {
+      this.chart = echarts.init(document.getElementById('songRank'))
+      var startIndex = Math.max(...this.singerData)
+      var length = this.songList.length
+      const option = {
+        title: {
+          text: '用户最常听歌曲排行榜',
+          x: 'center'
+        },
+        tooltip: {
+          formatter: '{b}历史播放量{c}首'
+        },
+        grid: {
+          top: 30,
+          left: 130
+        },
+        xAxis: {
+          max: 'dataMax',
+          label: {
+            formatter: function (n) {
+              return Math.round(n)
+            }
+          }
+        },
+        yAxis: {
+          type: 'category',
+          inverse: true,
+          max: this.songName.length,
+          axisLabel: {
+            show: true,
+            textStyle: {
+              fontSize: 14
+            },
+            rich: {
+              flag: {
+                fontSize: 25,
+                padding: 5
+              }
+            }
+          },
+          data: this.songName,
+          animationDuration: 2,
+          animationDurationUpdate: 1
+        },
+        series: [
+          {
+            realtimeSort: true,
+            seriesLayoutBy: 'column',
+            type: 'bar',
+            data: this.songData,
+            itemStyle: {
+              color: function (param) {
+                return (
+                  'rgb(' +
+                  [
+                    Math.round(Math.random() * 236),
+                    Math.round(Math.random() * 246),
+                    Math.round(Math.random() * 216)
+                  ].join(',') +
+                  ')'
+                )
+              }
+            },
+            encode: {
+              x: 0,
+              y: 3
+            },
+            label: {
+              show: true,
+              precision: 1,
+              position: 'right',
+              valueAnimation: true,
+              fontFamily: 'monospace'
+            }
+          }
+        ],
+        animationDuration: 0,
+        animationDurationUpdate: 0.5,
+        animationEasing: 'linear',
+        animationEasingUpdate: 'linear',
+        graphic: {
+          elements: [
+            {
+              type: 'text',
+              right: 150,
+              bottom: 60,
+              style: {
+                font: 'bolder 80px monospace',
+                fill: 'rgba(100, 100, 100, 0.25)'
+              },
+              z: 100
+            }
+          ]
+        }
+      }
+      this.chart.setOption(option)
+      for (var i = 0; i < startIndex; i++) {
+        for (var j = 0; j < length; j++) {
+          if (this.songStartData[j] < this.singerData[j]) {
+            this.songStartData[j]++
+            this.chart.setOption(option)
+          }
+        }
+      }
+    },
+    /** 歌手排行榜 */
+    initSingerCharts () {
       this.chart = echarts.init(document.getElementById('singerRank'))
       var startIndex = Math.max(...this.singerData)
       var length = this.singerName.length
@@ -32,7 +150,7 @@ export default {
         },
         grid: {
           top: 30,
-          left: 50
+          left: 130
         },
         xAxis: {
           max: 'dataMax',
@@ -62,49 +180,55 @@ export default {
           animationDuration: 2,
           animationDurationUpdate: 1
         },
-        series: [{
-          realtimeSort: true,
-          seriesLayoutBy: 'column',
-          type: 'bar',
-          data: this.singerStartData,
-          itemStyle: {
-            color: function (param) {
-              return 'rgb(' +
+        series: [
+          {
+            realtimeSort: true,
+            seriesLayoutBy: 'column',
+            type: 'bar',
+            data: this.singerStartData,
+            itemStyle: {
+              color: function (param) {
+                return (
+                  'rgb(' +
                   [
                     Math.round(Math.random() * 236),
                     Math.round(Math.random() * 246),
                     Math.round(Math.random() * 216)
                   ].join(',') +
                   ')'
+                )
+              }
+            },
+            encode: {
+              x: 0,
+              y: 3
+            },
+            label: {
+              show: true,
+              precision: 1,
+              position: 'right',
+              valueAnimation: true,
+              fontFamily: 'monospace'
             }
-          },
-          encode: {
-            x: 0,
-            y: 3
-          },
-          label: {
-            show: true,
-            precision: 1,
-            position: 'right',
-            valueAnimation: true,
-            fontFamily: 'monospace'
           }
-        }],
+        ],
         animationDuration: 0,
         animationDurationUpdate: 0.5,
         animationEasing: 'linear',
         animationEasingUpdate: 'linear',
         graphic: {
-          elements: [{
-            type: 'text',
-            right: 160,
-            bottom: 60,
-            style: {
-              font: 'bolder 80px monospace',
-              fill: 'rgba(100, 100, 100, 0.25)'
-            },
-            z: 100
-          }]
+          elements: [
+            {
+              type: 'text',
+              right: 150,
+              bottom: 60,
+              style: {
+                font: 'bolder 80px monospace',
+                fill: 'rgba(100, 100, 100, 0.25)'
+              },
+              z: 100
+            }
+          ]
         }
       }
       this.chart.setOption(option)
@@ -119,8 +243,16 @@ export default {
     },
     /** 数据处理 */
     getAnysis () {
+      this.singerData = []
+      this.singerName = []
+      this.singerStartData = []
+      this.songStartData = []
+      this.songName.length = 0
+      this.songData = []
       const singers = this.singerList.sort()
+      const songs = this.songList.sort()
       const length = singers.length
+      const len = songs.length
       for (var i = 0; i < length; i++) {
         var count = 0
         for (var j = i; j < length; j++) {
@@ -133,11 +265,70 @@ export default {
         this.singerStartData.push(0)
         i += count
       }
-      this.singerData && this.initBarCharts()
+      for (var m = 0; m < len; m++) {
+        var c = 0
+        for (var n = m; n < length; n++) {
+          if (songs[m] === songs[n]) {
+            c++
+          }
+        }
+        this.songName.push(songs[m])
+        this.songData.push(c)
+        this.songStartData.push(0)
+        m += c
+      }
+      console.log(this.songName)
+      this.singerData && this.initSingerCharts()
+      this.songData && this.initSongCharts()
+    },
+    /** 用户活跃度 */
+    initCharts () {
+      this.chart = echarts.init(document.getElementById('yonghu'))
+      const option = {
+        title: {
+          text: '用户系统功能使用雷达图',
+          x: 'center',
+          subtext: '用户活跃度：42.3'
+        },
+        legend: {
+          data: ['预算分配（Allocated Budget）']
+        },
+        radar: {
+          // shape: 'circle',
+          indicator: [
+            { name: '用户个性化推荐(Recommand)', max: 6500 },
+            { name: '搜索（Search)', max: 10 },
+            { name: '音乐盒子（Playbox）', max: 16000 },
+            { name: '音乐馆推荐（Musicstore Recommand）', max: 30000 },
+            { name: '个人中心(Personal Center)', max: 38000 },
+            { name: '歌手（Singer）', max: 52000 },
+            { name: '排行榜（Rank）', max: 25000 }
+          ]
+        },
+        series: [
+          {
+            name: '',
+            type: 'radar',
+            top: 0,
+            data: [
+              {
+                value: [3000, 3, 13000, 9000, 30000, 10500, 9000],
+                name: ''
+              }
+            ],
+
+            itemStyle: {
+              color: '#c23501'
+            }
+          }
+        ]
+      }
+      this.chart.setOption(option)
     }
   },
   mounted () {
     this.singerList && this.getAnysis()
+    this.initCharts()
   },
   computed: {
     getSingerList () {
@@ -147,6 +338,8 @@ export default {
   watch: {
     getSingerList (newVal, oldVal) {
       this.singerList = newVal.map((item) => item.name)
+      this.songList = newVal.map((item) => item.songName)
+      this.getAnysis()
     }
   }
 }
@@ -154,9 +347,11 @@ export default {
 <style scoped>
 #analysisSinger {
   width: 100%;
-  height: 10rem;
+  height: 30rem;
 }
-#singerRank {
+#singerRank,
+#songRank,
+#yonghu {
   width: 100%;
   height: 10rem;
   margin-bottom: 0.5rem;

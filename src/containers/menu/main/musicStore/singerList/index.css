@@ -34,7 +34,7 @@
     position: fixed;
     z-index: 4;
     right: 0;
-    top: 20%;
+    top: 0;
   }
   /** 常听歌手列表样式 */
   .singerBox {

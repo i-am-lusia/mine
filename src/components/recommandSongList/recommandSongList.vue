@@ -22,7 +22,7 @@
                 >{{ item.name }}-{{ songListData.singerName }}</span
               >
               <span v-if="!item.artists"
-                >{{ item.name }}-{{ songListData.singerName }}</span
+                >{{ item.song.album.name }}-{{ item.name }}</span
               >
               <span>{{ item.description }}</span>
             </div>
@@ -50,6 +50,9 @@ export default {
     play (item) {
       this.get(item.id)
     }
+  },
+  mounted () {
+    console.log(this.songListData)
   }
 }
 </script>

@@ -1,7 +1,7 @@
 <template>
   <div id="search" :class="{ issearch: isFocusing, isnotsearch: !isFocusing }">
     <div :class="{ tosearch: !isFocusing, istosearch: isFocusing }">
-      <div class="el-icon-search"></div>
+      <div class="el-icon-search" @click="toSearch"></div>
       <label
         :data-before="before"
         :data-after="after"
@@ -154,6 +154,9 @@ export default {
       if (e.keyCode === 13) {
         console.log(this.keywords[this.currentIndex])
       }
+    },
+    toSearch () {
+      this.$store.commit('updateScore', 'search')
     },
     /** 获取历史记录 */
     async getHistory () {

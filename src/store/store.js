@@ -12,7 +12,17 @@ const store = new Vuex.Store({
     lyricList: [],
     tags: [],
     singerList: [],
-    nearSongList: []
+    nearSongList: [],
+    router: {
+      playbox: 0,
+      musicStore: 0,
+      search: 0,
+      recommand: 0,
+      own: 0,
+      singger: 0,
+      rankList: 0,
+      total: 0
+    }
   },
   mutations: {
     /** 更新当前用户账户信息 */
@@ -28,6 +38,7 @@ const store = new Vuex.Store({
       state.currentSong = currentSong
       state.nearSongList.unshift(currentSong)
       state.singerList.unshift({
+        songName: currentSong.name,
         name: currentSong.ar[0].name,
         id: currentSong.ar[0].id
       })
@@ -54,6 +65,20 @@ const store = new Vuex.Store({
     /** 更新歌单类型 */
     updateTags (state, data) {
       state.tags.push(data)
+    },
+    /** 积分累积 */
+    updateScore (state, type) {
+      state.router.total++
+      switch (type) {
+        case 'playbox': state.router.playbox++; break
+        case 'musicStore': state.router.musicStore++; break
+        case 'recommand': state.router.recommand++; break
+        case 'own': state.router.own++; break
+        case 'singger': state.router.singger++; break
+        case 'rankList': state.router.rankList++; break
+        case 'search': state.router.search++; break
+      }
+      console.log(state.router)
     }
   }
 })

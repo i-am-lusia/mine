@@ -6,7 +6,7 @@
       <span style="margin-right: 36%;">歌手</span>
       <span class="el-icon-search"></span>
     </div>
-    <!-- 常听的歌手 -->
+    <!-- 常听的歌手
     <div class="title" style="height: 0.8rem;font-size: 0.35rem;color: grey;">
       <span style="margin-left: 10%;margin-right: 50%;">常见歌手</span>
       <span >关注歌手 ></span>
@@ -22,7 +22,7 @@
           </div>
         </li>
       </ul>
-    </div>
+    </div> -->
     <!-- 歌手分类区 -->
     <div class="classifyBox" style="margin-top: 0.3rem">
       <el-radio-group v-model="type1" @change="Toarea">
@@ -290,5 +290,7 @@ export default {
 </script>
 <style scoped>
 @import './index.css';
-
+#singer::-webkit-scrollbar{
+  display: none;
+}
 </style>

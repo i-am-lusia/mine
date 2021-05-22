@@ -170,6 +170,7 @@ export default {
     /** 控制当前音乐盒子显隐 */
     toPlaysong (data) {
       this.isPlaysong = data
+      this.$store.commit('updateScore', 'playbox')
     },
     /** 当前歌曲播放结束 */
     ended () {
@@ -317,6 +318,7 @@ export default {
       this.songMessage.songName = newVal.name
       this.songMessage.songpic = newVal.al.picUrl
       this.songMessage.songAuthor = newVal.ar[0].name
+      this.songMessage.singgerId = newVal.ar[0].id
       this.getMusicUrl(newVal.id)
       this.getLyrics(newVal.id)
       this.isPlay = true

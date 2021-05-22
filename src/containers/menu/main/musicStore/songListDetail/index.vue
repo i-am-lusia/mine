@@ -151,7 +151,7 @@
             style="width: 0.5rem; height: 0.5rem"
             src="@/assets/images/like1.png"
           />
-          <span style="margin-left: 0.1rem">13245</span>
+          <span style="margin-left: 0.1rem">{{playlist.shareCount}}</span>
         </div>
         <div class="sign">
           <span class="el-icon-chat-dot-square" @click="dialogVisible=true"></span>
@@ -223,7 +223,7 @@
         class="el-icon-video-play"
         style="font-size: 0.5rem; margin-left: 5%; margin-right: 1%"
       ></span>
-      <span>全部播放（123首）</span>
+      <span>全部播放（{{songs.length}}首）</span>
       <span
         class="el-icon-download"
         style="margin-left: 40%; margin-right: 2.5%; font-size: 0.5rem"
@@ -323,16 +323,13 @@
             playlist.name
           }}</span>
           <div class="box8-2-2">
-            <img class="h-pic" :src="playlist.creator.backgroundUrl" />
             <span style="font-size: 0.4rem; color: white">{{
               playlist.creator.nickname
             }}</span>
           </div>
           <div class="box8-2-3">
             <ul>
-              <!-- <li v-for="(item,index) in playlist.tags" :key="index">{{item}}</li> -->
-              <li>dasdnjhas</li>
-              <li>fakjnf</li>
+              <li v-for="(item,index) in playlist.tags" :key="index">{{item}}</li>
             </ul>
           </div>
         </div>
@@ -402,6 +399,7 @@ export default {
       tags.map((item) => { this.$store.commit('updateTags', item) })
       this.songs = res.data.playlist.tracks
       this.playlist = res.data.playlist
+      console.log(res)
     },
     chkAll () {
       var that = this

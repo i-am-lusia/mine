@@ -331,6 +331,7 @@ export default {
       })
       this.singerMessage = res.data.data.artist
     },
+    /** 歌词信息 */
     async getSongData () {
       var url = `http://localhost:3000/artists?id=${this.singerId}`
       const res = await axios({
@@ -339,6 +340,7 @@ export default {
       })
       this.songs = res.data.hotSongs
     },
+    /** 专辑 */
     async getAblum () {
       var url = `http://localhost:3000/artist/album?id=${this.singerId}`
       const res = await axios({
@@ -348,6 +350,7 @@ export default {
       this.albums = res.data.hotAlbums
       this.top = res.data.hotAlbums[0]
     },
+    /** MV */
     async getMv () {
       var url = `http://localhost:3000/artist/mv?id=${this.singerId}`
       const res = await axios({
@@ -358,6 +361,7 @@ export default {
       this.mv1 = res.data.mvs.slice(0, Math.floor(len / 2))
       this.mv2 = res.data.mvs.slice(Math.floor(len / 2), len)
     },
+    /** 相似歌手 */
     async getSimi () {
       var url = `http://localhost:3000/simi/artist?id=${this.singerId}`
       const res = await axios({
@@ -366,6 +370,7 @@ export default {
       })
       this.simi = res.data.artists
     },
+    /** 歌手详情介绍 */
     async getSingerDec () {
       var url = `http://localhost:3000/artist/desc?id=${this.singerId}`
       const res = await axios({

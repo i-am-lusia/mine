@@ -86,6 +86,7 @@ export default {
         url: `http://localhost:3000/recommend/resource`,
         withCredentials: true
       })
+      console.log(res)
       this.recommend = res.data.recommend[0]
       this.recommendPic = res.data.recommend[0].picUrl
       this.ktv = res.data.recommend[1]

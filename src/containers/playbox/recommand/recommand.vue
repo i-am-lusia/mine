@@ -16,7 +16,7 @@
             <div class="cd">
               <img :src="songMessage.songpic"/>
               <span>专辑：</span>
-              <span>{{cd}}</span>
+              <span>{{songMessage.al.name}}</span>
             </div>
           </div>
         </div>
@@ -27,7 +27,7 @@
             <img  src="@/assets/images/play.png"/>
           </div>
           <ul  class="list">
-            <li v-for="(item,index) in relatedSongList" :key="index">{{item.name}}-{{item.singger}}</li>
+            <li v-for="(item,index) in relatedSongList" :key="index">{{item.name}}-{{item.artists[0].name}}</li>
           </ul>
         </div>
       </div>
@@ -37,8 +37,8 @@
           相关歌单
           <div class="el-icon-refresh">换一批</div>
         </div>
-        <ul>
-          <li class="list-item"  v-for="(item,index) in relatedList" :key="index">
+        <ul >
+          <li class="list-item"  v-for="(item,index) in relatedList" :key="index" >
             <img :src="item.pic"/>
             <div class="item-box">
               <div class="item-title">{{item.name}}</div>
@@ -53,9 +53,9 @@
         <div class="box">
           <div class="title">相关视频</div>
           <ul>
-            <li v-for="item in relatedVideo" :key="item.name">
-             <!-- <iframe :src="item.add"></iframe> -->
-              <div>{{item.name}}</div>
+            <li v-for="item in relatedVideo" :key="item.name" style="display:flex;flex-direction: column;">
+              <img :src="item.cover" style="width: 5rem;height: 3rem" />
+              <div>{{item.name}}-{{item.artistName}}</div>
             </li>
           </ul>
         </div>
@@ -63,6 +63,7 @@
     </div>
 </template>
 <script>
+import axios from 'axios'
 export default {
   name: 'recommand',
   props: ['songMessage'],
@@ -76,27 +77,66 @@ export default {
       cd: 'Cut loose',
       singgerPic: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1604480726335&di=91dbc3aa477aa32ded0fa035be9b0713&imgtype=0&src=http%3A%2F%2Fpic4.zhimg.com%2F50%2Fv2-80eb0ba133165968229769261f2d0e12_hd.jpg',
       cdPic: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1604480482755&di=679ef9484ee5495b3afda4f8cde69bb1&imgtype=0&src=http%3A%2F%2Fc-ssl.duitang.com%2Fuploads%2Fitem%2F201908%2F27%2F20190827043959_tydrf.thumb.400_0.jpeg',
-      relatedSongList: [
-        {name: 'shfdjsaf',
-          singger: '12545225'},
-        {
-          name: 'fassadfg',
-          singger: '4fd5s4f5s'
-        }
-      ],
-      relatedList: [
-        {
-          name: 'fhauisdghaisudgiusdaoj',
-          number: '5654',
-          pic: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1604497654148&di=0e2a629397febf1179ed24c56e0ef843&imgtype=0&src=http%3A%2F%2Fcdnimg103.lizhi.fm%2Faudio_cover%2F2019%2F08%2F30%2F2757103042509859335_320x320.jpg'
-        }
-      ],
-      relatedVideo: [
-        {
-          name: 'gfsidkgojs',
-          add: 'http://player.youku.com/embed/XMzcwNTY3NTM2MA'
-        }
-      ]
+      relatedSongList: [],
+      relatedList: [],
+      relatedVideo: []
+    }
+  },
+  methods: {
+    /** 歌手信息 */
+    async getSingerData (id) {
+      var url = `http://localhost:3000/artist/detail?id=${id}`
+      const res = await axios({
+        url: url,
+        withCredentials: true
+      })
+      this.singgerPic = res.data.data.artist.cover
+    },
+    /** 相似音乐 */
+    async getSimiSongData (id) {
+      var url = `http://localhost:3000/simi/song?id=${id}`
+      const res = await axios({
+        url: url,
+        withCredentials: true
+      })
+      this.relatedSongList = res.data.songs
+    },
+    /** 相似歌单 */
+    async getSimiAblum (id) {
+      var url = `http://localhost:3000/simi/playlist?id=${id}`
+      const res = await axios({
+        url: url,
+        withCredentials: true
+      })
+      this.relatedList = res.data.playlist
+    },
+    /** 相似mv */
+    async getSimiMV (id) {
+      var url = `http://localhost:3000/simi/mv?mvid=${id}`
+      const res = await axios({
+        url: url,
+        withCredentials: true
+      })
+      console.log(res)
+      this.relatedVideo = res.data.mvs
+    }
+  },
+  mounted () {
+    console.log(this.songMessage)
+    this.songMessage.singgerId && this.getSingerData(this.songMessage.singgerId)
+    this.songMessage.id && this.getSimiSongData(this.songMessage.id)
+    this.songMessage.al.id && this.getSimiAblum(this.songMessage.al.id)
+    this.songMessage.mv && this.getSimiMV(this.songMessage.mv)
+  },
+  watch: {
+    songMessage: {
+      deep: true,
+      handler (newVal, oldVal) {
+        this.getSingerData(newVal.singgerId)
+        this.getSimiSongData(newVal.id)
+        this.getSimiAblum(newVal.al.id)
+        this.getSimiMV(newVal.mv)
+      }
     }
   }
 }
@@ -105,7 +145,7 @@ export default {
 #recommand {
   width: 100%;
   height: 100%;
-  background: gainsboro;
+  background: #4F4F4F;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;

@@ -123,6 +123,17 @@ export default {
       if (to.path === '/recommand' || to.path === '/musicstore' || to.path === '/fourth') {
         this.$store.commit('updateFullScreen', false)
       } else this.$store.commit('updateFullScreen', true)
+      switch (to.path) {
+        case '/fourth': this.$store.commit('updateScore', 'own'); break
+        case '/recommand': this.$store.commit('updateScore', 'recommand'); break
+        case '/musicstore': this.$store.commit('updateScore', 'musiStore'); break
+        case '/songListDetail': this.$store.commit('updateScore', 'musiStore'); break
+        case '/singerList': this.$store.commit('updateScore', 'singger'); break
+        case '/singerDetail': this.$store.commit('updateScore', 'singger'); break
+        case '/rankList': this.$store.commit('updateScore', 'rankList'); break
+        case '/rankDetail': this.$store.commit('updateScore', 'rankList'); break
+        case '/songList': this.$store.commit('updateScore', 'musiStore'); break
+      }
     }
   },
   mounted () {
