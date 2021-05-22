@@ -44,7 +44,7 @@
                         margin-left: 0.2rem;
                         margin-right: 0.3rem;
                       "
-                      >{{followed.length}}</span
+                      >{{ followed.length }}</span
                     >
                   </div>
                   <div style="border-right: gainsboro solid 2px">
@@ -55,7 +55,7 @@
                         margin-left: 0.2rem;
                         margin-right: 0.3rem;
                       "
-                      >{{fans.length}}</span
+                      >{{ fans.length }}</span
                     >
                   </div>
                   <div style="border-right: gainsboro solid 2px">
@@ -66,7 +66,7 @@
                         margin-left: 0.2rem;
                         margin-right: 0.3rem;
                       "
-                      >{{event.length}}</span
+                      >{{ event.length }}</span
                     >
                   </div>
                 </div>
@@ -74,45 +74,99 @@
             </div>
           </div>
           <!-- 活动中心 -->
-          <div class="ownBlock" style="width:90%;height: 2rem">
+          <div class="ownBlock" style="width: 90%; height: 2rem">
             <div id="activity">
-              <div style="display: flex;justify-content: center;">
-                <img style="width:1rem;height:1rem" src="@/assets/images/act1.png" />
-                <div style="margin-left:.2rem">
-                  <div style="font-size: .5rem;">活动中心</div>
-                  <div style="color:grey;font-size: .35rem;">签到七天赢绿砖</div>
+              <div style="display: flex; justify-content: center">
+                <img
+                  style="width: 1rem; height: 1rem"
+                  src="@/assets/images/act1.png"
+                />
+                <div style="margin-left: 0.2rem">
+                  <div style="font-size: 0.5rem">活动中心</div>
+                  <div style="color: grey; font-size: 0.35rem">
+                    签到七天赢绿砖
+                  </div>
                 </div>
               </div>
-              <div style="display: flex;justify-content: center;margin-left: .5rem">
-                <img style="width:1rem;height:1rem" src="@/assets/images/act2.png" />
-                <div style="margin-left:.2rem">
-                  <div style="font-size: .5rem;">会员中心</div>
-                  <div style="color:grey;font-size: .35rem;">VIP热门新碟🎵</div>
+              <div
+                style="
+                  display: flex;
+                  justify-content: center;
+                  margin-left: 0.5rem;
+                "
+              >
+                <img
+                  style="width: 1rem; height: 1rem"
+                  src="@/assets/images/act2.png"
+                />
+                <div style="margin-left: 0.2rem">
+                  <div style="font-size: 0.5rem">会员中心</div>
+                  <div style="color: grey; font-size: 0.35rem">
+                    VIP热门新碟🎵
+                  </div>
                 </div>
               </div>
             </div>
           </div>
           <!-- 按键 -->
-          <div class="ownBlock" style="width:90%;height: 3rem">
-             <div style="display: flex;flex-direction: column;justify-content: center;align-items: center;margin: .5rem;">
-                <img style="width: 1rem;" src="@/assets/images/heart1.png">
-                <span style="font-size:.4rem;margin-top: .15rem">喜欢</span>
-                <span style="font-size:.2rem;color: gray;">{{this.likeSong.length}}</span>
+          <div class="ownBlock" style="width: 90%; height: 3rem">
+            <div
+              style="
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                margin: 0.5rem;
+              "
+            >
+              <img style="width: 1rem" src="@/assets/images/heart1.png" />
+              <span style="font-size: 0.4rem; margin-top: 0.15rem">喜欢</span>
+              <span style="font-size: 0.2rem; color: gray">{{
+                this.likeSong.length
+              }}</span>
             </div>
-            <div style="display: flex;flex-direction: column;justify-content: center;align-items: center;margin: .5rem;">
-                <img style="width: 1rem;"  src="@/assets/images/download1.png">
-                <span style="font-size:.4rem;margin-top: .15rem">本地</span>
-                <span style="font-size:.2rem;color: gray;">0</span>
+            <div
+              style="
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                margin: 0.5rem;
+              "
+            >
+              <img style="width: 1rem" src="@/assets/images/download1.png" />
+              <span style="font-size: 0.4rem; margin-top: 0.15rem">本地</span>
+              <span style="font-size: 0.2rem; color: gray">0</span>
             </div>
-            <div style="display: flex;flex-direction: column;justify-content: center;align-items: center;margin: .5rem;">
-                <img style="width: 1rem;" src="@/assets/images/songlist2.png">
-                <span style="font-size:.4rem;margin-top: .15rem">歌单</span>
-                <span style="font-size:.2rem;color: gray;">{{playlist.length}}</span>
+            <div
+              style="
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                margin: 0.5rem;
+              "
+            >
+              <img style="width: 1rem" src="@/assets/images/songlist2.png" />
+              <span style="font-size: 0.4rem; margin-top: 0.15rem">歌单</span>
+              <span style="font-size: 0.2rem; color: gray">{{
+                playlist.length
+              }}</span>
             </div>
-            <div style="display: flex;flex-direction: column;justify-content: center;align-items: center;margin: .5rem;">
-                <img style="width: 1rem;" src="@/assets/images/yigou.png">
-                <span style="font-size:.4rem;margin-top: .15rem">已购</span>
-                <span style="font-size:.2rem;color: gray;">{{digitalAlbum.length}}</span>
+            <div
+              style="
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                margin: 0.5rem;
+              "
+            >
+              <img style="width: 1rem" src="@/assets/images/yigou.png" />
+              <span style="font-size: 0.4rem; margin-top: 0.15rem">已购</span>
+              <span style="font-size: 0.2rem; color: gray">{{
+                digitalAlbum.length
+              }}</span>
             </div>
           </div>
           <!-- 最近播放 -->
@@ -124,7 +178,7 @@
             <songlist :songListData="ownSongData"></songlist>
           </div>
           <!-- 推荐歌单 -->
-          <div class="ownBlock" style="background: white;height: 8rem">
+          <div class="ownBlock" style="background: white; height: 8rem">
             <songlist :songListData="recommendSongData"></songlist>
           </div>
         </div>
@@ -132,6 +186,7 @@
     </el-tabs>
     <span class="el-icon-message" @click="toMessage"></span>
     <span class="el-icon-more" @click="toMore"></span>
+    <!-- 用户分析报告 -->
     <el-dialog
       title="用户数据分析报告"
       :fullscreen="true"
@@ -139,12 +194,24 @@
       :modal="false"
       :modal-append-to-body="false"
     >
-    <div style=" height: 15rem;overflow: scroll;">
-    <analysisTags></analysisTags>
-    <analysisSinger></analysisSinger>
-    <analysisLyric></analysisLyric>
-    </div>
+      <div style="height: 15rem; overflow: scroll">
+        <analysisTags></analysisTags>
+        <analysisSinger></analysisSinger>
+        <analysisLyric></analysisLyric>
+      </div>
     </el-dialog>
+    <!-- 曲目 -->
+    <transition>
+      <div class="songListBox">
+        <div class="boxTitle">
+          <span class="el-icon-arrow-left"  @click="isBatch=false"></span>
+          <span>{{this.title}}</span>
+        </div>
+        <ul>
+          <li></li>
+        </ul>
+      </div>
+    </transition>
   </div>
 </template>
 <script>
@@ -194,7 +261,9 @@ export default {
       fans: [],
       event: [],
       digitalAlbum: [],
-      playlist: []
+      playlist: [],
+      isBatch: true,
+      title: '喜欢'
     }
   },
   methods: {
@@ -310,15 +379,15 @@ export default {
 </script>
 <style scoped>
 @import "./index.css";
-#mine{
+#mine {
   height: 14rem;
   overflow: scroll;
 }
-#mine >>> .el-dialog__body{
+#mine >>> .el-dialog__body {
   padding: 0;
-  margin-top: .5rem;
+  margin-top: 0.5rem;
 }
-#mine::-webkit-scrollbar{
+#mine::-webkit-scrollbar {
   display: none;
 }
 #own {
@@ -335,5 +404,118 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.songListBox{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    background-color:aqua;
+    z-index: 10;
+    top: 0;
+    overflow:scroll
+}
+.boxTitle{
+    font-size: .5rem;
+    background-color: pink;
+}
+.box7-1{
+    width: 100%;
+    height: 5%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    z-index: 1;
+}
+.box7-1-1{
+    font-size: .4rem;
+}
+.box7-1-2{
+    margin-left: 25%;
+    font-size: .4rem;
+    margin-right: 25%;
+    font-weight: 600;
+}
+.box7-1-3{
+    font-size: .4rem;
+}
+.box7-2{
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    margin-top: 10%;
+    width: 100%;
+    height: 87%;
+    overflow: scroll;
+    background: rgb(252, 252, 252);
+}
+.box7-3{
+    width: 100%;
+    height: 7%;
+    margin-top: .52%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.box7-3 div{
+    width: 33.3%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.box7-3 div span:nth-child(1){
+    font-size: .5rem;
+}
+.box7 ul li{
+    width: 100%;
+    height: 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: .1rem;
+    margin-bottom: .1rem;
+}
+input[type="checkbox"]{
+    width:.3rem;
+    height:.3rem;
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    line-height: .3rem;
+    position: relative;
+    border-radius: 50%;
+}
+input[type="checkbox"]::before{
+    content: "";
+    position: absolute;
+    background: #fff;
+    top: -.06rem;
+    left: -.05rem;
+    width: .36rem;
+    height: .36rem;
+    border: 1px solid #d9d9d9;
+    border-radius: 50%;
+}
+input[type="checkbox"]:checked::before{
+    content: "\2713";
+    background-color: rgb(26, 238, 238);
+    position: absolute;
+    top: -.06rem;
+    left: -.04rem;
+    width: .36rem;
+    height: .36rem;
+    border: 1px solid rgb(26, 238, 238);
+    color:#fff;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 50%;
 }
 </style>
