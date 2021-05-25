@@ -7,7 +7,8 @@
             <ul>
                 <li v-for="(item,index) in liveData.listData" :key="index">
                      <div class="box3">
-                        <img class="pic1" :src="item.picUrl"/>
+                        <img class="pic1" v-if="item.picUrl" :src="item.picUrl"/>
+                        <img class="pic1" v-if="!item.picUrl" :src="item.blurCoverUrl"/>
                             <div class="tags">
                                 <div class="tag1">
                                     <img class="logo1" src="@/assets/images/live1.png"/>

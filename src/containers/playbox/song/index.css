@@ -20,7 +20,7 @@
 }
 
 .song-box {
-  width: 60%;
+  width: 70%;
   margin-left: 10%;
   margin-top: .5rem;
   height: 2.5rem;
@@ -70,9 +70,10 @@
 }
 
 .song-lyric {
-  margin-top: .1rem;
-  margin-bottom: .2rem;
   color: whitesmoke;
+  white-space: nowrap;
+  overflow: hidden;
+  justify-content: flex-start;
   font-size: .4rem;
 }
 
@@ -116,7 +117,7 @@
 }
 
 p:nth-child(2) {
-  margin-left: 100%;
+  margin-left: 80%;
 }
 
 .song-button {

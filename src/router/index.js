@@ -22,11 +22,47 @@ export default new Router({
         },
         {
           path: '/recommand',
-          component: resolve => require(['../containers/menu/main/recommand/recommand.vue'], resolve)
+          component: resolve => require(['../containers/menu/main/recommand/index.vue'], resolve),
+          children: [
+            {
+              path: '/',
+              component: resolve => require(['../containers/menu/main/recommand/recommand.vue'], resolve)
+            }
+          ]
         },
         {
           path: '/musicstore',
-          component: resolve => require(['../containers/menu/main/musicStore/musicStore.vue'], resolve)
+          component: resolve => require(['../containers/menu/main/musicStore/index.vue'], resolve),
+          children: [
+            {
+              path: '/',
+              component: resolve => require(['../containers/menu/main/musicStore/musicStore.vue'], resolve)
+            },
+            {
+              path: '/singerList',
+              component: resolve => require(['../containers/menu/main/musicStore/singerList/index.vue'], resolve)
+            },
+            {
+              path: '/singerDetail',
+              component: resolve => require(['../containers/menu/main/musicStore/singerDetail/index.vue'], resolve)
+            },
+            {
+              path: '/rankList',
+              component: resolve => require(['../containers/menu/main/musicStore/rankList/index.vue'], resolve)
+            },
+            {
+              path: '/rankDetail',
+              component: resolve => require(['../containers/menu/main/musicStore/rankDetail/index.vue'], resolve)
+            },
+            {
+              path: '/songList',
+              component: resolve => require(['../containers/menu/main/musicStore/songListClass/index.vue'], resolve)
+            },
+            {
+              path: '/songListDetail',
+              component: resolve => require(['../containers/menu/main/musicStore/songListDetail/index.vue'], resolve)
+            }
+          ]
         }
       ],
       components: {
@@ -36,8 +72,14 @@ export default new Router({
     {
       path: '/fourth',
       components: {
-        content: resolve => require(['../containers/menu/mine/mine.vue'], resolve)
-      }
+        content: resolve => require(['../containers/menu/mine/index.vue'], resolve)
+      },
+      children: [
+        {
+          path: '/',
+          component: resolve => require(['../containers/menu/mine/mine.vue'], resolve)
+        }
+      ]
     }
   ]
 })

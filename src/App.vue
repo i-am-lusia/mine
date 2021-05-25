@@ -12,7 +12,7 @@
         <playbox></playbox>
       </div>
     </transition>
-    <!-- 二维码登录模块
+    <!-- 二维码登录模块 -->
     <div class='qrCodeBox' v-if="!isLogin">
       <div style="font-size: .3rem;margin-top: 1rem;margin-left:2rem;font-weight: 600">
         <span>请用手机下面二维码以进入音乐播放器：</span>
@@ -22,18 +22,10 @@
         <span>注意： 本音乐播放器暂未开放除二维码的登录方式</span>
       </div>
     </div>
-    -->
   </div>
 </template>
 <script>
 import menulist from '../src/containers/menu/menulist.vue'
-import Playlist from './components/playlist/playlist.vue'
-import singer from '@/components/pages/first/singer.vue'
-import Allranks from './components/pages/first/allranks.vue'
-import Onerank from './components/pages/first/onerank.vue'
-import Songlist from './components/pages/first/songlist.vue'
-import Onesinger from './components/pages/first/onesinger.vue'
-import Fourth from './components/pages/fourth/fourth.vue'
 import Playbox from './containers/playbox/playbox.vue'
 import Searchbox from './components/searchbox/searchbox.vue'
 import axios from 'axios'
@@ -41,13 +33,6 @@ export default {
   name: 'App',
   components: {
     menulist,
-    Playlist,
-    singer,
-    Allranks,
-    Onerank,
-    Songlist,
-    Onesinger,
-    Fourth,
     Playbox,
     Searchbox
   },
@@ -75,7 +60,6 @@ export default {
     },
     menuto (data) {
       this.menuindex = data
-      console.log(this.menuindex)
       switch (this.menuindex) {
         case '1':this.$router.push({path: '/first'}); return
         case '2':this.$router.push({path: '/second'}); return
@@ -86,50 +70,77 @@ export default {
     tolist () {
       this.isSongList = true
     },
+    async checkStatus (key) {
+      const res = await axios({
+        url: `http://localhost:3000/login/qr/check?key=${key}&timerstamp=${Date.now()}`,
+        withCredentials: true
+      })
+      return res.data
+    },
     async getLoginStatus () {
       const res = await axios({
         url: `http://localhost:3000/login/status?timerstamp=${Date.now()}`,
         withCredentials: true
       })
-      this.userData = res.data
-      if (res.data) this.isLogin = true
+      this.userData = res.data.data
+      if (res.data.data.account) {
+        this.$store.commit('updateUserData', this.userData)
+        this.isLogin = true
+      }
     },
     async login () {
       var that = this
       this.getLoginStatus()
       const res1 = await axios({
         method: 'get',
-        url: `http://localhost:3000/login/status?timerstamp=${Date.now()}`,
+        url: `http://localhost:3000/login/qr/key?timerstamp=${Date.now()}`,
         withCredentials: true
       })
       that.unikey = res1.data.data.unikey
       const res2 = await axios({
-        url: `http://localhost:3000/login/qr/create?key=${res1.data.unikey}&qrimg=true&timerstamp=${Date.now()}`,
+        url: `http://localhost:3000/login/qr/create?key=${that.unikey}&qrimg=true&timerstamp=${Date.now()}`,
         withCredentials: true
       })
       that.qrCode = res2.data.data.qrimg
       let timer = setInterval(async () => {
         if (this.isLogin) return
-        const status = this.checkStatus()
+        const status = await this.checkStatus(that.unikey)
         if (status.code === 800) {
-          alert('二维码已过期,请重新获取')
+          console.log('二维码已过期,请重新获取')
           clearInterval(timer)
         }
         if (status.code === 803) {
           clearInterval(timer)
-          alert('登录成功')
+          console.log('登录成功')
           this.getLoginStatus()
           this.isLogin = true
         }
       }, 3000)
     }
   },
+  watch: {
+    $route (to, from) {
+      if (to.path === '/recommand' || to.path === '/musicstore' || to.path === '/fourth') {
+        this.$store.commit('updateFullScreen', false)
+      } else this.$store.commit('updateFullScreen', true)
+      switch (to.path) {
+        case '/fourth': this.$store.commit('updateScore', 'own'); break
+        case '/recommand': this.$store.commit('updateScore', 'recommand'); break
+        case '/musicstore': this.$store.commit('updateScore', 'musicStore'); break
+        case '/songListDetail': this.$store.commit('updateScore', 'musicStore'); break
+        case '/singerList': this.$store.commit('updateScore', 'singger'); break
+        case '/singerDetail': this.$store.commit('updateScore', 'singger'); break
+        case '/rankList': this.$store.commit('updateScore', 'rankList'); break
+        case '/rankDetail': this.$store.commit('updateScore', 'rankList'); break
+        case '/songList': this.$store.commit('updateScore', 'musicStore'); break
+      }
+    }
+  },
   mounted () {
-    // this.login()
+    this.login()
   }
 }
 </script>
-
 <style>
 .qrCodeBox{
   position: absolute;

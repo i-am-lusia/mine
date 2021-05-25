@@ -2,25 +2,13 @@
     <div id="menulist" >
       <el-row>
         <el-menu class="el-menu-vertical-demo" default-active="1"  >
-            <el-col :span="6">
+            <el-col :span="12">
               <el-menu-item index="1" @click="toPath">
                 <img class="logo-music" src="@/assets/images/music1.png"/>
                 <div >首页</div>
               </el-menu-item>
             </el-col>
-            <el-col :span="6">
-              <el-menu-item index="2" @click="toPath">
-                <img  class="logo-video" src="@/assets/images/video1.png"/>
-                <div>视频</div>
-              </el-menu-item>
-            </el-col>
-            <el-col :span="6">
-              <el-menu-item index="3" @click="toPath">
-                <img class="logo-putong" src="@/assets/images/putong1.png"/>
-                <div>扑通</div>
-              </el-menu-item>
-            </el-col>
-            <el-col :span="6" >
+            <el-col :span="12" >
             <el-menu-item index="4" @click="toPath">
                 <img class="logo-wode" src="@/assets/images/wode1.png"/>
                 <div>我的</div>

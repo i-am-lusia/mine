@@ -1,29 +1,292 @@
 <template>
-    <div id='mine'>
-        <el-tabs  class="tab">
-          <el-tab-pane>
-            <span slot="label">
-              <span class="pane1">我的</span>
-            </span>
-          </el-tab-pane>
-        </el-tabs>
-        <span class="el-icon-message" @click="toMessage"></span>
-        <span class="el-icon-more" @click="toMore"></span>
+  <div id="mine">
+    <el-tabs class="tab">
+      <el-tab-pane>
+        <span slot="label">
+          <span class="pane1">我的</span>
+        </span>
+        <div id="own">
+          <!-- 个人信息表 -->
+          <div
+            class="ownBlock"
+            style="width: 90%; height: 3rem; margin-top: 1rem"
+          >
+            <div id="personal">
+              <img class="headPic" :src="headPic" />
+              <div class="box">
+                <div class="personalButtons" style="margin-left: 2rem">
+                  <div class="font-size: .6rem;margin-left: .6rem">
+                    {{ userName }}
+                  </div>
+                  <!--
+                  <img
+                    style="width: 0.5rem; height: 0.5rem; margin-left: 0.1rem"
+                    src="@/assets/images/vip1.png"
+                  />
+                  <img
+                    style="width: 0.5rem; height: 0.5rem; margin-left: 0.1rem"
+                    src="@/assets/images/vip1.png"
+                  />
+                  <img
+                    style="width: 0.5rem; height: 0.5rem; margin-left: 0.1rem"
+                    src="@/assets/images/vip1.png"
+                  /> -->
+                </div>
+                <div
+                  class="personalButtons"
+                  style="justify-content: flex-start"
+                >
+                  <div style="border-right: gainsboro solid 2px">
+                    <span style="color: black">关注</span>
+                    <span
+                      style="
+                        color: gainsboro;
+                        margin-left: 0.2rem;
+                        margin-right: 0.3rem;
+                      "
+                      >{{ followed.length }}</span
+                    >
+                  </div>
+                  <div style="border-right: gainsboro solid 2px">
+                    <span style="color: black">粉丝</span>
+                    <span
+                      style="
+                        color: gainsboro;
+                        margin-left: 0.2rem;
+                        margin-right: 0.3rem;
+                      "
+                      >{{ fans.length }}</span
+                    >
+                  </div>
+                  <div style="border-right: gainsboro solid 2px">
+                    <span style="color: black">新歌提醒</span>
+                    <span
+                      style="
+                        color: gainsboro;
+                        margin-left: 0.2rem;
+                        margin-right: 0.3rem;
+                      "
+                      >{{ event.length }}</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- 活动中心 -->
+          <div class="ownBlock" style="width: 90%; height: 2rem">
+            <div id="activity">
+              <div style="display: flex; justify-content: center">
+                <img
+                  style="width: 1rem; height: 1rem"
+                  src="@/assets/images/act1.png"
+                />
+                <div style="margin-left: 0.2rem">
+                  <div style="font-size: 0.5rem">活动中心</div>
+                  <div style="color: grey; font-size: 0.35rem">
+                    签到七天赢绿砖
+                  </div>
+                </div>
+              </div>
+              <div
+                style="
+                  display: flex;
+                  justify-content: center;
+                  margin-left: 0.5rem;
+                "
+              >
+                <img
+                  style="width: 1rem; height: 1rem"
+                  src="@/assets/images/act2.png"
+                />
+                <div style="margin-left: 0.2rem">
+                  <div style="font-size: 0.5rem">会员中心</div>
+                  <div style="color: grey; font-size: 0.35rem">
+                    VIP热门新碟🎵
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- 按键 -->
+          <div class="ownBlock" style="width: 90%; height: 3rem">
+            <div
+              style="
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                margin: 0.5rem;
+              "
+              @click="isBatch=true"
+            >
+              <img style="width: 1rem" src="@/assets/images/heart1.png" />
+              <span style="font-size: 0.4rem; margin-top: 0.15rem">喜欢</span>
+              <span style="font-size: 0.2rem; color: gray">{{
+                this.likeSong.length
+              }}</span>
+            </div>
+            <div
+              style="
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                margin: 0.5rem;
+              "
+            >
+              <img style="width: 1rem" src="@/assets/images/download1.png" />
+              <span style="font-size: 0.4rem; margin-top: 0.15rem">本地</span>
+              <span style="font-size: 0.2rem; color: gray">0</span>
+            </div>
+            <div
+              style="
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                margin: 0.5rem;
+              "
+            >
+              <img style="width: 1rem" src="@/assets/images/songlist2.png" />
+              <span style="font-size: 0.4rem; margin-top: 0.15rem">歌单</span>
+              <span style="font-size: 0.2rem; color: gray">{{
+                playlist.length
+              }}</span>
+            </div>
+            <div
+              style="
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                margin: 0.5rem;
+              "
+            >
+              <img style="width: 1rem" src="@/assets/images/yigou.png" />
+              <span style="font-size: 0.4rem; margin-top: 0.15rem">已购</span>
+              <span style="font-size: 0.2rem; color: gray">{{
+                digitalAlbum.length
+              }}</span>
+            </div>
+          </div>
+          <!-- 最近播放 -->
+          <div class="ownBlock" style="background: white">
+            <songlist :songListData="nearSongData"></songlist>
+          </div>
+          <!-- 自建歌单 -->
+          <div class="ownBlock" style="background: white">
+            <songlist :songListData="ownSongData"></songlist>
+          </div>
+          <!-- 推荐歌单 -->
+          <div class="ownBlock" style="background: white; height: 8rem">
+            <songlist :songListData="recommendSongData"></songlist>
+          </div>
+        </div>
+      </el-tab-pane>
+    </el-tabs>
+    <span class="el-icon-message" @click="toMessage"></span>
+    <span class="el-icon-more" @click="toMore"></span>
+    <!-- 用户分析报告 -->
+    <el-dialog
+      title="用户数据分析报告"
+      :fullscreen="true"
+      :visible.sync="dialogVisible"
+      :modal="false"
+      :modal-append-to-body="false"
+    >
+      <div style="height: 15rem; overflow: scroll">
+        <analysisTags></analysisTags>
+        <analysisSinger></analysisSinger>
+        <analysisLyric></analysisLyric>
+      </div>
+    </el-dialog>
+    <!-- 曲目 -->
+    <transition>
+      <div class="songListBox" v-if="isBatch">
+        <div class="boxTitle">
+          <span class="el-icon-arrow-left"  style="margin-left:5%;margin-right: 35%" @click="isBatch=false"></span>
+          <span>{{this.title}}</span>
+        </div>
+        <!-- 歌单 -->
+        <div class="list">
+      <ul>
+        <li v-for="(item, index) in songs" :key="index" @click="songChange(item)">
+          <div class="index">
+            <span>{{ index + 1 }}</span>
+          </div>
+          <div class="nameBox">
+            <span class="name">{{ item.name }}</span>
+            <div>
+              <span
+                style="
+                  white-space: nowrap;
+                  text-overflow: ellipsis;
+                  overflow: hidden;
+                "
+                >{{ item.ar[0].name }}-{{ item.name }}</span
+              >
+            </div>
+          </div>
+          <span class="el-icon-more"></span>
+        </li>
+      </ul>
     </div>
+      </div>
+    </transition>
+  </div>
 </template>
 <script>
 import more from '@/components/pages/fourth/more/more.vue'
 import messages from '@/components/pages/fourth/messages/messages.vue'
+import Songlist from '../../../components/songlist/songlist.vue'
+import analysisLyric from '../../../components/analysis/analysisLyric.vue'
+import analysisTags from '../../../components/analysis/analysisTags.vue'
+import analysisSinger from '../../../components/analysis/analysisSinger.vue'
+import axios from 'axios'
 export default {
   name: 'mine',
   components: {
     more,
-    messages
+    analysisLyric,
+    analysisTags,
+    messages,
+    Songlist,
+    analysisSinger
   },
   data () {
     return {
       isMore: false,
-      isMessage: false
+      isMessage: false,
+      dialogVisible: false,
+      headPic: this.$store.state.userData
+        ? this.$store.state.userData.profile.avatarUrl
+        : null,
+      userData: this.$store.state.userData ? this.$store.state.userData : null,
+      userName: this.$store.state.userData
+        ? this.$store.state.userData.profile.nickname
+        : null,
+      nearSongData: {
+        listName: '最近播放',
+        listData: this.$store.state.nearlist ? this.$store.state.nearlist : []
+      },
+      ownSongData: {
+        listName: '自建歌单',
+        listData: []
+      },
+      recommendSongData: {
+        listName: '推荐歌单',
+        listData: []
+      },
+      likeSong: [],
+      followed: [],
+      fans: [],
+      event: [],
+      digitalAlbum: [],
+      playlist: [],
+      isBatch: false,
+      title: '喜欢',
+      songs: []
     }
   },
   methods: {
@@ -31,17 +294,171 @@ export default {
       this.isMore = true
     },
     toMessage () {
-      this.isMessage = true
+      this.dialogVisible = true
     },
     closeMore () {
       this.isMore = false
     },
     closeMessage () {
       this.isMessage = false
+    },
+    /** 收藏歌单 */
+    async getColletSongData () {
+      const res = await axios({
+        url: `http://localhost:3000/album/sublist`,
+        withCredentials: true
+      })
+      this.ownSongData.listData = res.data.data
+    },
+    /** 推荐歌单 */
+    async getRecommandSongData () {
+      const res = await axios({
+        url: `http://localhost:3000/personalized?limit=3`,
+        withCredentials: true
+      })
+      this.recommendSongData.listData = res.data.result
+    },
+    /** 获取歌曲详情 */
+    async getSongDetail (id) {
+      const res = await axios({
+        url: `http://localhost:3000/song/detail?ids=${id}`,
+        withCredentials: true
+      })
+      this.songs.push(res.data.songs[0])
+    },
+    /** 获取喜好歌单列表 */
+    async getLikeSong () {
+      const res = await axios({
+        url: `http://localhost:3000/likelist?uid=${this.userData.profile.userId}`,
+        withCredentials: true
+      })
+      this.likeSong = res.data.ids
+      for (var i in this.likeSong) {
+        this.getSongDetail(this.likeSong[i])
+      }
+    },
+    /** 获取关注列表 */
+    async getfollowedList () {
+      const res = await axios({
+        url: `http://localhost:3000/user/follows?uid=${this.userData.profile.userId}`,
+        withCredentials: true
+      })
+      this.followed = res.data.follow
+    },
+    /** 获取粉丝列表 */
+    async getfansList () {
+      const res = await axios({
+        url: `http://localhost:3000/user/followeds?uid=${this.userData.profile.userId}`,
+        withCredentials: true
+      })
+      this.fans = res.data.followeds
+    },
+    /** 获取用户动态 */
+    async getEventList () {
+      const res = await axios({
+        url: `http://localhost:3000/user/event?uid=${this.userData.profile.userId}`,
+        withCredentials: true
+      })
+      this.event = res.data.events
+    },
+    /** 我的数据专辑 */
+    async getdigitalAlbumList () {
+      const res = await axios({
+        url: `http://localhost:3000/digitalAlbum/purchased`,
+        withCredentials: true
+      })
+      this.digitalAlbum = res.data.paidAlbums
+    },
+    /** 获取用户信息等数据 */
+    async getSubcount () {
+      const res = await axios({
+        url: `http://localhost:3000/user/playlist?uid=${this.userData.profile.userId}`,
+        withCredentials: true
+      })
+      this.playlist = res.data.playlist
+      this.ownSongData.listData.push(...res.data.playlist)
+    },
+    /** 播放当前歌曲 */
+    songChange (data) {
+      this.$store.commit('updateSongList', this.songs)
+      this.$store.commit('updateCurrentSongData', data)
+    }
+  },
+  mounted () {
+    this.getColletSongData()
+    this.getRecommandSongData()
+    this.getLikeSong()
+    this.getfollowedList()
+    this.getfansList()
+    this.getEventList()
+    this.getdigitalAlbumList()
+    this.getSubcount()
+  },
+  computed: {
+    getUserData () {
+      return this.$store.state.userData
+    },
+    getNearSongData () {
+      return this.$store.state.nearlist
+    }
+  },
+  watch: {
+    getUserData (newVal, oldVal) {
+      console.log(newVal)
+      this.userName = this.$store.state.userData.profile.nickname
+      this.headPic = this.$store.state.userData.profile.avatarUrl
+      this.userData = this.$store.state.userData
+      this.getLikeSong()
+    },
+    getNearSongData (newVal, oldVal) {
+      this.nearSongData.listData = newVal
     }
   }
 }
 </script>
 <style scoped>
-@import './index.css';
+@import "./index.css";
+#mine {
+  height: 14rem;
+  overflow: scroll;
+}
+#mine >>> .el-dialog__body {
+  padding: 0;
+  margin-top: 0.5rem;
+}
+#mine::-webkit-scrollbar {
+  display: none;
+}
+#own {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: whitesmoke;
+}
+.ownBlock {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.songListBox{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    background-color:#fff;
+    z-index: 10;
+    top: 0;
+    overflow:scroll
+}
+.boxTitle{
+    font-size: .5rem;
+    height: 1rem;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
 </style>

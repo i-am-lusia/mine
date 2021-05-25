@@ -1,47 +1,50 @@
 <template>
-    <div id="recommand">
-        <div class="thehellobox">
-          <hello></hello>
-        </div>
-        <!-- 你的歌单补给站 -->
-        <div class="song-list-block" style="height:8.4rem">
-          <doubleSongList :songListData="newListData"></doubleSongList>
-        </div>
-        <!-- 根据“***”推荐 -->
-        <div class="song-list-recommand-block">
-          <recommandSongList :songListData="recommandSongListData"></recommandSongList>
-        </div>
-        <!-- 你最近的悦耳旋律 -->
-        <div class="song-list-block">
-          <songlist :songListData="nearListData"></songlist>
-        </div>
-        <!-- DJ,Drop the beat! -->
-        <div class="song-list-block">
-          <songlist :songListData="djListData"></songlist>
-        </div>
-        <!-- 最热门的电台节目，一键获得 -->
-        <div class="song-list-block">
-          <songlist :songListData="radioListData"></songlist>
-        </div>
-        <!-- 等你来听的宝藏声音 -->
-        <div class="song-list-block" style="height:5.8rem">
-          <live :liveData="liveData"></live>
-        </div>
-        <!-- 根据“***”推荐 -->
-        <div class="song-list-recommand-block">
-          <recommandSongList :songListData="recommandSongListTwoData"></recommandSongList>
-        </div>
-        <!-- 和"***"一样好听 -->
-        <div class="song-list-block">
-          <songlist :songListData="recommandSingerListData"></songlist>
-        </div>
-        <!-- 宝藏歌手集合 -->
-        <div class="song-list-block">
-            <songlist :songListData="singerListData"></songlist>
-        </div>
-        <div class="bottom">
-        </div>
+  <div id="recommand">
+    <div class="thehellobox">
+      <hello></hello>
     </div>
+    <!-- 你的歌单补给站 -->
+    <div class="song-list-block" style="height: 8.4rem">
+      <doubleSongList :songListData="newListData"></doubleSongList>
+    </div>
+    <!-- 根据“***”推荐 -->
+    <div class="song-list-recommand-block">
+      <recommandSongList
+        :songListData="recommandSongListData"
+      ></recommandSongList>
+    </div>
+    <!-- 你最近的悦耳旋律 -->
+    <div class="song-list-block">
+      <songlist :songListData="nearListData"></songlist>
+    </div>
+    <!-- DJ,Drop the beat! -->
+    <div class="song-list-block">
+      <songlist :songListData="djListData"></songlist>
+    </div>
+    <!-- 最热门的电台节目，一键获得 -->
+    <div class="song-list-block">
+      <songlist :songListData="radioListData"></songlist>
+    </div>
+    <!-- 等你来听的宝藏声音 -->
+    <div class="song-list-block" style="height: 5.8rem">
+      <live :liveData="liveData"></live>
+    </div>
+    <!-- 根据“***”推荐 -->
+    <div class="song-list-recommand-block">
+      <recommandSongList
+        :songListData="recommandSongListTwoData"
+      ></recommandSongList>
+    </div>
+    <!-- 和"***"一样好听 -->
+    <div class="song-list-block">
+      <songlist :songListData="recommandSingerListData"></songlist>
+    </div>
+    <!-- 宝藏歌手集合 -->
+    <div class="song-list-block">
+      <songlist :songListData="singerListData"></songlist>
+    </div>
+    <div class="bottom"></div>
+  </div>
 </template>
 <script>
 import axios from 'axios'
@@ -109,54 +112,91 @@ export default {
         withCredentials: true
       })
       for (let i = 0; i < 60;) {
-        songlists.push(res.data.playlists.slice(i, i += 10))
+        songlists.push(res.data.playlists.slice(i, (i += 10)))
       }
       this.newListData.listOneData = songlists[0]
       this.newListData.listTwoData = songlists[1]
       this.nearListData.listData = songlists[2]
       this.djListData.listData = songlists[3]
       this.radioListData.listData = songlists[4]
+      this.singerListData.listData = songlists[5]
     },
     /** id号需要修改 */
     async getRecommendBySinger () {
+      const singerList = this.$store.state.singerList
+      const id1 = singerList[0] && singerList[0].id
+      const id2 = singerList[1] && singerList[1].id
+      const id3 = singerList[2] && singerList[2].id
+      const listData1 = []
+      const listData2 = []
       const res1 = await axios({
-        url: `http://localhost:3000/artist/album?id=6454&limit=9`,
+        url: `http://localhost:3000/artist/album?id=${id1 || 6454}&limit=9`,
         withCredentials: true
       })
       const res2 = await axios({
-        url: `http://localhost:3000/artist/album?id=6454&limit=9`,
+        url: `http://localhost:3000/artist/album?id=${id2 || 6454}&limit=9`,
         withCredentials: true
       })
       const res3 = await axios({
-        url: `http://localhost:3000/artist/album?id=6454&limit=9`,
+        url: `http://localhost:3000/artist/album?id=${id3 || 6454}&limit=9`,
         withCredentials: true
       })
       for (let i = 0; i < res1.data.hotAlbums.length;) {
-        this.recommandSongListData.listData.push(res1.data.hotAlbums.slice(i, i += 3))
+        listData1.push(
+          res1.data.hotAlbums.slice(i, (i += 3))
+        )
       }
       for (let i = 0; i < res2.data.hotAlbums.length;) {
-        this.recommandSongListTwoData.listData.push(res2.data.hotAlbums.slice(i, i += 3))
+        listData2.push(
+          res2.data.hotAlbums.slice(i, (i += 3))
+        )
       }
       this.recommandSingerListData.listData = res3.data.hotAlbums
       this.recommandSingerListData.listName = `和"${res3.data.artist.name}"一样好听`
       this.recommandSongListData.singerName = res1.data.artist.name
+      this.recommandSongListData.listData = listData1
       this.recommandSongListTwoData.singerName = res2.data.artist.name
+      this.recommandSongListTwoData.listData = listData2
+    },
+    async getLiveList () {
+      const res = await axios({
+        url: `http://localhost:3000/program/recommend`,
+        withCredentials: true
+      })
+      this.liveData.listData = res.data.programs
     }
   },
   mounted () {
     this.getSongList()
-    this.getRecommendBySinger()
+    this.getLiveList()
+    this.$store.state.singerList && this.getRecommendBySinger()
+  },
+  computed: {
+    getNearSinger () {
+      return this.$store.state.singerList
+    }
+  },
+  watch: {
+    getNearSinger (newVal, oldVal) {
+      this.getRecommendBySinger()
+    }
   }
 }
 </script>
 <style>
-@import './index.css';
-.thehellobox{
+@import "./index.css";
+.thehellobox {
   width: 100%;
   height: 4.5rem;
-  margin-top: 2rem;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+#recommand {
+  height: 14rem;
+  overflow: scroll;
+}
+#recommand::-webkit-scrollbar{
+  display: none;
 }
 </style>

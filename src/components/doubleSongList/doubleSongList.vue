@@ -5,7 +5,7 @@
         </div>
         <div class="box2">
             <ul>
-                <li v-for="(item,index) in songListData.listOneData" :key="index">
+                <li v-for="(item,index) in songListData.listOneData" :key="index" @click="goTo(item)">
                     <div class="box">
                         <img :src="item.coverImgUrl"/>
                         <div class="tag">
@@ -16,7 +16,7 @@
                 </li>
             </ul>
             <ul>
-                <li v-for="(item,index) in songListData.listTwoData" :key="index">
+                <li v-for="(item,index) in songListData.listTwoData" :key="index" @click="goTo(item)">
                      <div class="box">
                         <img :src="item.coverImgUrl"/>
                         <div class="tag">
@@ -32,7 +32,13 @@
 <script>
 export default {
   name: 'doubleSongList',
-  props: ['songListData']
+  props: ['songListData'],
+  methods: {
+    goTo (data) {
+      this.$store.commit('updateNearSongList', data)
+      this.$router.push({path: '/songListDetail', query: {id: data.id}})
+    }
+  }
 }
 </script>
 <style scoped>
