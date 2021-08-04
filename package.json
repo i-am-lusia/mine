@@ -4,9 +4,9 @@
   "description": "A musicplayer to analyze big data",
   "author": "Lusia",
   "private": true,
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
-    "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
+    "dev": "webpack serve --mode development ./src/main.js -o .dist/bundle.js --stats-error-details --open Chrome.exe",
     "start": "npm run dev",
     "build": "webpack ",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -24,12 +24,17 @@
     "vuex": "^3.5.1"
   },
   "devDependencies": {
+    "babel-cli": "^6.14.0",
+    "babel-polyfill": "^6.23.0",
+    "css-loader": "^6.2.0",
+    "husky": "^1.3.1",
+    "rimraf": "^2.6.0",
     "serve": "^12.0.0",
+    "style-loader": "^3.2.1",
+    "vue-loader": "^15.9.8",
+    "vue-template-compiler": "^2.6.14",
     "webpack": "^5.38.1",
     "webpack-cli": "^4.7.2",
-    "rimraf": "^2.6.0",
-    "husky": "^1.3.1",
-    "babel-cli": "^6.14.0",
-    "babel-polyfill": "^6.23.0"
+    "webpack-dev-server": "^3.11.2"
   }
 }
